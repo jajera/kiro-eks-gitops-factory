@@ -1144,8 +1144,7 @@ for (const page of pages) {
   while ((pm = pendingRe.exec(text))) {
     const body = pm[1];
     const pngs = body.match(/[\w.-]+\.png/g) ?? [];
-    const hasDest =
-      /public\/media\//.test(body) || /docs\/media\//.test(body);
+    const hasDest = /public\/media\//.test(body) || /docs\/media\//.test(body);
     if (pngs.length === 0 || !hasDest) {
       fail(
         7,

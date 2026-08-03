@@ -75,7 +75,10 @@ export default defineConfig({
           items: [
             { label: "Lab B — .kiro/ hub", slug: "lab-b" },
             { label: "Project profile map", slug: "map-project-profile" },
-            { label: "Workload archetypes map", slug: "map-workload-archetypes" },
+            {
+              label: "Workload archetypes map",
+              slug: "map-workload-archetypes",
+            },
             { label: "GitOps conventions map", slug: "map-gitops-conventions" },
             { label: "add-app scaffold map", slug: "map-add-app" },
             { label: "manage-clusters map", slug: "map-manage-clusters" },

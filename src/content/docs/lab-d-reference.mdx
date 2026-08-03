@@ -8,10 +8,9 @@ import Tooltip from "@/components/Tooltip.astro";
 
 Before this: [Onboard an app (Lab C)](../lab-c/) produced a compliant dual-overlay app and a pull request with green checks.
 
-Lab D is **out of scope** as a runnable lab here. This page is reference only — nothing below was
-observed on a cluster belonging to this documentation. The live path starts only after a human
-reviews and merges the PR; changes reach the cluster through Git merge and{" "}
-<Tooltip term="argo-cd" label="Argo CD" /> sync, never through a chat-side apply.
+<p>
+  Lab D is **out of scope** as a runnable lab here. This page is reference only — nothing below was observed on a cluster belonging to this documentation. The live path starts only after a human reviews and merges the PR; changes reach the cluster through Git merge and <Tooltip term="argo-cd" label="Argo CD" /> sync, never through a chat-side apply.
+</p>
 
 ## The live path after merge
 
@@ -24,14 +23,14 @@ reviews and merges the PR; changes reach the cluster through Git merge and{" "}
 
 ## The visual checklist
 
-| Step | Capture | Pass when |
-| --- | --- | --- |
-| Placeholders / ECR image ready | - | real account IDs, digest in <Tooltip term="ecr" label="ECR" /> |
-| IAM applied if needed | - | Pod Identity association exists |
-| Argo parent + child | `23-argocd-healthy.png` | `Synced` / `Healthy` |
-| Ingress ADDRESS | `24-alb-ingress.png` | <Tooltip term="alb" label="ALB" /> hostname present |
-| curl host | `25-curl-ok.png` | HTTP 200 |
-| Promote to prod overlay | - | same digest only after above |
+| Step                           | Capture                 | Pass when                                                      |
+| ------------------------------ | ----------------------- | -------------------------------------------------------------- |
+| Placeholders / ECR image ready | -                       | real account IDs, digest in <Tooltip term="ecr" label="ECR" /> |
+| IAM applied if needed          | -                       | Pod Identity association exists                                |
+| Argo parent + child            | `23-argocd-healthy.png` | `Synced` / `Healthy`                                           |
+| Ingress ADDRESS                | `24-alb-ingress.png`    | <Tooltip term="alb" label="ALB" /> hostname present            |
+| curl host                      | `25-curl-ok.png`        | HTTP 200                                                       |
+| Promote to prod overlay        | -                       | same digest only after above                                   |
 
 Use these verification commands against the app Lab C scaffolded (`demo-nginx` naming) in
 [jajera/kiro-eks-argocd-migration](https://github.com/jajera/kiro-eks-argocd-migration). They are
@@ -71,10 +70,8 @@ Managed or self-hosted Argo CD does not change this checklist’s meaning — bo
 
 ## What bites
 
-Promoting to prod before the digest is pinned. If the prod overlay resolves a tag instead of a
-digest, both overlays can run different bytes while both report `Synced` and `Healthy` — the drift
-is invisible because both Applications match their sources exactly. Pin the digest from the
-verified <Tooltip term="overlay" label="dev overlay" />, and promotion becomes a diff you can read
-instead of a hope that the tag has not moved.
+<p>
+  Promoting to prod before the digest is pinned. If the prod overlay resolves a tag instead of a digest, both overlays can run different bytes while both report `Synced` and `Healthy` — the drift is invisible because both Applications match their sources exactly. Pin the digest from the verified <Tooltip term="overlay" label="dev overlay" />, and promotion becomes a diff you can read instead of a hope that the tag has not moved.
+</p>
 
 Next: [Choose an autonomy mode](../autonomy-modes/) settles how much of each editing turn you review before it lands.

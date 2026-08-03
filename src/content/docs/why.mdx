@@ -8,24 +8,22 @@ import Tooltip from "@/components/Tooltip.astro";
 
 Before this: [Home](../) framed the migration problem and the factory shape of the argument.
 
-You already have <Tooltip term="eks" label="EKS" /> and{" "}
-<Tooltip term="argo-cd" label="Argo CD" /> running. The cluster is fine. The problem is getting
-the next hundred apps onto it without every team inventing a different repo shape, a different
-naming scheme, and a different set of shortcuts that nobody else can review.
+<p>
+  You already have <Tooltip term="eks" label="EKS" /> and <Tooltip term="argo-cd" label="Argo CD" /> running. The cluster is fine. The problem is getting the next hundred apps onto it without every team inventing a different repo shape, a different naming scheme, and a different set of shortcuts that nobody else can review.
+</p>
 
 ## The manual path does not scale
 
-One experienced engineer can migrate a single app in half a day: read the existing compose file or
-task definition, write the Kubernetes manifests, slot them into a{" "}
-<Tooltip term="kustomize" label="Kustomize" />{" "}<Tooltip term="overlay" label="overlay" />, wire
-an Argo CD Application, and open the <Tooltip term="pr" label="PR" />. That is fine for five apps.
+<p>
+  One experienced engineer can migrate a single app in half a day: read the existing compose file or task definition, write the Kubernetes manifests, slot them into a <Tooltip term="kustomize" label="Kustomize" /> <Tooltip term="overlay" label="overlay" />, wire an Argo CD Application, and open the <Tooltip term="pr" label="PR" />. That is fine for five apps.
+</p>
 
 At a hundred apps, spread across multiple teams with mixed Kubernetes experience, the math changes:
 
-| Path | Per app | For 100 apps |
-| --- | --- | --- |
-| Manual (experienced engineer) | ~3–6 h | ~450 h |
-| Manual (mixed experience) | ~1–2 days | ~150 person-days |
+| Path                                                          | Per app    | For 100 apps                  |
+| ------------------------------------------------------------- | ---------- | ----------------------------- |
+| Manual (experienced engineer)                                 | ~3–6 h     | ~450 h                        |
+| Manual (mixed experience)                                     | ~1–2 days  | ~150 person-days              |
 | Factory + <Tooltip term="kiro" label="Kiro" /> + human review | ~45–90 min | ~75–150 h after initial setup |
 
 The time savings are real, but they are not the main point. The main point is **consistency**. When
@@ -43,8 +41,7 @@ Without a shared structure, each migration attempt drifts in small ways that com
 - **Policy gaps.** An app ships without a <Tooltip term="pdb" label="PodDisruptionBudget" />, or
   with `runAsRoot: true`, because the author did not know the constraint existed and nothing
   blocked the PR.
-- **Prompt drift.** If you use an AI assistant without{" "}
-  <Tooltip term="steering" label="steering" />, each session invents a slightly different layout.
+- **Prompt drift.** If you use an AI assistant without <Tooltip term="steering" label="steering" />, each session invents a slightly different layout.
   The model is not wrong — it is just unconstrained, so it picks a plausible answer each time
   rather than the same answer.
 
@@ -68,13 +65,13 @@ team members gets harder, and automated checks require per-app configuration.
 
 ## What the factory removes — and what it does not
 
-| The factory handles | You still own |
-| --- | --- |
-| Deciding tree shape for every app | Understanding the workload |
-| Creating base + overlay scaffolding | Shrinking <Tooltip term="iam" label="IAM" /> to least privilege |
-| Enforcing naming, labels, and policy | <Tooltip term="dns" label="DNS" />, <Tooltip term="tls" label="TLS" />, and certificate setup |
-| Blocking forbidden patterns at prompt time | Cutover risk and rollback planning |
-| Producing a reviewable PR | The actual merge decision |
+| The factory handles                        | You still own                                                                                 |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| Deciding tree shape for every app          | Understanding the workload                                                                    |
+| Creating base + overlay scaffolding        | Shrinking <Tooltip term="iam" label="IAM" /> to least privilege                               |
+| Enforcing naming, labels, and policy       | <Tooltip term="dns" label="DNS" />, <Tooltip term="tls" label="TLS" />, and certificate setup |
+| Blocking forbidden patterns at prompt time | Cutover risk and rollback planning                                                            |
+| Producing a reviewable PR                  | The actual merge decision                                                                     |
 
 The factory accelerates **drafting**. It does not merge, it does not promote to production, and it
 does not make judgement calls about your workload. A human still reviews the PR and carries the

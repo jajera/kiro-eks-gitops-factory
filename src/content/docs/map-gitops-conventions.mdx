@@ -10,7 +10,7 @@ Before this: [Workload archetypes map](../map-workload-archetypes/) covered the 
 
 Deep dive for [`.kiro/steering/gitops-conventions.md`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/steering/gitops-conventions.md)
 — the second always-on file, and the largest single piece of the contract. Where the project
-profile answers *what are the values*, this one answers *what is the shape*.
+profile answers _what are the values_, this one answers _what is the shape_.
 
 ## The map
 
@@ -21,11 +21,8 @@ profile answers *what are the values*, this one answers *what is the shape*.
   caption="Layout, naming, labels, pinning, hardening — the shape a reviewer checks against."
 />
 
-Three things carry most of the review weight. Only seven values may differ between overlays, so
-anything else appearing in one and not the other is drift. `app.kubernetes.io/name` is the
-selector key, so if it drifts between a Deployment and its <Tooltip term="networkpolicy" label="NetworkPolicy" />
-the allow rules match nothing and traffic is silently denied. And `RollingUpdate` covers rollouts
-while a <Tooltip term="pdb" label="PDB" /> covers node drains — they are not substitutes, which is
-why the replicas matrix exists.
+<p>
+  Three things carry most of the review weight. Only seven values may differ between overlays, so anything else appearing in one and not the other is drift. `app.kubernetes.io/name` is the selector key, so if it drifts between a Deployment and its <Tooltip term="networkpolicy" label="NetworkPolicy" /> the allow rules match nothing and traffic is silently denied. And `RollingUpdate` covers rollouts while a <Tooltip term="pdb" label="PDB" /> covers node drains — they are not substitutes, which is why the replicas matrix exists.
+</p>
 
 Next: [add-app scaffold map](../map-add-app/) walks the skill that turns these facts into a tree.

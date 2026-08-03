@@ -7,7 +7,9 @@ import Tooltip from "@/components/Tooltip.astro";
 
 Before this: [Vibe or spec, and when](../vibe-vs-spec/) settled which session type fits the work in front of you.
 
-This is a lookup surface, not a lesson. Every entry below is one symptom, one cause, one fix, in that order, so you can scan for the symptom you are actually looking at. If <Tooltip term="gator-verify" label="gator verify" /> is what sent you here, work the triage order first.
+<p>
+  This is a lookup surface, not a lesson. Every entry below is one symptom, one cause, one fix, in that order, so you can scan for the symptom you are actually looking at. If <Tooltip term="gator-verify" label="gator verify" /> is what sent you here, work the triage order first.
+</p>
 
 ## How to triage a gator failure
 
@@ -20,7 +22,8 @@ This is a lookup surface, not a lesson. Every entry below is one symptom, one ca
 
 ### Gator version skew
 
-**Symptom:** the CLI reports `3.22.0` while the vendored <Tooltip term="gatekeeper" label="Gatekeeper" /> chart says `3.21.1`, which reads like a broken install.
+**Symptom:** the CLI reports `3.22.0` while the vendored <Tooltip term="gatekeeper" label="Gatekeeper" />
+chart says `3.21.1`, which reads like a broken install.
 
 **Cause:** the CLI pin is the `GATOR_VERSION` default in [`scripts/install-gator.sh`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/scripts/install-gator.sh), and the chart carries its own `version` and `appVersion` in [`infrastructure/gatekeeper/base/vendored/chart/gatekeeper/Chart.yaml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/infrastructure/gatekeeper/base/vendored/chart/gatekeeper/Chart.yaml).
 
@@ -40,7 +43,8 @@ This is a lookup surface, not a lesson. Every entry below is one symptom, one ca
 
 **Cause:** those are documentation placeholders carried through [`.kiro/steering/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/steering) so the trees build without real accounts; `111122223333` stands for dev (`dev-eks-1`) and `444455556666` for prod (`prod-eks-1`).
 
-**Fix:** substitute your own account IDs and region, then re-run the offline builds before anything touches <Tooltip term="iam" label="IAM" /> or <Tooltip term="ecr" label="ECR" />.
+**Fix:** substitute your own account IDs and region, then re-run the offline builds before anything
+touches <Tooltip term="iam" label="IAM" /> or <Tooltip term="ecr" label="ECR" />.
 
 :::caution
 Replace `111122223333`, `444455556666`, and `ap-southeast-2` with real values before any live IAM or ECR operation. Left in place they will point permissions and image pulls at accounts that are not yours.

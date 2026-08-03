@@ -13,11 +13,9 @@ come back. Run every factory command in
 [jajera/kiro-eks-argocd-migration](https://github.com/jajera/kiro-eks-argocd-migration), not in
 this docs repo.
 
-You need a clone, pinned <Tooltip term="gator" label="gator" />,{" "}
-<Tooltip term="kustomize" label="kustomize" />, and (for Lab C){" "}
-<Tooltip term="kiro" label="Kiro" />. You do **not** need a live <Tooltip term="eks" label="EKS" />
-API, <Tooltip term="argo-cd" label="Argo CD" /> login, or cluster{" "}
-<Tooltip term="mcp" label="MCP" /> adapters for Labs A–C.
+<p>
+  You need a clone, pinned <Tooltip term="gator" label="gator" />, <Tooltip term="kustomize" label="kustomize" />, and (for Lab C) <Tooltip term="kiro" label="Kiro" />. You do **not** need a live <Tooltip term="eks" label="EKS" /> API, <Tooltip term="argo-cd" label="Argo CD" /> login, or cluster <Tooltip term="mcp" label="MCP" /> adapters for Labs A–C.
+</p>
 
 ## 1. Clone the factory repo
 
@@ -43,25 +41,22 @@ was bumped upstream; check the factory README before assuming your install is br
 
 ### Why gator and the vendored chart disagree on version
 
-That pin differs from the <Tooltip term="gatekeeper" label="Gatekeeper" /> Helm chart `version` /
-`appVersion` **3.21.1** in
-[`infrastructure/gatekeeper/base/vendored/chart/gatekeeper/Chart.yaml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/infrastructure/gatekeeper/base/vendored/chart/gatekeeper/Chart.yaml).
-This is expected: the CLI and the chart are separate artifacts on their own release schedules.
-Gator's constraint-testing behavior is compatible across that gap. **Keep the CLI at 3.22.0** —
-do not downgrade it to match the chart. Bumping either pin is a deliberate edit to
-`scripts/install-gator.sh` (version + checksum map) and the README together.
+<p>
+  That pin differs from the <Tooltip term="gatekeeper" label="Gatekeeper" /> Helm chart `version` / `appVersion` **3.21.1** in [`infrastructure/gatekeeper/base/vendored/chart/gatekeeper/Chart.yaml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/infrastructure/gatekeeper/base/vendored/chart/gatekeeper/Chart.yaml). This is expected: the CLI and the chart are separate artifacts on their own release schedules. Gator's constraint-testing behavior is compatible across that gap. **Keep the CLI at 3.22.0** — do not downgrade it to match the chart. Bumping either pin is a deliberate edit to `scripts/install-gator.sh` (version + checksum map) and the README together.
+</p>
 
-Leaving the skew unexplained produces confusing <Tooltip term="gator-verify" label="gator verify" />
-failures that look like a broken install — see [Known scars](../gotchas/) if you hit that.
+<p>
+  Leaving the skew unexplained produces confusing <Tooltip term="gator-verify" label="gator verify" /> failures that look like a broken install — see [Known scars](../gotchas/) if you hit that.
+</p>
 
 ## 3. Confirm the rest of the toolchain
 
-| Tool | Needed for | Notes |
-| --- | --- | --- |
-| <Tooltip term="kustomize" label="kustomize" /> | Labs A–C | Overlay builds and local verify |
-| Node / `npx` | Local markdown / lint gates when factory scripts call them | Match whatever the factory README pins |
-| <Tooltip term="kiro" label="Kiro" /> | Lab C | Agent sessions against `.kiro/` |
-| `terraform` | Reading `iam.tf` only | Not required to run Labs A–C; the factory drafts IAM, you do not need to apply it to follow along |
+| Tool                                           | Needed for                                                 | Notes                                                                                             |
+| ---------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| <Tooltip term="kustomize" label="kustomize" /> | Labs A–C                                                   | Overlay builds and local verify                                                                   |
+| Node / `npx`                                   | Local markdown / lint gates when factory scripts call them | Match whatever the factory README pins                                                            |
+| <Tooltip term="kiro" label="Kiro" />           | Lab C                                                      | Agent sessions against `.kiro/`                                                                   |
+| `terraform`                                    | Reading `iam.tf` only                                      | Not required to run Labs A–C; the factory drafts IAM, you do not need to apply it to follow along |
 
 :::note
 This is a **starter toolchain** for Labs A–C, not a closed inventory. Add Helm, `kubectl`, or
@@ -71,19 +66,17 @@ offline story stays reproducible.
 
 ## 4. Placeholders and live AWS (skip for Labs A–C)
 
-Offline labs run on the shape-valid dummies already in the factory. Skip this section until
-you intend to touch a real AWS account. Account IDs and region live in
-[`.kiro/steering/project-profile.md`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/steering/project-profile.md);
-ACM and <Tooltip term="wafv2" label="WAFv2" /> ARN dummies are written per overlay on each app's
-Ingress (same shapes the skills scaffold).
+<p>
+  Offline labs run on the shape-valid dummies already in the factory. Skip this section until you intend to touch a real AWS account. Account IDs and region live in [`.kiro/steering/project-profile.md`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/steering/project-profile.md); ACM and <Tooltip term="wafv2" label="WAFv2" /> ARN dummies are written per overlay on each app's Ingress (same shapes the skills scaffold).
+</p>
 
-| Placeholder | Stands in for | Replace before |
-| --- | --- | --- |
-| `111122223333` | Dev AWS account ID (`dev-eks-1`) | Live <Tooltip term="iam" label="IAM" />, <Tooltip term="ecr" label="ECR" />, Ingress ARNs |
-| `444455556666` | Prod AWS account ID (`prod-eks-1`) | Live IAM, ECR pull, Ingress ARNs |
-| `ap-southeast-2` | AWS region | Clusters, ECR, ARN region segments |
-| `arn:aws:acm:…:certificate/00000000-…-0001` (dev) / `…-0002` (prod) | ACM certificate ARN on the ALB Ingress | Live HTTPS Ingress |
-| `arn:aws:wafv2:…:regional/webacl/<app>/00000000-…` | Regional <Tooltip term="web-acl" label="Web ACL" /> ARN (`wafv2-acl-arn`) | Live internet-facing Ingress; WAF policy stays dryrun until real ARNs exist |
+| Placeholder                                                         | Stands in for                                                             | Replace before                                                                            |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `111122223333`                                                      | Dev AWS account ID (`dev-eks-1`)                                          | Live <Tooltip term="iam" label="IAM" />, <Tooltip term="ecr" label="ECR" />, Ingress ARNs |
+| `444455556666`                                                      | Prod AWS account ID (`prod-eks-1`)                                        | Live IAM, ECR pull, Ingress ARNs                                                          |
+| `ap-southeast-2`                                                    | AWS region                                                                | Clusters, ECR, ARN region segments                                                        |
+| `arn:aws:acm:…:certificate/00000000-…-0001` (dev) / `…-0002` (prod) | ACM certificate ARN on the ALB Ingress                                    | Live HTTPS Ingress                                                                        |
+| `arn:aws:wafv2:…:regional/webacl/<app>/00000000-…`                  | Regional <Tooltip term="web-acl" label="Web ACL" /> ARN (`wafv2-acl-arn`) | Live internet-facing Ingress; WAF policy stays dryrun until real ARNs exist               |
 
 Dev and prod are separate accounts, so certificate and WAF ARNs always differ per overlay — they
 must not live in base. The zero-padded UUID dummies exist only so `kustomize build` and
@@ -95,10 +88,10 @@ ALB auth ARN placeholders today; if an app needs Cognito, supply real User Pool 
 in the overlay when you add that pattern — do not invent a bare `REPLACE_*` token.
 
 :::caution
-Replace placeholder accounts `111122223333` (dev / `dev-eks-1`) and `444455556666` (prod /
-`prod-eks-1`), region `ap-southeast-2`, and every dummy ACM / WAFv2 ARN before live{" "}
-<Tooltip term="iam" label="IAM" />, <Tooltip term="ecr" label="ECR" />, or Ingress work. Offline
-labs still run with the placeholders.
+
+<p>
+  Replace placeholder accounts `111122223333` (dev / `dev-eks-1`) and `444455556666` (prod / `prod-eks-1`), region `ap-southeast-2`, and every dummy ACM / WAFv2 ARN before live <Tooltip term="iam" label="IAM" />, <Tooltip term="ecr" label="ECR" />, or Ingress work. Offline labs still run with the placeholders.
+</p>
 :::
 
 ## Ready checklist

@@ -46,8 +46,7 @@ export const glossary: Record<string, string> = {
     "Gatekeeper CRD that defines a Rego policy and the shape of parameters a Constraint can set.",
   constraint:
     "Gatekeeper object that binds a ConstraintTemplate to a match scope (kinds, namespaces, labels).",
-  rego:
-    "OPA policy language — Gatekeeper ConstraintTemplates embed Rego `violation` rules that gator and the webhook both evaluate.",
+  rego: "OPA policy language — Gatekeeper ConstraintTemplates embed Rego `violation` rules that gator and the webhook both evaluate.",
   suite:
     "Gatekeeper test Suite — wires a template, a constraint, and named pass/fail object cases for `gator verify`.",
   ingress:

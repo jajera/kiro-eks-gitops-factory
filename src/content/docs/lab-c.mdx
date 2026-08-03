@@ -23,7 +23,9 @@ Do **not** hand-write the app. Start from empty `apps/` in
   caption="Empty apps, thin prompt, factory shape, then PR and Argo CD — Git stays the path."
 />
 
-Paste this thin prompt in <Tooltip term="kiro" label="Kiro" />:
+<p>
+  Paste this thin prompt in <Tooltip term="kiro" label="Kiro" />:
+</p>
 
 ```text
 Add a web-service app named demo-nginx.
@@ -45,8 +47,9 @@ Replicas: 2 in both overlays (so PDB minAvailable: 1 is valid).
   caption="add-app creates apps/demo-nginx with explorer and chat visible."
 />
 
-The Git-only hook allows <Tooltip term="kustomize" label="kustomize" /> `build` (read-only) and
-blocks chat-side `kubectl apply`. A live ACCESS DENIED was not in this recording.
+<p>
+  The Git-only hook allows <Tooltip term="kustomize" label="kustomize" /> `build` (read-only) and blocks chat-side `kubectl apply`. A live ACCESS DENIED was not in this recording.
+</p>
 
 <Still
   src="media/walkthrough/07-block-infra-denied.png"
@@ -86,12 +89,9 @@ The shell gate is the first line: see
 It keeps the agent on Git-only paths (`kustomize build`, `gator verify`, local lint) and denies
 mutating cluster or cloud commands from chat.
 
-That is not the only safety net. This factory is <Tooltip term="gitops" label="GitOps" />:{" "}
-<Tooltip term="argo-cd" label="Argo CD" /> reconciles the cluster to what is in Git after a human
-merges. An out-of-band `kubectl apply` that somehow reached the API would not become the lasting
-source of truth — the next sync brings the live object back in line with the repo (or surfaces
-drift for a human to fix). The hook stops the agent from creating that mess; Argo CD is why Git
-still wins if something else does.
+<p>
+  That is not the only safety net. This factory is <Tooltip term="gitops" label="GitOps" />: <Tooltip term="argo-cd" label="Argo CD" /> reconciles the cluster to what is in Git after a human merges. An out-of-band `kubectl apply` that somehow reached the API would not become the lasting source of truth — the next sync brings the live object back in line with the repo (or surfaces drift for a human to fix). The hook stops the agent from creating that mess; Argo CD is why Git still wins if something else does.
+</p>
 
 ## What `add-app` actually creates
 
@@ -104,20 +104,20 @@ off this page into a repo instead is not a substitute.
 
 The `add-app` skill scaffolds this tree for a `web-service` archetype:
 
-| File | Contents |
-| --- | --- |
-| `apps/demo-nginx/base/namespace.yaml` | Namespace with `name`/`owner` labels |
-| `apps/demo-nginx/base/application.yaml` | Argo CD Application using profile defaults |
-| `apps/demo-nginx/base/kustomization.yaml` | Lists the base resources |
-| `apps/demo-nginx/base/manifests/deployment.yaml` | Deployment with probes, resource limits, rolling update strategy |
-| `apps/demo-nginx/base/manifests/serviceaccount.yaml` | ServiceAccount for the workload |
-| `apps/demo-nginx/base/manifests/networkpolicy.yaml` | `default-deny-all` plus DNS/HTTPS allow rules |
-| `apps/demo-nginx/base/manifests/ingress.yaml` | ALB Ingress for the `web-service` archetype |
-| `apps/demo-nginx/base/manifests/poddisruptionbudget.yaml` | PDB, only added because replicas >= 2 |
-| `apps/demo-nginx/overlays/dev-eks-1/kustomization.yaml` | Overlay resources + patches for dev |
-| `apps/demo-nginx/overlays/prod-eks-1/kustomization.yaml` | Overlay resources + patches for prod |
-| `apps/demo-nginx/iam.tf` | IAM policy + Pod Identity association, skipped here since the prompt calls no AWS APIs |
-| `apps/demo-nginx/README.md` | Required app README with a Mermaid inputs/outputs diagram |
+| File                                                      | Contents                                                                               |
+| --------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `apps/demo-nginx/base/namespace.yaml`                     | Namespace with `name`/`owner` labels                                                   |
+| `apps/demo-nginx/base/application.yaml`                   | Argo CD Application using profile defaults                                             |
+| `apps/demo-nginx/base/kustomization.yaml`                 | Lists the base resources                                                               |
+| `apps/demo-nginx/base/manifests/deployment.yaml`          | Deployment with probes, resource limits, rolling update strategy                       |
+| `apps/demo-nginx/base/manifests/serviceaccount.yaml`      | ServiceAccount for the workload                                                        |
+| `apps/demo-nginx/base/manifests/networkpolicy.yaml`       | `default-deny-all` plus DNS/HTTPS allow rules                                          |
+| `apps/demo-nginx/base/manifests/ingress.yaml`             | ALB Ingress for the `web-service` archetype                                            |
+| `apps/demo-nginx/base/manifests/poddisruptionbudget.yaml` | PDB, only added because replicas >= 2                                                  |
+| `apps/demo-nginx/overlays/dev-eks-1/kustomization.yaml`   | Overlay resources + patches for dev                                                    |
+| `apps/demo-nginx/overlays/prod-eks-1/kustomization.yaml`  | Overlay resources + patches for prod                                                   |
+| `apps/demo-nginx/iam.tf`                                  | IAM policy + Pod Identity association, skipped here since the prompt calls no AWS APIs |
+| `apps/demo-nginx/README.md`                               | Required app README with a Mermaid inputs/outputs diagram                              |
 
 See the full scaffold contract in
 [`add-app`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/skills/add-app).
@@ -150,15 +150,15 @@ The `web-service` archetype in the [Workload archetypes map](../map-workload-arc
 seven things a compliant app must
 have. Each one traces to exactly one factory layer, not to the prompt:
 
-| Contract item | Satisfied by | Supplying layer |
-| --- | --- | --- |
-| Readiness probe | `deployment.yaml` container probes | `add-app` skill, step 3 |
-| Liveness probe | `deployment.yaml` container probes | `add-app` skill, step 3 |
-| Ingress present | `ingress.yaml` with the ALB class and hostname | steering: `workload-archetypes.md` |
-| NetworkPolicy present | `networkpolicy.yaml` with `default-deny-all` plus allows | `add-app` skill, step 3 |
-| PDB valid at `replicas: 2` | `poddisruptionbudget.yaml` only added because `replicas >= 2` | hook: `validate-app-scaffold` |
-| Placeholder image digest | Overlay patches pin `<app>:<tag>@sha256:<digest>` in the project ECR, never the upstream registry | `add-app` skill, step 2 |
-| Both overlays present | `overlays/dev-eks-1/` and `overlays/prod-eks-1/`, never just one | `add-app` skill, step 4 |
+| Contract item              | Satisfied by                                                                                      | Supplying layer                    |
+| -------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| Readiness probe            | `deployment.yaml` container probes                                                                | `add-app` skill, step 3            |
+| Liveness probe             | `deployment.yaml` container probes                                                                | `add-app` skill, step 3            |
+| Ingress present            | `ingress.yaml` with the ALB class and hostname                                                    | steering: `workload-archetypes.md` |
+| NetworkPolicy present      | `networkpolicy.yaml` with `default-deny-all` plus allows                                          | `add-app` skill, step 3            |
+| PDB valid at `replicas: 2` | `poddisruptionbudget.yaml` only added because `replicas >= 2`                                     | hook: `validate-app-scaffold`      |
+| Placeholder image digest   | Overlay patches pin `<app>:<tag>@sha256:<digest>` in the project ECR, never the upstream registry | `add-app` skill, step 2            |
+| Both overlays present      | `overlays/dev-eks-1/` and `overlays/prod-eks-1/`, never just one                                  | `add-app` skill, step 4            |
 
 None of these seven came from the prompt. The prompt named the app, the image, and the
 hostname — the archetype contract, the file shape, and the PDB validity check all came from
@@ -166,19 +166,15 @@ steering, the skill, and a hook.
 
 ## Takeaway
 
-This was <Tooltip term="vibe" label="vibe coding" />: short prompt, no hand-authored manifests.
-Output still matched the platform contract because steering,{" "}
-<Tooltip term="add-app" label="add-app" />, hooks, and the agent bundle did the heavy lifting.
-Humans still review before merge — this lab is the closing proof of
-**skills generate → hooks enforce → humans approve.** The shell gate keeps apply out of chat;
-Argo CD sync keeps Git authoritative on the cluster afterward.
+<p>
+  This was <Tooltip term="vibe" label="vibe coding" />: short prompt, no hand-authored manifests. Output still matched the platform contract because steering, <Tooltip term="add-app" label="add-app" />, hooks, and the agent bundle did the heavy lifting. Humans still review before merge — this lab is the closing proof of **skills generate → hooks enforce → humans approve.** The shell gate keeps apply out of chat; Argo CD sync keeps Git authoritative on the cluster afterward.
+</p>
 
 ## Tradeoff
 
-**Choice:** thin prompt plus hard guardrails. **Alternative:** a long prescriptive prompt that
-restates every factory rule. **Reason:** the `.kiro/` map already encodes overlays,{" "}
-<Tooltip term="pdb" label="PDB" />, and Git-only shell policy, so repeating them in chat adds
-noise without safety.
+<p>
+  **Choice:** thin prompt plus hard guardrails. **Alternative:** a long prescriptive prompt that restates every factory rule. **Reason:** the `.kiro/` map already encodes overlays, <Tooltip term="pdb" label="PDB" />, and Git-only shell policy, so repeating them in chat adds noise without safety.
+</p>
 
 If `add-app` stops at the PDB step, see
 [Known scars: the PDB scar at replicas 1](../gotchas/#the-pdb-scar-at-replicas-1) — the same

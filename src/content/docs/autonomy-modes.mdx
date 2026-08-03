@@ -7,9 +7,9 @@ import Tooltip from "@/components/Tooltip.astro";
 
 Before this: [Lab D (out of scope)](../lab-d-reference/) showed what the live path looks like once a human has merged.
 
-<Tooltip term="kiro" label="Kiro" /> runs a session in one of two modes.{" "}
-<Tooltip term="autopilot" label="Autopilot" /> is the default: it applies its edits and yields when the turn is done.{" "}
-<Tooltip term="supervised" label="Supervised" /> yields for approval after each turn that edits files, and presents the changes as individual hunks you accept or reject. [Onboard an app (Lab C)](../lab-c/) ran in Autopilot, which is why the whole scaffold appeared at once rather than a file at a time.
+<p>
+  <Tooltip term="kiro" label="Kiro" /> runs a session in one of two modes. <Tooltip term="autopilot" label="Autopilot" /> is the default: it applies its edits and yields when the turn is done. <Tooltip term="supervised" label="Supervised" /> yields for approval after each turn that edits files, and presents the changes as individual hunks you accept or reject. [Onboard an app (Lab C)](../lab-c/) ran in Autopilot, which is why the whole scaffold appeared at once rather than a file at a time.
+</p>
 
 ## What a Supervised turn does
 
@@ -35,11 +35,15 @@ Supervised fits work where one wrong line is expensive before anyone reads it. E
 
 ## Both modes keep the gates
 
-The mode changes when you review, not what enforces. <Tooltip term="hooks" label="Hooks" /> fire in both, including the shell gate that inspects every command before it runs, so a Supervised session cannot reach a live cluster any more than an Autopilot session can. And both end in the same place: a human merges, and only then does <Tooltip term="argo-cd" label="Argo CD" /> see anything. Nothing in either mode shortens that path.
+<p>
+  The mode changes when you review, not what enforces. <Tooltip term="hooks" label="Hooks" /> fire in both, including the shell gate that inspects every command before it runs, so a Supervised session cannot reach a live cluster any more than an Autopilot session can. And both end in the same place: a human merges, and only then does <Tooltip term="argo-cd" label="Argo CD" /> see anything. Nothing in either mode shortens that path.
+</p>
 
 ## Mode is not session type
 
-Autonomy mode and the vibe-versus-spec choice are two independent decisions, and it is easy to collapse them into one. Mode controls when you review edits, turn by turn or at the end. Session type controls whether requirements are negotiated before implementation starts at all. A Supervised <Tooltip term="vibe" label="vibe" /> session and an Autopilot <Tooltip term="spec" label="spec" /> session are both perfectly ordinary; see [Vibe or spec, and when](../vibe-vs-spec/) for the second decision.
+<p>
+  Autonomy mode and the vibe-versus-spec choice are two independent decisions, and it is easy to collapse them into one. Mode controls when you review edits, turn by turn or at the end. Session type controls whether requirements are negotiated before implementation starts at all. A Supervised <Tooltip term="vibe" label="vibe" /> session and an Autopilot <Tooltip term="spec" label="spec" /> session are both perfectly ordinary; see [Vibe or spec, and when](../vibe-vs-spec/) for the second decision.
+</p>
 
 ## What bites
 

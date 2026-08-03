@@ -21,13 +21,9 @@ hero:
 import Still from "../../components/Still.astro";
 import Tooltip from "@/components/Tooltip.astro";
 
-You already deployed <Tooltip term="eks" label="EKS" /> and you manage apps with{" "}
-<Tooltip term="argo-cd" label="Argo CD" /> on a <Tooltip term="gitops" label="GitOps" /> path.
-The next job is migrating what you already run somewhere else —{" "}
-<Tooltip term="podman" label="Podman" />, Docker Compose, <Tooltip term="ecs" label="ECS" />, or
-other hosts — onto that same cluster and the same repo shape.
-At **100** apps and roughly **450** engineer-hours per migration wave, configuration **drift**
-becomes the default outcome unless the repo carries one reusable contract.
+<p>
+  You already deployed <Tooltip term="eks" label="EKS" /> and you manage apps with <Tooltip term="argo-cd" label="Argo CD" /> on a <Tooltip term="gitops" label="GitOps" /> path. The next job is migrating what you already run somewhere else — <Tooltip term="podman" label="Podman" />, Docker Compose, <Tooltip term="ecs" label="ECS" />, or other hosts — onto that same cluster and the same repo shape. At **100** apps and roughly **450** engineer-hours per migration wave, configuration **drift** becomes the default outcome unless the repo carries one reusable contract.
+</p>
 
 ## Why the factory exists
 
@@ -46,12 +42,9 @@ it.
 Prompting a model harder does not fix it. A bare model invents a different tree for each app, and
 given a shell it will apply that tree straight to a live cluster.
 
-So the decisions move into the repository instead of into the prompt.{" "}
-<Tooltip term="steering" label="Steering" /> carries the knowledge a reviewer would otherwise
-supply from memory, a <Tooltip term="skill" label="skill" /> fixes the procedure into an ordered
-sequence, <Tooltip term="hooks" label="hooks" /> refuse what must not happen no matter how the
-request is phrased, and an <Tooltip term="agent" label="agent" /> bundles the three so one thin
-prompt activates all of it.
+<p>
+  So the decisions move into the repository instead of into the prompt. <Tooltip term="steering" label="Steering" /> carries the knowledge a reviewer would otherwise supply from memory, a <Tooltip term="skill" label="skill" /> fixes the procedure into an ordered sequence, <Tooltip term="hooks" label="hooks" /> refuse what must not happen no matter how the request is phrased, and an <Tooltip term="agent" label="agent" /> bundles the three so one thin prompt activates all of it.
+</p>
 
 **skills generate → hooks enforce → humans approve.** This page claims none of the three clauses
 yet — it states the shape of the argument the rest of the site walks, and each page that follows
@@ -79,17 +72,12 @@ Each lab rests on the conclusion of the one before it, so the order is the point
    [Prove policy offline (Lab A)](/lab-a/)
 2. **Second — Lab B** proves the configuration in the repository is what makes a thin prompt safe.
    [What makes prompts safe (Lab B)](/lab-b/)
-3. **Third — Lab C** proves a thin prompt produces a compliant{" "}
-   <Tooltip term="dual-overlay" label="dual-overlay" /> app.
+3. **Third — Lab C** proves a thin prompt produces a compliant <Tooltip term="dual-overlay" label="dual-overlay" /> app.
    [Onboard an app (Lab C)](/lab-c/)
 
-What the factory does not remove is the part that needs judgement: understanding the workload,
-shrinking <Tooltip term="iam" label="IAM" /> to what the app actually calls, getting{" "}
-<Tooltip term="dns" label="DNS" /> and <Tooltip term="tls" label="TLS" /> right, and carrying
-cutover risk. This site is documentation only — you clone the{" "}
-<Tooltip term="source-factory" label="source factory" />
-([jajera/kiro-eks-argocd-migration](https://github.com/jajera/kiro-eks-argocd-migration)) and run
-every command there, and a human still merges the result.
+<p>
+  What the factory does not remove is the part that needs judgement: understanding the workload, shrinking <Tooltip term="iam" label="IAM" /> to what the app actually calls, getting <Tooltip term="dns" label="DNS" /> and <Tooltip term="tls" label="TLS" /> right, and carrying cutover risk. This site is documentation only — you clone the <Tooltip term="source-factory" label="source factory" /> ([jajera/kiro-eks-argocd-migration](https://github.com/jajera/kiro-eks-argocd-migration)) and run every command there, and a human still merges the result.
+</p>
 
 Next: [Why manual onboarding breaks](/why/) settles why the multi-team hand path fails and what
 the factory refuses to take off your hands.

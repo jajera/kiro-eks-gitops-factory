@@ -8,15 +8,13 @@ import Tooltip from "@/components/Tooltip.astro";
 
 Before this: [Prove policy offline (Lab A)](../lab-a/) proved policy passes before any cluster exists.
 
-This lab proves the spine claim it owes: **the configuration in the repository is what makes a
-thin prompt safe.** Everything below is an index of config on disk — not a live
-<Tooltip term="kiro" label="Kiro" /> session. Tall maps live on sibling pages so this hub stays
-scannable; Lab C's thin prompt draws on the same files.
+<p>
+  This lab proves the spine claim it owes: **the configuration in the repository is what makes a thin prompt safe.** Everything below is an index of config on disk — not a live <Tooltip term="kiro" label="Kiro" /> session. Tall maps live on sibling pages so this hub stays scannable; Lab C's thin prompt draws on the same files.
+</p>
 
-The `.kiro/` contract in
-[jajera/kiro-eks-argocd-migration](https://github.com/jajera/kiro-eks-argocd-migration) is layered:
-<Tooltip term="steering" label="steering" />, <Tooltip term="skills" label="skills" />,
-<Tooltip term="hooks" label="hooks" />, and the <Tooltip term="agent" label="agent" /> bundle.
+<p>
+  The `.kiro/` contract in [jajera/kiro-eks-argocd-migration](https://github.com/jajera/kiro-eks-argocd-migration) is layered: <Tooltip term="steering" label="steering" />, <Tooltip term="skills" label="skills" />, <Tooltip term="hooks" label="hooks" />, and the <Tooltip term="agent" label="agent" /> bundle.
+</p>
 
 ## The `.kiro/` tree
 
@@ -62,14 +60,14 @@ Archetypes load only when `apps/**` paths enter the conversation.
   caption="Archetypes load only when apps paths enter the conversation."
 />
 
-| File | Mode | Purpose | Map |
-| --- | --- | --- | --- |
-| `project-profile.md` | `always` | Clusters, region, owner, policy engine — every other file defers here | [Project profile map](../map-project-profile/) |
-| `gitops-conventions.md` | `always` | Argo CD + Kustomize base/overlay layout | — |
-| `workload-archetypes.md` | conditional (`apps/**`) | Five archetypes, required inputs, hardening | [Workload archetypes map](../map-workload-archetypes/) |
-| `identity-and-secrets.md` | conditional (`apps/**`) | Per-workload IAM (Pod Identity) and secrets | — |
-| `policy-validation.md` | conditional (`apps/**`, `policies/**`, `scripts/**`) | Which local checks apply and when | — |
-| `ci-workflows.md` | conditional (`.github/**`) | What each CI workflow checks | — |
+| File                      | Mode                                                 | Purpose                                                               | Map                                                    |
+| ------------------------- | ---------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------ |
+| `project-profile.md`      | `always`                                             | Clusters, region, owner, policy engine — every other file defers here | [Project profile map](../map-project-profile/)         |
+| `gitops-conventions.md`   | `always`                                             | Argo CD + Kustomize base/overlay layout                               | —                                                      |
+| `workload-archetypes.md`  | conditional (`apps/**`)                              | Five archetypes, required inputs, hardening                           | [Workload archetypes map](../map-workload-archetypes/) |
+| `identity-and-secrets.md` | conditional (`apps/**`)                              | Per-workload IAM (Pod Identity) and secrets                           | —                                                      |
+| `policy-validation.md`    | conditional (`apps/**`, `policies/**`, `scripts/**`) | Which local checks apply and when                                     | —                                                      |
+| `ci-workflows.md`         | conditional (`.github/**`)                           | What each CI workflow checks                                          | —                                                      |
 
 See [steering](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/steering).
 Open a Map link for the full picture; empty Map cells wait on the same treatment.
@@ -78,12 +76,12 @@ Open a Map link for the full picture; empty Map cells wait on the same treatment
 
 A skill is an ordered procedure. Facts belong in steering; procedures belong in skills.
 
-| Skill | Trigger intent | Key behavior |
-| --- | --- | --- |
-| `add-app` | Add a new app, create a service, deploy something new | Scaffolds base plus both overlays; asks for archetype and required fields first |
-| `migrate-workload` | Migrate off EC2/ECS/Compose | Eight gated phases; a failed gate blocks the next |
-| `promote-app` | Promote / ship to prod | Confirms dev `Synced`/`Healthy`, then copies the verified digest |
-| `manage-clusters` | Bootstrap, ApplicationSet, add-ons | Edits `bootstrap/` and `clusters/`, not app trees |
+| Skill              | Trigger intent                                        | Key behavior                                                                    |
+| ------------------ | ----------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `add-app`          | Add a new app, create a service, deploy something new | Scaffolds base plus both overlays; asks for archetype and required fields first |
+| `migrate-workload` | Migrate off EC2/ECS/Compose                           | Eight gated phases; a failed gate blocks the next                               |
+| `promote-app`      | Promote / ship to prod                                | Confirms dev `Synced`/`Healthy`, then copies the verified digest                |
+| `manage-clusters`  | Bootstrap, ApplicationSet, add-ons                    | Edits `bootstrap/` and `clusters/`, not app trees                               |
 
 See
 [`add-app`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/skills/add-app),
@@ -115,11 +113,11 @@ procedures and gates as your reviews need — the layering (steering → skill �
 Hooks are hard gates in `.kiro/hooks/` — IDE-level, not agent-level. That is why
 `eks-migration` names no hooks: they enforce anyway.
 
-| Category | Hooks | Fires on |
-| --- | --- | --- |
-| Shell gate | `block-infra-commands` | `preToolUse` on shell |
-| Scaffold checks | `validate-app-scaffold`, `validate-infra-scaffold` | `fileEdited` under `apps/**` or platform trees |
-| Build / policy | `kustomize-build-check`, `kustomize-build-check-on-edit`, `gator-test-on-create`, `gator-test-on-edit`, `policy-validate` | create/edit on kustomization or workloads |
+| Category        | Hooks                                                                                                                     | Fires on                                       |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| Shell gate      | `block-infra-commands`                                                                                                    | `preToolUse` on shell                          |
+| Scaffold checks | `validate-app-scaffold`, `validate-infra-scaffold`                                                                        | `fileEdited` under `apps/**` or platform trees |
+| Build / policy  | `kustomize-build-check`, `kustomize-build-check-on-edit`, `gator-test-on-create`, `gator-test-on-edit`, `policy-validate` | create/edit on kustomization or workloads      |
 
 See [hooks](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/hooks).
 
@@ -136,8 +134,9 @@ See [hooks](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/
   caption="Hooks enforce scaffold checks, policy checks, and the shell deny list."
 />
 
-`validate-app-scaffold` encodes the PDB scar: <Tooltip term="pdb" label="PDB" />
-`minAvailable: 1` is only valid when `replicas >= 2`.
+<p>
+  `validate-app-scaffold` encodes the PDB scar: <Tooltip term="pdb" label="PDB" /> `minAvailable: 1` is only valid when `replicas >= 2`.
+</p>
 
 <Still
   src="media/walkthrough/08-pdb-rule.png"
@@ -145,12 +144,9 @@ See [hooks](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/
   caption="PDB scar: replicas 1 must not keep minAvailable 1."
 />
 
-The shell gate denies mutating cluster, cloud, or registry commands before they run. Changes
-reach a cluster only through <Tooltip term="argo-cd" label="Argo CD" /> after a human merges.
-Shape: `when.type: preToolUse`, `when.toolTypes: ["shell"]`, `then.type: askAgent` demanding
-`ACCESS DENIED` for mutating families while allowing `kustomize build`, `gator`, and read-only
-local commands. Full deny/allow lists live in
-[`block-infra-commands.kiro.hook`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/hooks/block-infra-commands.kiro.hook).
+<p>
+  The shell gate denies mutating cluster, cloud, or registry commands before they run. Changes reach a cluster only through <Tooltip term="argo-cd" label="Argo CD" /> after a human merges. Shape: `when.type: preToolUse`, `when.toolTypes: ["shell"]`, `then.type: askAgent` demanding `ACCESS DENIED` for mutating families while allowing `kustomize build`, `gator`, and read-only local commands. Full deny/allow lists live in [`block-infra-commands.kiro.hook`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/hooks/block-infra-commands.kiro.hook).
+</p>
 
 ## Agent, MCP, specs
 
@@ -178,14 +174,16 @@ this JSON on purpose — they are IDE-level.
   caption="eks-migration wires steering and skills into one session bundle."
 />
 
-<Tooltip term="mcp" label="MCP" /> servers:
+<p>
+  <Tooltip term="mcp" label="MCP" /> servers:
+</p>
 
-| Server | Purpose | Default state |
-| --- | --- | --- |
-| `aws-knowledge` | AWS docs search and regional availability | On |
-| `filesystem` | Read/write access to this repo | On |
-| `eks` | Live EKS reads | Off until credentials; `--read-only` |
-| `kubernetes` | Live cluster tools | Off until credentials; non-destructive only |
+| Server          | Purpose                                   | Default state                               |
+| --------------- | ----------------------------------------- | ------------------------------------------- |
+| `aws-knowledge` | AWS docs search and regional availability | On                                          |
+| `filesystem`    | Read/write access to this repo            | On                                          |
+| `eks`           | Live EKS reads                            | Off until credentials; `--read-only`        |
+| `kubernetes`    | Live cluster tools                        | Off until credentials; non-destructive only |
 
 <Still
   src="media/walkthrough/21-mcp-servers.png"

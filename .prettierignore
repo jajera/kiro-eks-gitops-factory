@@ -3,3 +3,7 @@ dist
 node_modules
 pnpm-lock.yaml
 package-lock.json
+diagrams/
+public/
+*.svg
+*.png

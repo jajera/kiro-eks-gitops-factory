@@ -129,9 +129,7 @@ document.addEventListener("click", (event) => {
   const target = event.target;
   if (!(target instanceof Element)) return;
 
-  const stillTrigger = target.closest(
-    ".still__trigger",
-  ) as HTMLElement | null;
+  const stillTrigger = target.closest(".still__trigger") as HTMLElement | null;
   if (stillTrigger) {
     event.preventDefault();
     openZoom(

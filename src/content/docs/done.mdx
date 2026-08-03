@@ -10,14 +10,12 @@ Before this: [Known scars and fixes](../gotchas/) cleared the recurrent failures
 Evidence for Labs A–C only. Live Lab D is **out of scope** for this documentation site.
 `skills generate`, `hooks enforce`, and `humans approve` stay the gate model for every row below.
 
-| Lab | Evidence |
-| --- | --- |
-| A | <Tooltip term="gator" label="gator" /> `PASS` on offline suites |
-| B | `.kiro/` config map stills reviewed |
-| C | thin prompt → scaffold → hook → verify → dual overlays → <Tooltip term="pr" label="PR" /> checks |
+| Lab | Evidence                                                                                         |
+| --- | ------------------------------------------------------------------------------------------------ |
+| A   | <Tooltip term="gator" label="gator" /> `PASS` on offline suites                                  |
+| B   | `.kiro/` config map stills reviewed                                                              |
+| C   | thin prompt → scaffold → hook → verify → dual overlays → <Tooltip term="pr" label="PR" /> checks |
 
-Production stays a human gate. <Tooltip term="source-factory" label="source factory" /> CI mirrors
-local gates via
-[`kustomize-build.yml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.github/workflows/kustomize-build.yml)
-and
-[`policy-validate.yml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.github/workflows/policy-validate.yml).
+<p>
+  Production stays a human gate. <Tooltip term="source-factory" label="source factory" /> CI mirrors local gates via [`kustomize-build.yml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.github/workflows/kustomize-build.yml) and [`policy-validate.yml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.github/workflows/policy-validate.yml).
+</p>

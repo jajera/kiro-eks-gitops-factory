@@ -522,7 +522,7 @@ by ordering around it:
 
   - [x] 10.1 Create `.github/workflows/deploy.yml`
     - `on: push` to `main` plus `workflow_dispatch`; `concurrency: { group: pages,
-      cancel-in-progress: false }`; permissions `contents: read`, `pages: write`,
+cancel-in-progress: false }`; permissions `contents: read`, `pages: write`,
       `id-token: write`
     - Single job `pages` calling
       `actionsforge/actions/.github/workflows/astro-pages-deploy.yml@main` with

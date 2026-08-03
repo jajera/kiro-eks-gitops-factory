@@ -14,9 +14,9 @@ below runs on your laptop with no cluster credentials and no live webhook. Work 
 
 ## The chain: one policy, four artifacts
 
-Every <Tooltip term="gatekeeper" label="Gatekeeper" /> rule in the factory is proven by the same
-four-step chain before it reaches a cluster. Walking `httpsonly` end to end shows what each
-artifact contributes:
+<p>
+  Every <Tooltip term="gatekeeper" label="Gatekeeper" /> rule in the factory is proven by the same four-step chain before it reaches a cluster. Walking `httpsonly` end to end shows what each artifact contributes:
+</p>
 
 1. **<Tooltip term="constraint-template" label="ConstraintTemplate" />** — the <Tooltip term="rego" label="Rego" /> rule itself.
 2. **<Tooltip term="constraint" label="Constraint" />** — binds the rule to a match scope.
@@ -67,10 +67,9 @@ metadata:
         }
 ```
 
-The Rego `violation` rule is the actual check: an <Tooltip term="ingress" label="Ingress" /> fails
-when it lacks both a `tls` block and the `kubernetes.io/ingress.allow-http: "false"` annotation.
-This template defines the rule but binds to nothing yet — it is reusable across any number of
-constraints.
+<p>
+  The Rego `violation` rule is the actual check: an <Tooltip term="ingress" label="Ingress" /> fails when it lacks both a `tls` block and the `kubernetes.io/ingress.allow-http: "false"` annotation. This template defines the rule but binds to nothing yet — it is reusable across any number of constraints.
+</p>
 
 ### 2. Constraint — the binding
 
@@ -91,11 +90,9 @@ spec:
         kinds: ["Ingress"]
 ```
 
-The Constraint is what actually runs. It names the template (`K8sHttpsOnly`, from
-`metadata.name: k8shttpsonly` in the template) and scopes it: only `Ingress` objects in the
-`extensions` and `networking.k8s.io` API groups are reviewed. `enforcementAction: dryrun` means
-this constraint currently logs violations rather than blocking admission — a live-cluster detail,
-not something <Tooltip term="gator" label="gator" /> cares about offline.
+<p>
+  The Constraint is what actually runs. It names the template (`K8sHttpsOnly`, from `metadata.name: k8shttpsonly` in the template) and scopes it: only `Ingress` objects in the `extensions` and `networking.k8s.io` API groups are reviewed. `enforcementAction: dryrun` means this constraint currently logs violations rather than blocking admission — a live-cluster detail, not something <Tooltip term="gator" label="gator" /> cares about offline.
+</p>
 
 ### 3. Test suite — the test cases
 
@@ -206,9 +203,9 @@ automatically. Lab B picks that up next.
 
 ## Tradeoff
 
-**Choice:** offline admission testing with <Tooltip term="gator" label="gator" />. **Alternative:**
-wait for a live cluster webhook. **Reason:** gator catches constraint regressions in CI and on the
-laptop without cluster credentials, so Lab A stays reproducible for every reader.
+<p>
+  **Choice:** offline admission testing with <Tooltip term="gator" label="gator" />. **Alternative:** wait for a live cluster webhook. **Reason:** gator catches constraint regressions in CI and on the laptop without cluster credentials, so Lab A stays reproducible for every reader.
+</p>
 
 If `gator verify` fails in a way that looks like a broken install rather than a real policy
 violation, check [Known scars: gator version skew](../gotchas/#gator-version-skew) — that
