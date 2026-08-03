@@ -1,0 +1,81 @@
+---
+title: Known scars, and how to get past them
+description: Version skew, the PDB replicas rule, placeholder accounts, and three ways gator verify fails, each as one symptom, cause, and fix.
+---
+
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [Vibe or spec, and when](../vibe-vs-spec/) settled which session type fits the work in front of you.
+
+This is a lookup surface, not a lesson. Every entry below is one symptom, one cause, one fix, in that order, so you can scan for the symptom you are actually looking at. If <Tooltip term="gator-verify" label="gator verify" /> is what sent you here, work the triage order first.
+
+## How to triage a gator failure
+
+1. Confirm the suite count. A full run reports 14 suites; a smaller number means the path you passed never resolved to all of them, and the assertion you care about was skipped rather than failed.
+2. Re-read the failing case name. It names the suite directory and the case file, which is where the assertion lives, not where the rule lives.
+3. Open the case object. The YAML under [`infrastructure/gatekeeper/tests/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/infrastructure/gatekeeper/tests) is the exact input the rule was evaluated against.
+4. Open the constraint match scope. The `match` block under [`infrastructure/gatekeeper/constraints/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/infrastructure/gatekeeper/constraints) decides whether your object was ever in scope, and an out-of-scope object produces no violations at all.
+
+## Version and placeholder scars
+
+### Gator version skew
+
+**Symptom:** the CLI reports `3.22.0` while the vendored <Tooltip term="gatekeeper" label="Gatekeeper" /> chart says `3.21.1`, which reads like a broken install.
+
+**Cause:** the CLI pin is the `GATOR_VERSION` default in [`scripts/install-gator.sh`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/scripts/install-gator.sh), and the chart carries its own `version` and `appVersion` in [`infrastructure/gatekeeper/base/vendored/chart/gatekeeper/Chart.yaml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/infrastructure/gatekeeper/base/vendored/chart/gatekeeper/Chart.yaml).
+
+**Fix:** keep the pinned CLI rather than downgrading it, and read [Install the toolchain](../setup/) for why the mismatch is expected.
+
+### The PDB scar at replicas 1
+
+**Symptom:** the scaffold is blocked and the hook message names one manifest along with the conflicting `minAvailable` and `replicas` values it found.
+
+**Cause:** `minAvailable: 1` is only valid once `replicas` is 2 or greater, and the rule is encoded twice, in [`.kiro/steering/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/steering) and in [`.kiro/hooks/validate-app-scaffold.kiro.hook`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/hooks/validate-app-scaffold.kiro.hook).
+
+**Fix:** raise `replicas` to 2 or greater in both overlays, or drop the <Tooltip term="pdb" label="PodDisruptionBudget" />.
+
+### Placeholder accounts and region
+
+**Symptom:** account IDs `111122223333` and `444455556666` and region `ap-southeast-2` appear throughout the trees, and nothing complains locally.
+
+**Cause:** those are documentation placeholders carried through [`.kiro/steering/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/steering) so the trees build without real accounts; `111122223333` stands for dev (`dev-eks-1`) and `444455556666` for prod (`prod-eks-1`).
+
+**Fix:** substitute your own account IDs and region, then re-run the offline builds before anything touches <Tooltip term="iam" label="IAM" /> or <Tooltip term="ecr" label="ECR" />.
+
+:::caution
+Replace `111122223333`, `444455556666`, and `ap-southeast-2` with real values before any live IAM or ECR operation. Left in place they will point permissions and image pulls at accounts that are not yours.
+:::
+
+## Gator failure modes
+
+### Suite path resolves to no tests
+
+**Symptom:** the run exits without executing a single case and reports a test count of zero.
+
+**Cause:** the path you passed does not resolve to any `suite.yaml` under [`infrastructure/gatekeeper/tests/<name>/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/infrastructure/gatekeeper/tests).
+
+**Fix:** rerun `gator verify` against a path that resolves to all 14 suites, and confirm the reported suite count is 14.
+
+### A case asserts the wrong violation count
+
+**Symptom:** a case fails with a reported expected violation count that differs from the actual count, while the constraint itself behaves exactly as designed.
+
+**Cause:** the asserted count in the sibling [`pass.yaml` or `fail.yaml`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/infrastructure/gatekeeper/tests) case object does not match the number of violations the ConstraintTemplate rule produces for that object.
+
+**Fix:** reconcile the asserted count with the rule output, then rerun to a zero exit code.
+
+### A constraint match scope excludes the reviewed object
+
+**Symptom:** a `fail.yaml` object produces zero violations, so the negative case passes without ever exercising the rule it exists to prove.
+
+**Cause:** the `match` scope in [`infrastructure/gatekeeper/constraints/<name>/constraint.yaml`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/infrastructure/gatekeeper/constraints) excludes the reviewed object's kind or namespace.
+
+**Fix:** align that match scope with the case object and confirm the fail case now reports at least one violation.
+
+## What goes wrong
+
+One consolidated page is the choice here, and the alternative it beat was an inline callout wherever each scar bites: a note about the version pin on the install page, a note about the PDB rule beside the generated PodDisruptionBudget, a note about placeholders next to every account ID. That reads better on first pass and rots on the second, because six copies of an explanation drift until they contradict each other and nobody knows which one is current. It is the same reason the version skew is explained once on [Install the toolchain](../setup/) and only summarised here: one authority, one place to correct.
+
+The cost of that choice, stated rather than hidden, is a page you have to remember exists. And the gotcha this page owes about itself: nothing in continuous integration verifies that a file quoted on these pages still matches the file it was copied from. The fidelity check needs a clone of the factory repo to compare against, and it skips with a notice when there is none, so a quoted block that drifted upstream stays green until a human notices. Treat every quoted block as dated, and follow its link when the detail matters.
+
+Next: [Evidence checklist](../done/) collects what Labs A-C actually proved.

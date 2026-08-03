@@ -1,0 +1,552 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="3420" viewBox="0 0 1400 3420" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="11" markerHeight="11" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1.5,1.5 L8,5 L1.5,8.5" fill="none" stroke="#56657A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowsm" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2,2 L8,5 L2,8" fill="none" stroke="#56657A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="3420" fill="#0F1720"/>
+
+  <!-- ============ HEADER ============ -->
+  <text x="700" y="34" text-anchor="middle" font-size="19" font-weight="700" fill="#E8EAED">GitOps conventions — the shape every app must land in</text>
+  <text x="700" y="56" text-anchor="middle" font-size="12" fill="#8B9DAF">Argo CD with a Kustomize base/overlay layout. Applies to every app regardless of where the workload was migrated from.</text>
+  <text x="700" y="76" text-anchor="middle" font-size="11" fill="#7C8CA0">.kiro/steering/gitops-conventions.md · inclusion: always — the largest single piece of the contract</text>
+
+  <!-- ============ 1 : WHAT IT GOVERNS ============ -->
+  <rect x="40" y="94" width="1320" height="86" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="122" r="13" fill="#4DA8DA"/>
+  <text x="72" y="127" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="96" y="127" font-size="13" font-weight="700" fill="#E8EAED">What this file governs</text>
+  <text x="286" y="127" font-size="10.5" fill="#7C8CA0" font-style="italic">always-on, alongside the project profile</text>
+
+  <text x="60" y="152" font-size="10.5" fill="#8B9DAF">Layout, naming, labels, image pinning, mandatory hardening, and the review rules that make one app's tree look like every other app's tree.</text>
+  <text x="60" y="170" font-size="10.5" fill="#8B9DAF">Where the project profile answers <tspan font-style="italic">what are the values</tspan>, this file answers <tspan font-style="italic">what is the shape</tspan> — and it is the file a reviewer is implicitly checking against.</text>
+
+  <line x1="700" y1="180" x2="700" y2="202" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 2 : LAYOUT ============ -->
+  <circle cx="72" cy="220" r="13" fill="#4DA8DA"/>
+  <text x="72" y="225" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="96" y="225" font-size="13" font-weight="700" fill="#E8EAED">Layout — base holds what is identical, overlays hold only what differs</text>
+
+  <rect x="40" y="238" width="645" height="196" rx="12" fill="#1A2332" stroke="#56657A" stroke-width="2" filter="url(#s)"/>
+  <text x="58" y="260" font-size="11.5" font-weight="700" fill="#E8EAED">The tree</text>
+  <rect x="58" y="270" width="609" height="150" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="72" y="288" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">apps/&lt;app&gt;/</text>
+  <text x="72" y="302" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  base/</text>
+  <text x="72" y="316" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">    kustomization.yaml</text>
+  <text x="72" y="330" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">    namespace.yaml</text>
+  <text x="72" y="344" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">    application.yaml</text>
+  <text x="72" y="358" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">    manifests/                 <tspan fill="#7C8CA0"># plain-manifest apps only</tspan></text>
+  <text x="72" y="372" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  overlays/dev-eks-1/</text>
+  <text x="72" y="386" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">    kustomization.yaml · application-patch.yaml · manifests/</text>
+  <text x="72" y="400" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  overlays/prod-eks-1/         <tspan fill="#4ADE80" font-weight="700"># same shape; both required</tspan></text>
+  <text x="72" y="414" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  iam.tf · README.md</text>
+
+  <rect x="715" y="238" width="645" height="196" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <text x="733" y="260" font-size="11.5" font-weight="700" fill="#E8EAED">The split rule</text>
+
+  <rect x="733" y="270" width="609" height="40" rx="6" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="745" y="286" font-size="10.5" font-weight="700" fill="#9CCBE8">base/</text>
+  <text x="800" y="286" font-size="10" fill="#9CCBE8">everything identical across both clusters</text>
+  <text x="745" y="302" font-size="10" fill="#9CCBE8">If a value is the same in dev and prod, it belongs here — not duplicated twice.</text>
+
+  <rect x="733" y="316" width="609" height="52" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="745" y="332" font-size="10.5" font-weight="700" fill="#E0B457">overlays/</text>
+  <text x="815" y="332" font-size="10" fill="#E0B457">cluster differences only</text>
+  <text x="745" y="348" font-size="10" fill="#E0B457">Image digests, replica counts, secret paths, ingress hostnames. <tspan font-weight="700">Keep them small.</tspan></text>
+  <text x="745" y="362" font-size="10" fill="#E0B457">If an overlay grows, the value probably belongs in base instead.</text>
+
+  <text x="733" y="388" font-size="10.5" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">There is no dev-only app here.</tspan> A prod overlay created at</text>
+  <text x="733" y="403" font-size="10.5" fill="#8B9DAF">promotion time is an overlay whose <tspan font-style="italic">first ever build</tspan> happens</text>
+  <text x="733" y="418" font-size="10.5" fill="#FF6B52" font-weight="700">during a production deploy.</text>
+
+  <line x1="700" y1="434" x2="700" y2="456" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 3 : DEV VS PROD ============ -->
+  <circle cx="72" cy="474" r="13" fill="#FF9900"/>
+  <text x="72" y="479" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="96" y="479" font-size="13" font-weight="700" fill="#E8EAED">The only seven things that may legitimately differ between overlays</text>
+  <text x="600" y="479" font-size="10.5" fill="#FF6B52" font-style="italic">anything else in one overlay and not the other is usually drift</text>
+
+  <rect x="40" y="492" width="1320" height="28" fill="#24344A"/>
+  <text x="58" y="511" font-size="11" font-weight="700" fill="#ffffff">Differs</text>
+  <text x="440" y="511" font-size="11" font-weight="700" fill="#ffffff">Why it is allowed to differ</text>
+
+  <rect x="40" y="520" width="1320" height="24" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="536" font-size="10.5" fill="#E8EAED">Image digest</text>
+  <text x="440" y="536" font-size="10.5" fill="#8B9DAF">Prod trails dev by however long verification takes</text>
+
+  <rect x="40" y="544" width="1320" height="24" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="560" font-size="10.5" fill="#E8EAED">Replica count or scaling bounds</text>
+  <text x="440" y="560" font-size="10.5" fill="#8B9DAF">Prod carries real load</text>
+
+  <rect x="40" y="568" width="1320" height="24" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="584" font-size="10.5" fill="#E8EAED">Resource requests and limits</text>
+  <text x="440" y="584" font-size="10.5" fill="#8B9DAF">Sized from observed usage per environment</text>
+
+  <rect x="40" y="592" width="1320" height="24" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="608" font-size="10.5" fill="#E8EAED">Secret store paths</text>
+  <text x="440" y="608" font-size="10.5" fill="#8B9DAF">Separate secrets per environment — one <tspan font-family="ui-monospace, monospace">secretproviderclass.yaml</tspan> per overlay</text>
+
+  <rect x="40" y="616" width="1320" height="24" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="632" font-size="10.5" fill="#E8EAED">Ingress hostname</text>
+  <text x="440" y="632" font-size="10.5" fill="#8B9DAF">Separate DNS per environment</text>
+
+  <rect x="40" y="640" width="1320" height="24" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="656" font-size="10.5" fill="#E8EAED">ACM certificate ARN</text>
+  <text x="440" y="656" font-size="10.5" fill="#8B9DAF">Each account has its own cert — <tspan font-family="ui-monospace, monospace">alb.ingress.kubernetes.io/certificate-arn</tspan></text>
+
+  <rect x="40" y="664" width="1320" height="24" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="680" font-size="10.5" fill="#E8EAED">WAFv2 Web ACL ARN</text>
+  <text x="440" y="680" font-size="10.5" fill="#8B9DAF">Each account has its own WAF — <tspan font-family="ui-monospace, monospace">alb.ingress.kubernetes.io/wafv2-acl-arn</tspan></text>
+
+  <rect x="40" y="696" width="1320" height="26" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="58" y="713" font-size="10.5" fill="#E0B457"><tspan font-weight="700">A setting that is only exercised in prod is a setting that is only tested in prod.</tspan> Keep the two overlays as close to identical as the environments allow.</text>
+
+  <line x1="700" y1="722" x2="700" y2="744" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 4 : ACCOUNT-SPECIFIC ANNOTATIONS ============ -->
+  <circle cx="72" cy="762" r="13" fill="#FF9900"/>
+  <text x="72" y="767" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="96" y="767" font-size="13" font-weight="700" fill="#E8EAED">Any Ingress annotation carrying an AWS account ID lives in the overlay, never in base</text>
+  <text x="700" y="767" font-size="10.5" fill="#7C8CA0" font-style="italic">dev and prod are separate accounts, so these always differ</text>
+
+  <rect x="40" y="780" width="645" height="150" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <rect x="40" y="780" width="645" height="26" rx="12" fill="#4DA8DA"/>
+  <rect x="40" y="794" width="645" height="12" fill="#4DA8DA"/>
+  <text x="58" y="798" font-size="11" font-weight="700" fill="#ffffff">base/manifests/ingress.yaml — account-neutral only</text>
+
+  <text x="58" y="826" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">kubernetes.io/ingress.allow-http: "false"</text>
+  <text x="58" y="846" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">alb.ingress.kubernetes.io/scheme</text>
+  <text x="58" y="866" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">alb.ingress.kubernetes.io/target-type</text>
+  <text x="58" y="886" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">alb.ingress.kubernetes.io/listen-ports</text>
+  <text x="58" y="914" font-size="10" fill="#8B9DAF" font-style="italic">Nothing here contains an account ID, a hostname, or an ARN.</text>
+
+  <rect x="715" y="780" width="645" height="150" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <rect x="715" y="780" width="645" height="26" rx="12" fill="#FF9900"/>
+  <rect x="715" y="794" width="645" height="12" fill="#FF9900"/>
+  <text x="733" y="798" font-size="11" font-weight="700" fill="#ffffff">each overlay's ingress-patch.yaml adds</text>
+
+  <text x="733" y="826" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">alb.ingress.kubernetes.io/certificate-arn</text>
+  <text x="1105" y="826" font-size="9.5" fill="#7C8CA0">ACM cert in that account</text>
+  <text x="733" y="846" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">alb.ingress.kubernetes.io/wafv2-acl-arn</text>
+  <text x="1105" y="846" font-size="9.5" fill="#7C8CA0">WAFv2 ACL in that account</text>
+  <text x="733" y="866" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">spec.tls</text>
+  <text x="1105" y="866" font-size="9.5" fill="#7C8CA0">env-specific hostname</text>
+  <text x="733" y="886" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">spec.rules[].host</text>
+  <text x="1105" y="886" font-size="9.5" fill="#7C8CA0">env-specific hostname</text>
+  <text x="733" y="914" font-size="10" fill="#8B9DAF" font-style="italic">Everything account-bound is patched in, per cluster.</text>
+
+  <line x1="700" y1="930" x2="700" y2="952" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 5 : SHAPE-VALID PLACEHOLDERS ============ -->
+  <circle cx="72" cy="970" r="13" fill="#FF6B52"/>
+  <text x="72" y="975" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">5</text>
+  <text x="96" y="975" font-size="13" font-weight="700" fill="#E8EAED">Scaffold placeholders must be shape-valid</text>
+  <text x="392" y="975" font-size="10.5" fill="#FF6B52" font-style="italic">Gatekeeper validates ARN shape and image refs at gator test time — a bare token causes a false failure</text>
+
+  <rect x="40" y="988" width="1320" height="28" fill="#24344A"/>
+  <text x="58" y="1007" font-size="11" font-weight="700" fill="#ffffff">Value</text>
+  <text x="220" y="1007" font-size="11" font-weight="700" fill="#ffffff">Dev overlay dummy (111122223333)</text>
+  <text x="800" y="1007" font-size="11" font-weight="700" fill="#ffffff">Prod overlay dummy (444455556666)</text>
+
+  <rect x="40" y="1016" width="1320" height="46" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="1016" width="5" height="46" fill="#FF6B52"/>
+  <text x="58" y="1035" font-size="10.5" fill="#E8EAED">ACM certificate ARN</text>
+  <text x="58" y="1052" font-size="9" fill="#7C8CA0">shape-checked</text>
+  <text x="220" y="1044" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">arn:aws:acm:ap-southeast-2:111122223333:certificate/</text>
+  <text x="220" y="1056" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">00000000-0000-0000-0000-000000000001</text>
+  <text x="800" y="1044" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">arn:aws:acm:ap-southeast-2:444455556666:certificate/</text>
+  <text x="800" y="1056" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">00000000-0000-0000-0000-000000000002</text>
+
+  <rect x="40" y="1062" width="1320" height="46" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="1062" width="5" height="46" fill="#FF6B52"/>
+  <text x="58" y="1081" font-size="10.5" fill="#E8EAED">WAFv2 Web ACL ARN</text>
+  <text x="58" y="1098" font-size="9" fill="#7C8CA0">webacl name = app</text>
+  <text x="220" y="1090" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">arn:aws:wafv2:ap-southeast-2:111122223333:regional/webacl/</text>
+  <text x="220" y="1102" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">&lt;app&gt;/00000000-0000-0000-0000-000000000001</text>
+  <text x="800" y="1090" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">arn:aws:wafv2:ap-southeast-2:444455556666:regional/webacl/</text>
+  <text x="800" y="1102" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">&lt;app&gt;/00000000-0000-0000-0000-000000000002</text>
+
+  <rect x="40" y="1108" width="1320" height="46" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="1108" width="5" height="46" fill="#FF6B52"/>
+  <text x="58" y="1127" font-size="10.5" fill="#E8EAED">Image digest</text>
+  <text x="58" y="1144" font-size="9" fill="#7C8CA0">64 hex chars</text>
+  <text x="220" y="1136" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">sha256:00000000000000000000000000000000</text>
+  <text x="220" y="1148" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">000000000000000000000000000000001</text>
+  <text x="800" y="1136" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">sha256:00000000000000000000000000000000</text>
+  <text x="800" y="1148" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">000000000000000000000000000000002</text>
+
+  <rect x="40" y="1162" width="1320" height="64" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="58" y="1178" font-size="10.5" font-weight="700" fill="#E0B457">Never write bare tokens like REPLACE_WITH_CERT_ID or REPLACE_WITH_ACTUAL_DIGEST into manifests.</text>
+  <text x="58" y="1194" font-size="10" fill="#E0B457">Trailing digit differs per overlay (<tspan font-family="ui-monospace, monospace">...0001</tspan> dev / <tspan font-family="ui-monospace, monospace">...0002</tspan> prod) so the two stay visually distinct. The WAFv2 <tspan font-family="ui-monospace, monospace">webacl</tspan> segment is the app name.</text>
+  <text x="58" y="1210" font-size="10" fill="#E0B457">These exist <tspan font-style="italic">only</tspan> to pass <tspan font-family="ui-monospace, monospace">kustomize build</tspan> and <tspan font-family="ui-monospace, monospace">gator test --deny-only</tspan> in Git. They are <tspan font-weight="700">not deployable</tspan>.</text>
+  <text x="58" y="1222" font-size="10" font-weight="700" fill="#FF6B52">Replace every dummy with a real ARN or digest before the app reaches a live cluster.</text>
+
+  <line x1="700" y1="1226" x2="700" y2="1248" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 6 : TWO-LAYER ARGO CD PATTERN ============ -->
+  <rect x="40" y="1250" width="1320" height="140" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1278" r="13" fill="#4DA8DA"/>
+  <text x="72" y="1283" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">6</text>
+  <text x="96" y="1283" font-size="13" font-weight="700" fill="#E8EAED">Two-layer Argo CD pattern</text>
+  <text x="304" y="1283" font-size="10.5" fill="#7C8CA0" font-style="italic">plain-manifest apps only — Helm-chart apps skip the second layer</text>
+
+  <rect x="60" y="1300" width="230" height="44" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="175" y="1318" text-anchor="middle" font-size="10.5" font-weight="700" fill="#9CCBE8">ApplicationSet</text>
+  <text x="175" y="1334" text-anchor="middle" font-size="9.5" fill="#9CCBE8">discovers apps/*/overlays/&lt;cluster&gt;</text>
+  <line x1="292" y1="1322" x2="322" y2="1322" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="326" y="1300" width="250" height="44" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="451" y="1315" text-anchor="middle" font-size="10.5" font-weight="700" fill="#E8EAED">Layer 1 — the overlay directory</text>
+  <text x="451" y="1330" text-anchor="middle" font-size="9.5" fill="#8B9DAF">Namespace + a child Application</text>
+  <text x="451" y="1341" text-anchor="middle" font-size="9" fill="#4ADE80" font-weight="700">sync wave: Namespace created &amp; labelled first</text>
+  <line x1="578" y1="1322" x2="608" y2="1322" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="612" y="1300" width="250" height="44" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="737" y="1315" text-anchor="middle" font-size="10.5" font-weight="700" fill="#E8EAED">Layer 2 — child Application</text>
+  <text x="737" y="1330" text-anchor="middle" font-size="9.5" fill="#8B9DAF">source.path → overlay's manifests/</text>
+  <text x="737" y="1341" text-anchor="middle" font-size="9" fill="#8B9DAF">holds the real workloads</text>
+  <line x1="864" y1="1322" x2="894" y2="1322" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="898" y="1300" width="200" height="44" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="998" y="1318" text-anchor="middle" font-size="10.5" font-weight="700" fill="#9CCBE8">Workloads land</text>
+  <text x="998" y="1334" text-anchor="middle" font-size="9.5" fill="#9CCBE8">into a labelled namespace</text>
+
+  <rect x="60" y="1354" width="1038" height="26" rx="6" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="74" y="1371" font-size="10.5" fill="#9CCBE8"><tspan font-weight="700">Why two layers:</tspan> the Namespace is created and labelled by a separate sync wave <tspan font-style="italic">before</tspan> any workload lands in it — which matters because admission policies gate on Namespace labels.</text>
+
+  <line x1="700" y1="1390" x2="700" y2="1412" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 7 : APPLICATION DEFAULTS ============ -->
+  <circle cx="72" cy="1430" r="13" fill="#4DA8DA"/>
+  <text x="72" y="1435" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">7</text>
+  <text x="96" y="1435" font-size="13" font-weight="700" fill="#E8EAED">Argo CD Application defaults</text>
+
+  <rect x="40" y="1448" width="1320" height="28" fill="#24344A"/>
+  <text x="58" y="1467" font-size="11" font-weight="700" fill="#ffffff">Field</text>
+  <text x="420" y="1467" font-size="11" font-weight="700" fill="#ffffff">Value</text>
+  <text x="700" y="1467" font-size="11" font-weight="700" fill="#ffffff">Why</text>
+
+  <rect x="40" y="1476" width="1320" height="24" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="1492" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">spec.project</text>
+  <text x="420" y="1492" font-size="10" font-family="ui-monospace, monospace" fill="#4DA8DA">&lt;argocd_project&gt;</text>
+  <text x="700" y="1492" font-size="10.5" fill="#8B9DAF">From the project profile</text>
+
+  <rect x="40" y="1500" width="1320" height="24" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="1516" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">spec.destination.name</text>
+  <text x="420" y="1516" font-size="10" font-family="ui-monospace, monospace" fill="#4DA8DA">in-cluster</text>
+  <text x="700" y="1516" font-size="10.5" fill="#FF6B52">EKS-managed Argo CD rejects <tspan font-family="ui-monospace, monospace">https://kubernetes.default.svc</tspan></text>
+
+  <rect x="40" y="1524" width="1320" height="24" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="1540" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">spec.destination.namespace</text>
+  <text x="420" y="1540" font-size="10" font-family="ui-monospace, monospace" fill="#4DA8DA">&lt;app&gt;</text>
+  <text x="700" y="1540" font-size="10.5" fill="#8B9DAF">One namespace per app</text>
+
+  <rect x="40" y="1548" width="1320" height="24" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="1564" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">spec.source.targetRevision</text>
+  <text x="420" y="1564" font-size="10" font-family="ui-monospace, monospace" fill="#4DA8DA">&lt;default_branch&gt;</text>
+  <text x="700" y="1564" font-size="10.5" fill="#FF6B52">Never commit a feature branch name</text>
+
+  <rect x="40" y="1572" width="1320" height="24" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="1588" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">spec.syncPolicy.automated</text>
+  <text x="420" y="1588" font-size="10" font-family="ui-monospace, monospace" fill="#4DA8DA">prune: true, selfHeal: true</text>
+  <text x="700" y="1588" font-size="10.5" fill="#8B9DAF">Drift is corrected automatically</text>
+
+  <rect x="40" y="1596" width="1320" height="24" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="1612" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">spec.syncPolicy.syncOptions</text>
+  <text x="420" y="1612" font-size="10" font-family="ui-monospace, monospace" fill="#4DA8DA">CreateNamespace=true</text>
+  <text x="700" y="1612" font-size="10.5" fill="#8B9DAF">Namespace exists before workloads sync</text>
+
+  <rect x="40" y="1628" width="1320" height="24" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="58" y="1644" font-size="10.5" fill="#E0B457"><tspan font-weight="700">Exception:</tspan> do not set <tspan font-family="ui-monospace, monospace">targetRevision</tspan> to a branch for Helm <tspan font-style="italic">chart repo</tspan> sources (those with a <tspan font-family="ui-monospace, monospace">chart:</tspan> field) — they are versioned by chart version, not Git ref.</text>
+
+  <line x1="700" y1="1652" x2="700" y2="1674" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 8 : NAMING ============ -->
+  <rect x="40" y="1676" width="1320" height="190" rx="12" fill="#1A2332" stroke="#56657A" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1704" r="13" fill="#7C8CA0"/>
+  <text x="72" y="1709" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">8</text>
+  <text x="96" y="1709" font-size="13" font-weight="700" fill="#E8EAED">Naming — every manifest file is its Kubernetes kind, lowercased</text>
+  <text x="536" y="1709" font-size="10.5" fill="#FF6B52" font-style="italic">never invent unrelated names: creds.yaml, netpol.yaml, app.yaml</text>
+
+  <text x="58" y="1734" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">Namespace          <tspan fill="#7C8CA0">→</tspan> namespace.yaml</text>
+  <text x="400" y="1734" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">Service            <tspan fill="#7C8CA0">→</tspan> service.yaml</text>
+  <text x="742" y="1734" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">ScaledObject          <tspan fill="#7C8CA0">→</tspan> scaledobject.yaml</text>
+
+  <text x="58" y="1752" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">Application        <tspan fill="#7C8CA0">→</tspan> application.yaml</text>
+  <text x="400" y="1752" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">Ingress            <tspan fill="#7C8CA0">→</tspan> ingress.yaml</text>
+  <text x="742" y="1752" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">TriggerAuthentication <tspan fill="#7C8CA0">→</tspan> triggerauthentication.yaml</text>
+
+  <text x="58" y="1770" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">ServiceAccount     <tspan fill="#7C8CA0">→</tspan> serviceaccount.yaml</text>
+  <text x="400" y="1770" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">NetworkPolicy      <tspan fill="#7C8CA0">→</tspan> networkpolicy.yaml</text>
+  <text x="742" y="1770" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">PodDisruptionBudget   <tspan fill="#7C8CA0">→</tspan> poddisruptionbudget.yaml</text>
+
+  <text x="58" y="1788" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">Deployment         <tspan fill="#7C8CA0">→</tspan> deployment.yaml</text>
+  <text x="400" y="1788" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">ConfigMap          <tspan fill="#7C8CA0">→</tspan> configmap.yaml</text>
+  <text x="742" y="1788" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">SecretProviderClass   <tspan fill="#7C8CA0">→</tspan> secretproviderclass.yaml</text>
+
+  <text x="58" y="1806" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">CronJob            <tspan fill="#7C8CA0">→</tspan> cronjob.yaml</text>
+
+  <rect x="58" y="1816" width="640" height="42" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="72" y="1832" font-size="10" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">Collision?</tspan> Disambiguate with a suffix: <tspan font-family="ui-monospace, monospace">deployment-&lt;role&gt;.yaml</tspan>, <tspan font-family="ui-monospace, monospace">configmap-passwd.yaml</tspan>.</text>
+  <text x="72" y="1848" font-size="10" fill="#8B9DAF">Several objects of one kind may share a file when they belong together (all NetworkPolicies in one).</text>
+
+  <rect x="712" y="1816" width="630" height="42" rx="6" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="726" y="1832" font-size="10" fill="#9CCBE8"><tspan font-weight="700">Overlay patches</tspan> follow the same rule with a <tspan font-family="ui-monospace, monospace">-patch</tspan> suffix:</text>
+  <text x="726" y="1848" font-size="10" font-family="ui-monospace, monospace" fill="#9CCBE8">application-patch.yaml · deployment-patch.yaml · cronjob-patch.yaml</text>
+
+  <line x1="700" y1="1866" x2="700" y2="1888" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 9 : LABELS ============ -->
+  <circle cx="72" cy="1906" r="13" fill="#2ECC71"/>
+  <text x="72" y="1911" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">9</text>
+  <text x="96" y="1911" font-size="13" font-weight="700" fill="#E8EAED">Labels — the selector key is load-bearing</text>
+
+  <rect x="40" y="1924" width="1320" height="28" fill="#24344A"/>
+  <text x="58" y="1943" font-size="11" font-weight="700" fill="#ffffff">Resource</text>
+  <text x="640" y="1943" font-size="11" font-weight="700" fill="#ffffff">Required labels</text>
+
+  <rect x="40" y="1952" width="1320" height="26" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="1969" font-size="10.5" fill="#E8EAED">Namespace</text>
+  <text x="640" y="1969" font-size="10" font-family="ui-monospace, monospace" fill="#4ADE80">name: &lt;app&gt;  ·  owner: platform</text>
+
+  <rect x="40" y="1978" width="1320" height="26" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="1995" font-size="10.5" fill="#E8EAED">Workloads, ServiceAccount, NetworkPolicy, ConfigMap, Secret, etc.</text>
+  <text x="640" y="1995" font-size="10" font-family="ui-monospace, monospace" fill="#4ADE80">app.kubernetes.io/name: &lt;app&gt;  ·  owner: platform</text>
+
+  <rect x="40" y="2004" width="1320" height="26" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="2021" font-size="10.5" fill="#E8EAED">Pod template</text>
+  <text x="640" y="2021" font-size="10" font-family="ui-monospace, monospace" fill="#4ADE80">app.kubernetes.io/name  ·  owner  <tspan font-family="-apple-system, sans-serif" fill="#8B9DAF">(same as the workload)</tspan></text>
+
+  <rect x="40" y="2030" width="1320" height="26" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="2047" font-size="10.5" fill="#E8EAED">Deployment / Service selector</text>
+  <text x="640" y="2047" font-size="10" font-family="ui-monospace, monospace" fill="#4ADE80">app.kubernetes.io/name: &lt;app&gt;</text>
+
+  <rect x="40" y="2056" width="1320" height="26" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="2073" font-size="10.5" fill="#E8EAED">NetworkPolicy <tspan font-family="ui-monospace, monospace">podSelector</tspan></text>
+  <text x="640" y="2073" font-size="10" font-family="ui-monospace, monospace" fill="#4ADE80">app.kubernetes.io/name: &lt;app&gt;</text>
+
+  <rect x="40" y="2090" width="645" height="70" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="58" y="2106" font-size="10" fill="#8B9DAF">Add <tspan font-family="ui-monospace, monospace" fill="#E8EAED">part-of</tspan> via the manifests <tspan font-family="ui-monospace, monospace" fill="#E8EAED">kustomization.yaml</tspan>:</text>
+  <text x="58" y="2124" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">labels:</text>
+  <text x="58" y="2138" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  - pairs:</text>
+  <text x="58" y="2152" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">      app.kubernetes.io/part-of: &lt;app&gt;</text>
+
+  <rect x="715" y="2090" width="645" height="70" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="733" y="2110" font-size="10.5" font-weight="700" fill="#E0B457">Why this is not cosmetic</text>
+  <text x="733" y="2128" font-size="10" fill="#E0B457"><tspan font-family="ui-monospace, monospace">app.kubernetes.io/name</tspan> is the selector key. If it drifts</text>
+  <text x="733" y="2143" font-size="10" fill="#E0B457">between the Deployment and the NetworkPolicy, the allow</text>
+  <text x="733" y="2156" font-size="10" font-weight="700" fill="#FF6B52">policies match nothing and traffic is silently denied.</text>
+
+  <line x1="700" y1="2160" x2="700" y2="2182" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 10 : IMAGES AND PROMOTION ============ -->
+  <rect x="40" y="2184" width="1320" height="200" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="2212" r="13" fill="#FF9900"/>
+  <text x="72" y="2217" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">10</text>
+  <text x="100" y="2217" font-size="13" font-weight="700" fill="#E8EAED">Images and promotion — base floats, overlays pin</text>
+  <text x="440" y="2217" font-size="10.5" fill="#7C8CA0" font-style="italic">manifests never point at the upstream registry</text>
+
+  <text x="58" y="2240" font-size="10.5" fill="#8B9DAF">Every workload image is the existing ECR repo named after the app, in the dev account. Upstream sources (Docker Hub, GHCR, Quay, local build) are mirrored there first.</text>
+
+  <rect x="58" y="2250" width="1284" height="24" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="70" y="2266" font-size="9.5" font-weight="700" fill="#4DA8DA">BASE</text>
+  <text x="150" y="2266" font-size="9.5" fill="#7C8CA0">floating tag</text>
+  <text x="250" y="2266" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">111122223333.dkr.ecr.ap-southeast-2.amazonaws.com/&lt;app&gt;:&lt;tag&gt;</text>
+
+  <rect x="58" y="2278" width="1284" height="24" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="70" y="2294" font-size="9.5" font-weight="700" fill="#2ECC71">OVERLAY</text>
+  <text x="150" y="2294" font-size="9.5" fill="#7C8CA0">real digest</text>
+  <text x="250" y="2294" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">111122223333.dkr.ecr.ap-southeast-2.amazonaws.com/&lt;app&gt;:&lt;tag&gt;@sha256:&lt;64-hex-digest&gt;</text>
+
+  <rect x="58" y="2306" width="1284" height="24" rx="5" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="70" y="2322" font-size="9.5" font-weight="700" fill="#FFB84D">SCAFFOLD</text>
+  <text x="150" y="2322" font-size="9.5" fill="#FFB84D">dummy digest</text>
+  <text x="250" y="2322" font-size="10" font-family="ui-monospace, monospace" fill="#E0B457">...amazonaws.com/&lt;app&gt;:&lt;tag&gt;@sha256:000...0001    <tspan font-family="-apple-system, sans-serif" font-style="italic">passes gator, not deployable</tspan></text>
+
+  <text x="58" y="2350" font-size="10" fill="#8B9DAF">Keep the pin in <tspan font-weight="700" fill="#E8EAED">exactly one file per overlay</tspan> so a bump is a one-line diff. Pin even when no policy requires it: a tag can be re-pointed at different bytes, a digest cannot.</text>
+
+  <rect x="58" y="2358" width="1284" height="20" rx="5" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="70" y="2372" font-size="10" fill="#9CCBE8"><tspan font-weight="700">Promotion is copying the digest from overlays/dev-eks-1 to overlays/prod-eks-1.</tspan> Prod runs the exact bytes verified in dev, and the diff shows precisely what is changing.</text>
+
+  <line x1="700" y1="2384" x2="700" y2="2406" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 11 : THREE MANDATORY ============ -->
+  <circle cx="72" cy="2424" r="13" fill="#2ECC71"/>
+  <text x="72" y="2429" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">11</text>
+  <text x="100" y="2429" font-size="13" font-weight="700" fill="#E8EAED">Three things are mandatory, not advisory</text>
+
+  <rect x="40" y="2442" width="426" height="170" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <rect x="40" y="2442" width="426" height="26" rx="12" fill="#2ECC71"/>
+  <rect x="40" y="2456" width="426" height="12" fill="#2ECC71"/>
+  <text x="58" y="2460" font-size="11" font-weight="700" fill="#ffffff">Resources — every container</text>
+  <text x="58" y="2486" font-size="10" fill="#8B9DAF">Explicit CPU and memory <tspan font-family="ui-monospace, monospace" fill="#E8EAED">requests</tspan> and <tspan font-family="ui-monospace, monospace" fill="#E8EAED">limits</tspan> on</text>
+  <text x="58" y="2500" font-size="10" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">every</tspan> container — including init and sidecars.</text>
+  <text x="58" y="2514" font-size="10" fill="#FF6B52">No defaults, no omissions.</text>
+  <rect x="58" y="2522" width="390" height="60" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="70" y="2537" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">resources:</text>
+  <text x="70" y="2549" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  requests: { cpu: 50m, memory: 64Mi }</text>
+  <text x="70" y="2561" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  limits:   { cpu: 500m, memory: 256Mi }</text>
+  <text x="70" y="2575" font-size="9" fill="#7C8CA0">Requests drive scheduling; limits cap blast radius.</text>
+  <text x="58" y="2598" font-size="9.5" fill="#8B9DAF">Size from observed usage; else start small and raise</text>
+  <text x="58" y="2608" font-size="9.5" fill="#8B9DAF">after it runs in <tspan font-family="ui-monospace, monospace">dev-eks-1</tspan>.</text>
+
+  <rect x="486" y="2442" width="426" height="170" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <rect x="486" y="2442" width="426" height="26" rx="12" fill="#2ECC71"/>
+  <rect x="486" y="2456" width="426" height="12" fill="#2ECC71"/>
+  <text x="504" y="2460" font-size="11" font-weight="700" fill="#ffffff">NetworkPolicy — deny, then allow</text>
+  <text x="504" y="2486" font-size="10" fill="#8B9DAF">Every plain-manifest app ships</text>
+  <text x="504" y="2500" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">networkpolicy.yaml</text>
+  <text x="640" y="2500" font-size="10" fill="#8B9DAF">in base:</text>
+
+  <rect x="504" y="2510" width="390" height="30" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="516" y="2523" font-size="10" font-weight="700" fill="#FF6B52">1. default-deny-all</text>
+  <text x="516" y="2535" font-size="9.5" fill="#8B9DAF">deny Ingress and Egress for every pod in the ns</text>
+
+  <rect x="504" y="2544" width="390" height="30" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="516" y="2557" font-size="10" font-weight="700" fill="#4ADE80">2. one allow per required flow</text>
+  <text x="516" y="2569" font-size="9.5" fill="#8B9DAF">DNS · HTTPS · Pod Identity · SSH · app ports</text>
+
+  <text x="504" y="2590" font-size="10" fill="#FF6B52" font-weight="700">Do not combine allows into one policy.</text>
+  <text x="504" y="2604" font-size="10" fill="#FF6B52" font-weight="700">Do not leave an app without the deny.</text>
+
+  <rect x="932" y="2442" width="426" height="170" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <rect x="932" y="2442" width="426" height="26" rx="12" fill="#4DA8DA"/>
+  <rect x="932" y="2456" width="426" height="12" fill="#4DA8DA"/>
+  <text x="950" y="2460" font-size="11" font-weight="700" fill="#ffffff">Probes — mandatory for web-service</text>
+  <text x="950" y="2486" font-size="10" fill="#8B9DAF">Every <tspan font-family="ui-monospace, monospace" fill="#E8EAED">web-service</tspan> container serving HTTP</text>
+  <text x="950" y="2500" font-size="10" fill="#8B9DAF">declares readiness <tspan font-weight="700" fill="#E8EAED">and</tspan> liveness probes.</text>
+  <rect x="950" y="2508" width="390" height="66" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="962" y="2522" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">readinessProbe:  httpGet /health</text>
+  <text x="962" y="2534" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  initialDelaySeconds: 5   periodSeconds: 10</text>
+  <text x="962" y="2550" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">livenessProbe:   httpGet /health</text>
+  <text x="962" y="2562" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  initialDelaySeconds: 30  periodSeconds: 30</text>
+  <text x="950" y="2590" font-size="9.5" fill="#8B9DAF">Shallow readiness, separate liveness path —</text>
+  <text x="950" y="2601" font-size="9.5" fill="#FF6B52">do not point both at a deep dependency check.</text>
+  <text x="950" y="2611" font-size="9" fill="#7C8CA0">Slow start? Use startupProbe, not a long initialDelay.</text>
+
+  <line x1="700" y1="2612" x2="700" y2="2634" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 12 : ROLLOUT SAFETY ============ -->
+  <circle cx="72" cy="2652" r="13" fill="#FF6B52"/>
+  <text x="72" y="2657" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">12</text>
+  <text x="100" y="2657" font-size="13" font-weight="700" fill="#E8EAED">Rollout safety and node drains are two different problems</text>
+  <text x="516" y="2657" font-size="10.5" fill="#FF6B52" font-style="italic">confusing them is the single most common scar in this repo</text>
+
+  <rect x="40" y="2670" width="645" height="130" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <rect x="40" y="2670" width="645" height="26" rx="12" fill="#4DA8DA"/>
+  <rect x="40" y="2684" width="645" height="12" fill="#4DA8DA"/>
+  <text x="58" y="2688" font-size="11" font-weight="700" fill="#ffffff">RollingUpdate — governs Argo syncs / rollouts</text>
+  <text x="58" y="2714" font-size="10" fill="#8B9DAF">Surge-first rolling updates keep a <tspan font-family="ui-monospace, monospace" fill="#E8EAED">replicas: 1</tspan> service up during</text>
+  <text x="58" y="2728" font-size="10" fill="#8B9DAF">an image or config rollout. Prefer this for web-facing Deployments.</text>
+  <rect x="58" y="2736" width="609" height="42" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="70" y="2750" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">strategy: { type: RollingUpdate }</text>
+  <text x="70" y="2762" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }</text>
+  <text x="70" y="2774" font-size="9" fill="#7C8CA0">Safe at replicas: 1 — a new pod comes up before the old one goes down.</text>
+  <text x="58" y="2794" font-size="10" fill="#FF6B52" font-weight="700">Does NOT replace a PDB for node drains.</text>
+
+  <rect x="715" y="2670" width="645" height="130" rx="12" fill="#1A2332" stroke="#FF6B52" stroke-width="2" filter="url(#s)"/>
+  <rect x="715" y="2670" width="645" height="26" rx="12" fill="#FF6B52"/>
+  <rect x="715" y="2684" width="645" height="12" fill="#FF6B52"/>
+  <text x="733" y="2688" font-size="11" font-weight="700" fill="#ffffff">PodDisruptionBudget — governs voluntary disruptions</text>
+  <text x="733" y="2714" font-size="10" fill="#8B9DAF">Cordon / drain, EKS Auto Mode and Karpenter node replacement.</text>
+  <text x="733" y="2728" font-size="10" fill="#FF6B52" font-weight="700">Does NOT control Deployment rollouts.</text>
+  <rect x="733" y="2736" width="609" height="42" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="745" y="2750" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">minAvailable: 1</text>
+  <text x="745" y="2762" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">selector.matchLabels: app.kubernetes.io/name: &lt;app&gt;</text>
+  <text x="745" y="2774" font-size="9" fill="#7C8CA0">Add only when the Deployment (or KEDA/HPA floor) runs at least 2 replicas.</text>
+  <text x="733" y="2794" font-size="10" fill="#FF6B52" font-weight="700">Never set minAvailable &gt;= replica count.</text>
+
+  <rect x="40" y="2810" width="1320" height="26" fill="#24344A"/>
+  <text x="58" y="2828" font-size="11" font-weight="700" fill="#ffffff">replicas</text>
+  <text x="300" y="2828" font-size="11" font-weight="700" fill="#ffffff">RollingUpdate maxUnavailable: 0 / maxSurge: 1</text>
+  <text x="820" y="2828" font-size="11" font-weight="700" fill="#ffffff">PDB minAvailable: 1</text>
+
+  <rect x="40" y="2836" width="1320" height="24" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="2852" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">1</text>
+  <text x="300" y="2852" font-size="10.5" fill="#4ADE80" font-weight="700">Yes — rollout safety</text>
+  <text x="820" y="2852" font-size="10.5" fill="#FF6B52" font-weight="700">No — remove the PDB or raise replicas</text>
+
+  <rect x="40" y="2860" width="1320" height="24" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="58" y="2876" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">&gt;= 2</text>
+  <text x="300" y="2876" font-size="10.5" fill="#4ADE80" font-weight="700">Yes</text>
+  <text x="820" y="2876" font-size="10.5" fill="#4ADE80" font-weight="700">Yes</text>
+
+  <text x="58" y="2902" font-size="10" fill="#FF6B52">With <tspan font-family="ui-monospace, monospace">replicas: 1</tspan>, a <tspan font-family="ui-monospace, monospace">minAvailable: 1</tspan> PDB blocks <tspan font-weight="700">every</tspan> voluntary eviction → <tspan font-family="ui-monospace, monospace" font-weight="700">DisruptionBlocked</tspan> and stuck node replacement.</text>
+
+  <line x1="700" y1="2910" x2="700" y2="2932" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 13 : ORDERING + EDGE CASES ============ -->
+  <circle cx="72" cy="2950" r="13" fill="#FF9900"/>
+  <text x="72" y="2955" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">13</text>
+  <text x="100" y="2955" font-size="13" font-weight="700" fill="#E8EAED">Ordering and edge cases</text>
+
+  <rect x="40" y="2968" width="645" height="150" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <rect x="40" y="2968" width="645" height="26" rx="12" fill="#FF9900"/>
+  <rect x="40" y="2982" width="645" height="12" fill="#FF9900"/>
+  <text x="58" y="2986" font-size="11" font-weight="700" fill="#ffffff">Terraform and manifest ordering</text>
+  <text x="58" y="3012" font-size="10" fill="#8B9DAF">IAM lives in <tspan font-family="ui-monospace, monospace" fill="#E8EAED">apps/&lt;app&gt;/iam.tf</tspan>, applied separately from the manifests</text>
+  <text x="58" y="3026" font-size="10" fill="#8B9DAF">Argo CD syncs. Two systems means ordering is your responsibility.</text>
+
+  <rect x="58" y="3034" width="609" height="24" rx="5" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="70" y="3050" font-size="10" fill="#9CCBE8"><tspan font-weight="700">Adding</tspan> a permission → apply Terraform <tspan font-weight="700">first</tspan>, then merge the manifest.</text>
+
+  <rect x="58" y="3062" width="609" height="24" rx="5" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="70" y="3078" font-size="10" fill="#E0B457"><tspan font-weight="700">Removing</tspan> one → merge manifest first, confirm unused, <tspan font-weight="700">then</tspan> apply Terraform.</text>
+
+  <text x="58" y="3100" font-size="9.5" fill="#8B9DAF">A pod whose Pod Identity association does not exist yet starts normally and fails its</text>
+  <text x="58" y="3112" font-size="9.5" fill="#FF6B52">first AWS call — surfacing as an app error, not missing infrastructure.</text>
+
+  <rect x="715" y="2968" width="645" height="150" rx="12" fill="#1A2332" stroke="#56657A" stroke-width="2" filter="url(#s)"/>
+  <rect x="715" y="2968" width="645" height="26" rx="12" fill="#7C8CA0"/>
+  <rect x="715" y="2982" width="645" height="12" fill="#7C8CA0"/>
+  <text x="733" y="2986" font-size="11" font-weight="700" fill="#ffffff">Helm charts and autoscaler-owned replicas</text>
+
+  <text x="733" y="3010" font-size="10" font-weight="700" fill="#E8EAED">Vendor a chart only when the fetch fails</text>
+  <text x="733" y="3024" font-size="9.5" fill="#8B9DAF">Managed Argo CD often has one Git credential (e.g. CodeConnections) that</text>
+  <text x="733" y="3036" font-size="9.5" fill="#8B9DAF">gets sent to non-Git HTTP endpoints and rejected, so chart fetches fail.</text>
+  <text x="733" y="3050" font-size="9.5" fill="#8B9DAF"><tspan font-family="ui-monospace, monospace" fill="#E8EAED">helm pull --untar -d apps/&lt;app&gt;/base/vendored/chart/</tspan>, record upstream URL +</text>
+  <text x="733" y="3062" font-size="9.5" fill="#8B9DAF">pinned version in a README, point the Application at the in-repo path.</text>
+  <text x="733" y="3074" font-size="9.5" fill="#FF6B52" font-style="italic">Vendoring is a workaround, not a default.</text>
+
+  <text x="733" y="3094" font-size="10" font-weight="700" fill="#E8EAED">Replicas owned by KEDA or an HPA</text>
+  <text x="733" y="3106" font-size="9.5" fill="#8B9DAF">Set the manifest to the autoscaler floor (0 for KEDA, 1 for HPA) and add</text>
+  <text x="733" y="3112" font-size="9.5" fill="#8B9DAF" xml:space="preserve"> </text>
+  <text x="733" y="3116" font-size="9.5" fill="#8B9DAF"><tspan font-family="ui-monospace, monospace" fill="#E8EAED">ignoreDifferences</tspan> on <tspan font-family="ui-monospace, monospace" fill="#E8EAED">/spec/replicas</tspan> — else Argo fights the autoscaler.</text>
+
+  <line x1="700" y1="3118" x2="700" y2="3140" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 14 : APP README ============ -->
+  <rect x="40" y="3142" width="1320" height="130" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="3170" r="13" fill="#2ECC71"/>
+  <text x="72" y="3175" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">14</text>
+  <text x="100" y="3175" font-size="13" font-weight="700" fill="#E8EAED">Every app must have a README — create it with the scaffold, do not defer it</text>
+
+  <text x="58" y="3199" font-size="10" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">1.</tspan> Title <tspan font-family="ui-monospace, monospace">#&lt;app&gt;</tspan> and a short purpose paragraph.  <tspan font-weight="700" fill="#E8EAED">2.</tspan> <tspan font-family="ui-monospace, monospace">## Inputs and outputs</tspan> — a <tspan font-weight="700" fill="#E8EAED">required</tspan> Mermaid <tspan font-family="ui-monospace, monospace">flowchart LR</tspan> with an <tspan font-family="ui-monospace, monospace">inputs</tspan> subgraph (queues, HTTP clients,</text>
+  <text x="58" y="3213" font-size="10" fill="#8B9DAF">schedules, secrets, upstream APIs), the app or named workers in the middle, and an <tspan font-family="ui-monospace, monospace">outputs</tspan> subgraph (sinks, responses, downstream APIs, storage).</text>
+  <text x="58" y="3227" font-size="10" fill="#8B9DAF"><tspan font-weight="700" fill="#FF6B52">Labeled edges</tspan> that say <tspan font-style="italic">how</tspan> each link works — protocol, env var, Pod Identity, CSI → env — not bare arrows.  <tspan font-weight="700" fill="#E8EAED">3.</tspan> Compact tables under the diagram.  <tspan font-weight="700" fill="#E8EAED">4.</tspan> Image / ECR, IAM, networking sections as needed.</text>
+
+  <rect x="58" y="3236" width="645" height="26" rx="5" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="70" y="3253" font-size="10" fill="#E0B457">Do <tspan font-weight="700">not</tspan> substitute a shallow "Client → ALB → Pod" architecture diagram.</text>
+
+  <rect x="715" y="3236" width="627" height="26" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="727" y="3253" font-size="10" fill="#8B9DAF">Must pass repo lint: <tspan font-family="ui-monospace, monospace" fill="#E8EAED">npx --yes markdownlint-cli2 "apps/&lt;app&gt;/README.md"</tspan></text>
+
+  <!-- ============ 15 : STYLE ============ -->
+  <rect x="40" y="3288" width="1320" height="44" rx="10" fill="#1A2332" stroke="#56657A" stroke-width="2" filter="url(#s)"/>
+  <text x="58" y="3306" font-size="11" font-weight="700" fill="#E8EAED">Style</text>
+  <text x="120" y="3306" font-size="10" fill="#8B9DAF">Use ASCII <tspan font-family="ui-monospace, monospace" fill="#E8EAED">-&gt;</tspan> rather than Unicode arrows in docs and comments.</text>
+  <text x="120" y="3322" font-size="10" fill="#8B9DAF">Markdown tables: compact pipe style with a space either side of every <tspan font-family="ui-monospace, monospace" fill="#E8EAED">|</tspan>.</text>
+
+  <!-- ============ FOOTER ============ -->
+  <rect x="40" y="3356" width="1320" height="34" rx="8" fill="#24344A"/>
+  <text x="700" y="3378" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">one layout → one naming rule → one label key → base floats, overlays pin → mandatory hardening → a README that explains the data flow</text>
+</svg>

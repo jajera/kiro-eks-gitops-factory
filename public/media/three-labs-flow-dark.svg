@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="220" viewBox="0 0 900 220" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#8B9DAF"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="220" fill="#131A22"/>
+
+  <!-- Title -->
+  <text x="450" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#E8EAED">Three labs, one argument — each rests on the one before it</text>
+
+  <!-- Lab A -->
+  <rect x="40" y="60" width="230" height="130" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="40" y="60" width="230" height="36" rx="12" fill="#147EBA"/>
+  <rect x="40" y="84" width="230" height="12" fill="#147EBA"/>
+  <text x="155" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">Lab A</text>
+  <text x="155" y="120" text-anchor="middle" font-size="12" fill="#E8EAED" font-weight="600">Prove policy offline</text>
+  <text x="155" y="142" text-anchor="middle" font-size="11" fill="#8B9DAF">Gatekeeper constraints</text>
+  <text x="155" y="158" text-anchor="middle" font-size="11" fill="#8B9DAF">pass before any cluster</text>
+  <text x="155" y="174" text-anchor="middle" font-size="11" fill="#8B9DAF">exists</text>
+
+  <!-- Arrow A→B -->
+  <line x1="270" y1="125" x2="325" y2="125" stroke="#8B9DAF" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="298" y="115" text-anchor="middle" font-size="10" fill="#8B9DAF">proves</text>
+
+  <!-- Lab B -->
+  <rect x="335" y="60" width="230" height="130" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="335" y="60" width="230" height="36" rx="12" fill="#CC7A00"/>
+  <rect x="335" y="84" width="230" height="12" fill="#CC7A00"/>
+  <text x="450" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">Lab B</text>
+  <text x="450" y="120" text-anchor="middle" font-size="12" fill="#E8EAED" font-weight="600">Repo config makes</text>
+  <text x="450" y="136" text-anchor="middle" font-size="12" fill="#E8EAED" font-weight="600">prompts safe</text>
+  <text x="450" y="158" text-anchor="middle" font-size="11" fill="#8B9DAF">Steering + hooks constrain</text>
+  <text x="450" y="174" text-anchor="middle" font-size="11" fill="#8B9DAF">what the agent can do</text>
+
+  <!-- Arrow B→C -->
+  <line x1="565" y1="125" x2="620" y2="125" stroke="#8B9DAF" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="593" y="115" text-anchor="middle" font-size="10" fill="#8B9DAF">enables</text>
+
+  <!-- Lab C -->
+  <rect x="630" y="60" width="230" height="130" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="630" y="60" width="230" height="36" rx="12" fill="#27AE60"/>
+  <rect x="630" y="84" width="230" height="12" fill="#27AE60"/>
+  <text x="745" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">Lab C</text>
+  <text x="745" y="120" text-anchor="middle" font-size="12" fill="#E8EAED" font-weight="600">Thin prompt → compliant app</text>
+  <text x="745" y="142" text-anchor="middle" font-size="11" fill="#8B9DAF">One sentence triggers full</text>
+  <text x="745" y="158" text-anchor="middle" font-size="11" fill="#8B9DAF">dual-overlay scaffolding</text>
+  <text x="745" y="174" text-anchor="middle" font-size="11" fill="#8B9DAF">with policy compliance</text>
+
+  <!-- Bottom note -->
+  <text x="450" y="212" text-anchor="middle" font-size="11" fill="#8B9DAF" font-style="italic">Order is the point — each lab rests on the conclusion of the one before it</text>
+</svg>

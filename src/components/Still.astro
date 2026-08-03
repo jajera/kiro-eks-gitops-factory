@@ -1,0 +1,123 @@
+---
+interface Props {
+  src: string;
+  /** Optional dark-theme asset; shown when Starlight `data-theme="dark"`. */
+  darkSrc?: string;
+  alt: string;
+  caption: string;
+}
+const { src, darkSrc, alt, caption } = Astro.props;
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL}${path}`.replace(/\/{2,}/g, "/");
+const href = withBase(src);
+const darkHref = darkSrc ? withBase(darkSrc) : undefined;
+---
+
+<figure class:list={["still", darkHref && "still--themeable"]}>
+  <button
+    type="button"
+    class="still__trigger"
+    aria-label={`Enlarge image: ${alt}`}
+    data-zoom-src={href}
+    data-zoom-dark-src={darkHref}
+    data-zoom-alt={alt}
+  >
+    <img
+      class="still__light"
+      src={href}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+    />
+    {
+      darkHref && (
+        <img
+          class="still__dark"
+          src={darkHref}
+          alt=""
+          decoding="async"
+          aria-hidden="true"
+        />
+      )
+    }
+  </button>
+  <figcaption>{caption}</figcaption>
+</figure>
+
+{/*
+  Unscoped on purpose: Astro :where() scoping zeros specificity so
+  `.still__trigger img { display:block }` would win and leave both
+  light+dark images visible (white cards stuck on in dark mode).
+
+  Themeable stills stack both imgs in one grid cell and toggle with
+  opacity/visibility — never display:none — so theme switches do not
+  change the figure height and shift the page.
+*/}
+<style is:global>
+  .still__trigger {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+    text-align: inherit;
+  }
+
+  .still__trigger img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .still--themeable .still__trigger {
+    display: grid;
+  }
+
+  .still--themeable .still__trigger > .still__light,
+  .still--themeable .still__trigger > .still__dark {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  /* Default: light visible; dark laid out but invisible. */
+  .still--themeable .still__trigger > .still__dark {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  :root[data-theme="dark"] .still--themeable > .still__trigger > .still__light {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  :root[data-theme="dark"] .still--themeable > .still__trigger > .still__dark {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"])
+      .still--themeable
+      > .still__trigger
+      > .still__light {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    :root:not([data-theme="light"])
+      .still--themeable
+      > .still__trigger
+      > .still__dark {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+title: Project profile map
+description: Visual map of always-on project-profile steering — ten keys, two clusters, one registry.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [What makes prompts safe (Lab B)](../lab-b/) indexed the `.kiro/` layers; this page is the full profile map.
+
+Deep dive for [`.kiro/steering/project-profile.md`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/steering/project-profile.md)
+— the always-on file every other <Tooltip term="steering" label="steering" /> file and skill
+defers to. Lab B keeps the index; this page is the picture.
+
+## The map
+
+<Still
+  src="media/project-profile-map.svg"
+  darkSrc="media/project-profile-map-dark.svg"
+  alt="Eight-stage project profile map: why the file is always-on, the ten configuration values grouped by what they govern, the two clusters and their accounts, the single ECR registry and three image shapes, the standalone repo layout, the both-clusters completeness rule, per-app IAM, and the constraints implied by compute mode, identity mode, and policy engine"
+  caption="Ten keys, two clusters, one registry — and what three of those keys forbid."
+/>
+
+`compute_mode: auto` means EKS Auto Mode already owns the load balancer controller and node
+lifecycle. `identity_mode: pod-identity` is why generated manifests carry no account IDs or
+role ARNs. Replace placeholder accounts and region before live IAM or ECR — see
+[Install the toolchain](../setup/).
+
+Next: [Workload archetypes map](../map-workload-archetypes/) walks the conditional apps contract.

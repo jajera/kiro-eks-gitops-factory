@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="360" viewBox="0 0 1040 360" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
+    </filter>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#879596"/></marker>
+  </defs>
+
+  <rect x="40" y="108" width="210" height="120" rx="12" fill="#ffffff" stroke="#147EBA" stroke-width="2" filter="url(#s)"/>
+  <text x="56" y="144" font-size="14" font-weight="700" fill="#232F3E">Session starts</text>
+  <text x="56" y="170" font-size="12" fill="#5A6A7E">Kiro opens a turn</text>
+  <text x="56" y="192" font-size="12" fill="#5A6A7E">against this repo</text>
+
+  <rect x="480" y="24" width="320" height="128" rx="12" fill="#ffffff" stroke="#147EBA" stroke-width="2" filter="url(#s)"/>
+  <text x="496" y="52" font-size="13" font-weight="700" fill="#147EBA">always</text>
+  <text x="496" y="72" font-size="12" fill="#5A6A7E">project-profile.md</text>
+  <text x="496" y="92" font-size="12" fill="#5A6A7E">gitops-conventions.md</text>
+  <text x="496" y="112" font-size="11" fill="#5A6A7E">Cheap facts — load every turn</text>
+
+  <rect x="480" y="184" width="320" height="128" rx="12" fill="#ffffff" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <text x="496" y="212" font-size="13" font-weight="700" fill="#FF9900">fileMatch (conditional)</text>
+  <text x="496" y="232" font-size="12" fill="#5A6A7E">archetypes · identity · policy</text>
+  <text x="496" y="252" font-size="12" fill="#5A6A7E">ci-workflows (`.github/**`)</text>
+  <text x="496" y="272" font-size="11" fill="#5A6A7E">Load only when paths match</text>
+
+  <line x1="250" y1="168" x2="365" y2="168" stroke="#879596" stroke-width="2"/>
+  <line x1="365" y1="88" x2="365" y2="248" stroke="#879596" stroke-width="2"/>
+  <line x1="365" y1="88" x2="482" y2="88" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="365" y1="248" x2="482" y2="248" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <text x="520" y="344" text-anchor="middle" font-size="12" fill="#5A6A7E" font-style="italic">Heavy archetype rules stay out of the window until `apps/**` is in play</text>
+</svg>

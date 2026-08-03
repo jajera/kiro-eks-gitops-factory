@@ -1,0 +1,40 @@
+---
+title: Vibe vs Spec
+description: When a thin vibe session fits versus a structured requirements design tasks spec.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [Choose an autonomy mode](../autonomy-modes/) set how tightly each editing turn is reviewed.
+
+<Tooltip term="kiro" label="Kiro" /> supports two session types. Lab C is the{" "}
+<Tooltip term="vibe" label="vibe" /> case; multi-phase platform work prefers{" "}
+<Tooltip term="spec" label="spec" />-driven sessions under
+[`.kiro/specs/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/specs).
+
+## Choosing a mode
+
+<Still
+  src="media/walkthrough/10-vibe-mode.png"
+  alt="Kiro UI contrasting vibe Autopilot with structured Spec mode"
+  caption="Vibe versus Spec: speed after the fact versus criteria before code."
+/>
+
+| Dimension | Vibe (Lab C) | Spec-driven |
+| --- | --- | --- |
+| Input | One natural-language prompt | Structured requirements → design → tasks |
+| Feedback loop | After the fact (<Tooltip term="pr" label="PR" /> review) | Before code (requirement refinement) |
+| Traceability | Chat history | Versioned files in `.kiro/specs/` |
+| Best for | Known archetypes with strong <Tooltip term="steering" label="steering" /> | Novel infrastructure, multi-stakeholder sign-off |
+| Risk surface | Reviewer catches drift at PR time | Drift caught at spec-authoring time |
+
+**Vibe fits** when the archetype is known, the ask maps to{" "}
+<Tooltip term="add-app" label="add-app" /> or <Tooltip term="promote-app" label="promote-app" />,
+and you trust guardrails plus PR review. **Spec earns its keep** for operator install, policy
+bundles, CI, and bootstrap wiring that need coordinated acceptance criteria.
+
+They compose: specs build the platform into steering and skills; vibe onboards apps on top.
+Neither mode bypasses the human gate.
+
+Next: [Known scars and fixes](../gotchas/) captures the recurrent failures and exact fixes.

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="230" viewBox="0 0 900 230" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect x="16" y="16" width="210" height="175" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <text x="30" y="44" font-size="13" font-weight="700" fill="#E8EAED">Ingress and edge</text>
+  <text x="30" y="68" font-size="10" font-weight="600" fill="#8B9DAF">httpsonly</text>
+  <text x="30" y="84" font-size="10" font-weight="600" fill="#8B9DAF">k8singresswafv2</text>
+  <text x="30" y="100" font-size="11" fill="#6B7C8F">TLS + WAFv2 on ALB</text>
+
+  <rect x="236" y="16" width="210" height="175" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <text x="250" y="44" font-size="13" font-weight="700" fill="#E8EAED">Workload hygiene</text>
+  <text x="250" y="68" font-size="10" font-weight="600" fill="#8B9DAF">requiredlabels</text>
+  <text x="250" y="84" font-size="10" font-weight="600" fill="#8B9DAF">disallowedtags</text>
+  <text x="250" y="100" font-size="10" font-weight="600" fill="#8B9DAF">containerlimits</text>
+  <text x="250" y="116" font-size="11" fill="#6B7C8F">Labels, tags, limits</text>
+
+  <rect x="456" y="16" width="210" height="175" rx="12" fill="#1A2332" stroke="#FF6B4A" stroke-width="2" filter="url(#s)"/>
+  <text x="470" y="44" font-size="13" font-weight="700" fill="#E8EAED">Privilege and host</text>
+  <text x="470" y="68" font-size="10" font-weight="600" fill="#8B9DAF">privileged-containers</text>
+  <text x="470" y="84" font-size="10" font-weight="600" fill="#8B9DAF">allow-privilege-escalation</text>
+  <text x="470" y="100" font-size="10" font-weight="600" fill="#8B9DAF">host-namespaces</text>
+  <text x="470" y="116" font-size="10" font-weight="600" fill="#8B9DAF">host-filesystem</text>
+
+  <rect x="676" y="16" width="210" height="175" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <text x="690" y="44" font-size="13" font-weight="700" fill="#E8EAED">Network and identity</text>
+  <text x="690" y="68" font-size="10" font-weight="600" fill="#8B9DAF">block-nodeport-services</text>
+  <text x="690" y="84" font-size="10" font-weight="600" fill="#8B9DAF">disallow-default-namespace</text>
+  <text x="690" y="100" font-size="10" font-weight="600" fill="#8B9DAF">disallowanonymous</text>
+  <text x="690" y="116" font-size="10" font-weight="600" fill="#8B9DAF">networkpolicy-egress-defined</text>
+  <text x="690" y="132" font-size="10" font-weight="600" fill="#8B9DAF">verifydeprecatedapi</text>
+
+  <text x="450" y="214" text-anchor="middle" font-size="12" fill="#8B9DAF" font-style="italic">Fourteen Gatekeeper constraints in four buckets — starter set, not a closed catalog</text>
+</svg>

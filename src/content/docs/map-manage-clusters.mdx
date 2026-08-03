@@ -1,0 +1,29 @@
+---
+title: manage-clusters map
+description: Visual map of the manage-clusters skill — discovery, keeping both clusters in step, add-ons, and the cost of a third cluster.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [add-app scaffold map](../map-add-app/) walked the skill that scaffolds one app.
+
+Deep dive for [`.kiro/skills/manage-clusters/SKILL.md`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/skills/manage-clusters/SKILL.md)
+— the smallest of the four <Tooltip term="skills" label="skills" />, and the one with the widest
+blast radius. Where `add-app` touches one app tree, this touches every app on a cluster.
+
+## The map
+
+<Still
+  src="media/manage-clusters-map.svg"
+  darkSrc="media/manage-clusters-map-dark.svg"
+  alt="Five-part manage-clusters skill map: when the skill fires and the cluster-wide versus app-level scope boundary, where bootstrap and per-cluster configuration lives, ApplicationSet discovery producing one Application per matching overlay for each cluster, keeping the two clusters in step, cluster add-ons going into bootstrap rather than app manifests, and the four steps to onboard a third cluster"
+  caption="Cluster-wide only — discovery, parity between clusters, add-ons, and a third cluster's cost."
+/>
+
+Two traps are worth reading twice. An `ApplicationSet` does not pick up its own definition from a
+Git change unless something else manages it, so editing the file and waiting for a sync that never
+arrives is the common failure. And widening a discovery glob deploys whatever it now matches —
+including work-in-progress trees you did not intend to ship.
+
+Next: [migrate-workload map](../map-migrate-workload/) covers the gated path for existing workloads.

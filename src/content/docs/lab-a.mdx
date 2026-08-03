@@ -1,0 +1,217 @@
+---
+title: Lab A — Offline admission
+description: Walk one policy from ConstraintTemplate to gator verify PASS, then run the full offline suite.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [Install the toolchain](../setup/) pinned gator and confirmed Lab prerequisites.
+
+This lab proves the spine claim it owes: **policy passes before any cluster exists.** Everything
+below runs on your laptop with no cluster credentials and no live webhook. Work in a clone of
+[jajera/kiro-eks-argocd-migration](https://github.com/jajera/kiro-eks-argocd-migration).
+
+## The chain: one policy, four artifacts
+
+Every <Tooltip term="gatekeeper" label="Gatekeeper" /> rule in the factory is proven by the same
+four-step chain before it reaches a cluster. Walking `httpsonly` end to end shows what each
+artifact contributes:
+
+1. **<Tooltip term="constraint-template" label="ConstraintTemplate" />** — the <Tooltip term="rego" label="Rego" /> rule itself.
+2. **<Tooltip term="constraint" label="Constraint" />** — binds the rule to a match scope.
+3. **<Tooltip term="suite" label="Test suite" />** — named cases with expected pass/fail outcomes.
+4. **`gator verify`** — runs the suite offline and reports `PASS` or a violation message.
+
+<Still
+  src="media/gator-chain.svg"
+  darkSrc="media/gator-chain-dark.svg"
+  alt="Four-step offline policy chain: ConstraintTemplate, Constraint, Suite with pass and fail cases, then gator verify PASS"
+  caption="Template, constraint, suite, then gator verify — one chain reused by every policy."
+/>
+
+:::note
+`httpsonly` is the walkthrough exemplar, not the only rule that matters. The other thirteen
+constraints in [the constraint set](../concepts/#the-constraint-set) use this same shape — keep,
+drop, or add policies as your reviews need; the chain stays.
+:::
+
+### 1. ConstraintTemplate — the rule
+
+Source: [`infrastructure/gatekeeper/constraint-templates/httpsonly.yaml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/infrastructure/gatekeeper/constraint-templates/httpsonly.yaml)
+
+```yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8shttpsonly
+# ...
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8shttpsonly
+
+        violation[{"msg": msg}] {
+          input.review.object.kind == "Ingress"
+          regex.match("^(extensions|networking.k8s.io)/", input.review.object.apiVersion)
+          ingress := input.review.object
+          not https_complete(ingress)
+          not tls_is_optional
+          msg := sprintf("Ingress should be https. tls configuration and allow-http=false annotation are required for %v", [ingress.metadata.name])
+        }
+# ...
+        https_complete(ingress) = true {
+          ingress.spec["tls"]
+          count(ingress.spec.tls) > 0
+          ingress.metadata.annotations["kubernetes.io/ingress.allow-http"] == "false"
+        }
+```
+
+The Rego `violation` rule is the actual check: an <Tooltip term="ingress" label="Ingress" /> fails
+when it lacks both a `tls` block and the `kubernetes.io/ingress.allow-http: "false"` annotation.
+This template defines the rule but binds to nothing yet — it is reusable across any number of
+constraints.
+
+### 2. Constraint — the binding
+
+Source: [`infrastructure/gatekeeper/constraints/httpsonly/constraint.yaml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/infrastructure/gatekeeper/constraints/httpsonly/constraint.yaml)
+
+```yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sHttpsOnly
+metadata:
+  labels:
+    owner: platform
+  name: ingress-https-only
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+      - apiGroups: ["extensions", "networking.k8s.io"]
+        kinds: ["Ingress"]
+```
+
+The Constraint is what actually runs. It names the template (`K8sHttpsOnly`, from
+`metadata.name: k8shttpsonly` in the template) and scopes it: only `Ingress` objects in the
+`extensions` and `networking.k8s.io` API groups are reviewed. `enforcementAction: dryrun` means
+this constraint currently logs violations rather than blocking admission — a live-cluster detail,
+not something <Tooltip term="gator" label="gator" /> cares about offline.
+
+### 3. Test suite — the test cases
+
+Source: [`infrastructure/gatekeeper/tests/httpsonly/suite.yaml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/infrastructure/gatekeeper/tests/httpsonly/suite.yaml)
+
+```yaml
+kind: Suite
+apiVersion: test.gatekeeper.sh/v1alpha1
+tests:
+  - name: ingress-https-only
+    template: ../../constraint-templates/httpsonly.yaml
+    constraint: ../../constraints/httpsonly/constraint.yaml
+    cases:
+      - name: ingress-with-tls
+        object: pass.yaml
+        assertions:
+          - violations: "no"
+      - name: ingress-without-tls
+        object: fail.yaml
+        assertions:
+          - violations: "yes"
+```
+
+A suite wires one template and one constraint together, then runs named cases against them. Each
+case points at an object file and asserts how many violations gator should find: `pass.yaml`
+should produce `violations: "no"`, `fail.yaml` should produce `violations: "yes"`. `gator verify`
+fails the whole suite if either assertion does not hold.
+
+### 4. The failing case
+
+Source: [`infrastructure/gatekeeper/tests/httpsonly/fail.yaml`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/infrastructure/gatekeeper/tests/httpsonly/fail.yaml)
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test-ingress
+  namespace: my-app
+spec:
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: my-svc
+                port:
+                  number: 80
+```
+
+This `Ingress` has no `tls` block and no `allow-http` annotation, so it fails both conditions in
+`https_complete`. The expected result of the `ingress-without-tls` case is one violation with this
+message, built by the Rego `sprintf` call:
+
+```text
+Ingress should be https. tls configuration and allow-http=false annotation are required for test-ingress
+```
+
+That block is an expected result, not a captured terminal session — no failing run exists in the
+walkthrough recording, because CI only records the passing suite.
+
+### Reading a violation message
+
+Every gator violation has three parts, and they show up in that `sprintf` output above:
+
+- **Constraint kind** — `K8sHttpsOnly`, from the template's `metadata.name` field, tells you
+  which rule fired.
+- **Reviewed object identity** — `test-ingress`, interpolated into the message, tells you which
+  object failed.
+- **Message string** — the human-readable explanation the Rego author wrote, here naming the
+  two missing pieces (`tls configuration and allow-http=false annotation`).
+
+When `gator verify` reports a failure, these three parts are what you read to find the fix.
+
+## Run the full offline suite
+
+The `httpsonly` chain above is one of fourteen constraints. The remaining policies live under
+[`infrastructure/gatekeeper/constraints/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/infrastructure/gatekeeper/constraints)
+and
+[`infrastructure/gatekeeper/tests/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/infrastructure/gatekeeper/tests),
+each following the same template → constraint → suite shape.
+
+1. Confirm `pwd` is inside `kiro-eks-argocd-migration` and `gator version` prints `3.22.0`.
+2. Run `gator verify` against the full tests tree so all fourteen suites execute.
+3. Build both policy overlays with `kustomize` so the bundle that Argo would sync still renders.
+4. Confirm every suite reports `ok` and the run ends in `PASS`.
+
+```bash
+gator verify infrastructure/gatekeeper/tests/...
+kustomize build policies/overlays/dev-eks-1 >/dev/null
+kustomize build policies/overlays/prod-eks-1 >/dev/null
+```
+
+Expect all suites `ok` and a final `PASS`.
+
+<Still
+  src="media/walkthrough/09-gator-verify.png"
+  alt="Terminal output of gator verify with all constraint test suites passing"
+  caption="gator verify runs the full policy suite offline before any cluster exists."
+/>
+
+This lab only proves the first clause of the factory's contract —
+**skills generate → hooks enforce → humans approve.** Passing `gator verify` here means the
+policy layer is sound; it does not yet show that a thin prompt can hit these constraints
+automatically. Lab B picks that up next.
+
+## Tradeoff
+
+**Choice:** offline admission testing with <Tooltip term="gator" label="gator" />. **Alternative:**
+wait for a live cluster webhook. **Reason:** gator catches constraint regressions in CI and on the
+laptop without cluster credentials, so Lab A stays reproducible for every reader.
+
+If `gator verify` fails in a way that looks like a broken install rather than a real policy
+violation, check [Known scars: gator version skew](../gotchas/#gator-version-skew) — that
+mismatch is the usual culprit.
+
+Next: [What makes prompts safe (Lab B)](../lab-b/) — the `.kiro/` map that makes thin prompts safe.

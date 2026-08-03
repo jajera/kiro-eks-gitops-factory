@@ -1,0 +1,30 @@
+---
+title: add-app scaffold map
+description: Visual map of the add-app skill — seven ordered steps from gathering inputs to a validated, reviewable app tree.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [GitOps conventions map](../map-gitops-conventions/) covered the shape every app lands in.
+
+Deep dive for [`.kiro/skills/add-app/SKILL.md`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/skills/add-app/SKILL.md)
+— the <Tooltip term="skill" label="skill" /> Lab C's thin prompt actually runs. The three steering
+maps before this one supply the *facts*; this supplies the *order*.
+
+## The map
+
+<Still
+  src="media/add-app-scaffold-map.svg"
+  darkSrc="media/add-app-scaffold-map-dark.svg"
+  alt="Nine-part add-app skill map: when the skill fires and when to use migrate-workload instead, gather inputs before creating files, resolve the source image into ECR with dummy digests when unpushed, scaffold base with labels and hardening rules, scaffold both overlays, account-specific Ingress annotations belonging in overlays, declare per-app IAM, supporting README and renovate files, the validate command block, and the human rollout sequence after merge"
+  caption="Seven ordered steps, each gating the next, ending at a PR a human reviews."
+/>
+
+The ordering is the point. Step 1 refuses to write files until the archetype is known, because
+scaffolding around a guess produces a tree that has to be unpicked rather than edited. Step 7 runs
+base before either overlay so a base-level error surfaces first. And the skill deliberately stops
+at the pull request — applying Terraform, verifying dev, and promoting the digest to prod are all
+human decisions.
+
+Next: [manage-clusters map](../map-manage-clusters/) covers the cluster-wide counterpart.

@@ -1,0 +1,226 @@
+---
+title: Lab B — `.kiro/` config map
+description: Walk the steering, skills, hooks, agent, MCP, and specs layers that make the factory.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [Prove policy offline (Lab A)](../lab-a/) proved policy passes before any cluster exists.
+
+This lab proves the spine claim it owes: **the configuration in the repository is what makes a
+thin prompt safe.** Everything below is an index of config on disk — not a live
+<Tooltip term="kiro" label="Kiro" /> session. Tall maps live on sibling pages so this hub stays
+scannable; Lab C's thin prompt draws on the same files.
+
+The `.kiro/` contract in
+[jajera/kiro-eks-argocd-migration](https://github.com/jajera/kiro-eks-argocd-migration) is layered:
+<Tooltip term="steering" label="steering" />, <Tooltip term="skills" label="skills" />,
+<Tooltip term="hooks" label="hooks" />, and the <Tooltip term="agent" label="agent" /> bundle.
+
+## The `.kiro/` tree
+
+Frames below are rendered config views — not a live Kiro IDE montage.
+
+<Still
+  src="media/walkthrough/01-repo-tree.png"
+  alt="Repository tree showing platform directories and the .kiro folder"
+  caption="Repo layout shows platform trees beside the Kiro contract on disk."
+/>
+
+<Still
+  src="media/walkthrough/14-kiro-explorer-tree.png"
+  alt="Explorer tree of .kiro steering skills hooks agents settings and specs"
+  caption="The Kiro tree holds steering, skills, hooks, agent, MCP, and specs."
+/>
+
+## Steering
+
+Steering is markdown that loads into context automatically, so a reviewer's usual knowledge —
+naming, layout, required fields — is present before the agent writes anything.
+
+<Still
+  src="media/steering-inclusion.svg"
+  darkSrc="media/steering-inclusion-dark.svg"
+  alt="Steering inclusion flow: always-on profile and conventions versus conditional fileMatch files"
+  caption="Always-on facts load every turn; heavy archetype rules wait for matching paths."
+/>
+
+`always` files stay cheap; conditional files load only when their path pattern is in play.
+
+<Still
+  src="media/walkthrough/15-steering-profile.png"
+  alt="project-profile steering document with cluster and region keys"
+  caption="project-profile is always-on: clusters, region, and policy engine keys."
+/>
+
+Archetypes load only when `apps/**` paths enter the conversation.
+
+<Still
+  src="media/walkthrough/16-steering-archetypes.png"
+  alt="workload-archetypes steering with web-service and worker contracts"
+  caption="Archetypes load only when apps paths enter the conversation."
+/>
+
+| File | Mode | Purpose | Map |
+| --- | --- | --- | --- |
+| `project-profile.md` | `always` | Clusters, region, owner, policy engine — every other file defers here | [Project profile map](../map-project-profile/) |
+| `gitops-conventions.md` | `always` | Argo CD + Kustomize base/overlay layout | — |
+| `workload-archetypes.md` | conditional (`apps/**`) | Five archetypes, required inputs, hardening | [Workload archetypes map](../map-workload-archetypes/) |
+| `identity-and-secrets.md` | conditional (`apps/**`) | Per-workload IAM (Pod Identity) and secrets | — |
+| `policy-validation.md` | conditional (`apps/**`, `policies/**`, `scripts/**`) | Which local checks apply and when | — |
+| `ci-workflows.md` | conditional (`.github/**`) | What each CI workflow checks | — |
+
+See [steering](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/steering).
+Open a Map link for the full picture; empty Map cells wait on the same treatment.
+
+## Skills
+
+A skill is an ordered procedure. Facts belong in steering; procedures belong in skills.
+
+| Skill | Trigger intent | Key behavior |
+| --- | --- | --- |
+| `add-app` | Add a new app, create a service, deploy something new | Scaffolds base plus both overlays; asks for archetype and required fields first |
+| `migrate-workload` | Migrate off EC2/ECS/Compose | Eight gated phases; a failed gate blocks the next |
+| `promote-app` | Promote / ship to prod | Confirms dev `Synced`/`Healthy`, then copies the verified digest |
+| `manage-clusters` | Bootstrap, ApplicationSet, add-ons | Edits `bootstrap/` and `clusters/`, not app trees |
+
+See
+[`add-app`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/skills/add-app),
+[`migrate-workload`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/skills/migrate-workload),
+[`promote-app`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/skills/promote-app),
+and
+[`manage-clusters`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/skills/manage-clusters).
+Deep skill maps can land beside the steering maps later — same hub pattern.
+
+:::note
+Four skills and eight hooks are a **starter set**, not a closed catalog. Keep, drop, or add
+procedures and gates as your reviews need — the layering (steering → skill → hook) stays.
+:::
+
+<Still
+  src="media/walkthrough/17-skill-add-app.png"
+  alt="add-app skill document describing scaffold contract and validation"
+  caption="add-app orders base, then both overlays, then validation."
+/>
+
+<Still
+  src="media/walkthrough/18-skill-migrate.png"
+  alt="migrate-workload skill with gated migration phases"
+  caption="migrate-workload keeps discovery ahead of scaffold and forbids skips."
+/>
+
+## Hooks and the PDB scar
+
+Hooks are hard gates in `.kiro/hooks/` — IDE-level, not agent-level. That is why
+`eks-migration` names no hooks: they enforce anyway.
+
+| Category | Hooks | Fires on |
+| --- | --- | --- |
+| Shell gate | `block-infra-commands` | `preToolUse` on shell |
+| Scaffold checks | `validate-app-scaffold`, `validate-infra-scaffold` | `fileEdited` under `apps/**` or platform trees |
+| Build / policy | `kustomize-build-check`, `kustomize-build-check-on-edit`, `gator-test-on-create`, `gator-test-on-edit`, `policy-validate` | create/edit on kustomization or workloads |
+
+See [hooks](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/hooks).
+
+<Still
+  src="media/hooks-categories.svg"
+  darkSrc="media/hooks-categories-dark.svg"
+  alt="Three hook categories: shell gate, scaffold checks, and build or policy validation"
+  caption="Eight hooks in three categories — shell deny, scaffold checks, build and policy."
+/>
+
+<Still
+  src="media/walkthrough/19-hooks-grid.png"
+  alt="Grid of Kiro hooks for shell gate scaffold and policy checks"
+  caption="Hooks enforce scaffold checks, policy checks, and the shell deny list."
+/>
+
+`validate-app-scaffold` encodes the PDB scar: <Tooltip term="pdb" label="PDB" />
+`minAvailable: 1` is only valid when `replicas >= 2`.
+
+<Still
+  src="media/walkthrough/08-pdb-rule.png"
+  alt="PDB guidance that replicas one must not keep minAvailable one"
+  caption="PDB scar: replicas 1 must not keep minAvailable 1."
+/>
+
+The shell gate denies mutating cluster, cloud, or registry commands before they run. Changes
+reach a cluster only through <Tooltip term="argo-cd" label="Argo CD" /> after a human merges.
+Shape: `when.type: preToolUse`, `when.toolTypes: ["shell"]`, `then.type: askAgent` demanding
+`ACCESS DENIED` for mutating families while allowing `kustomize build`, `gator`, and read-only
+local commands. Full deny/allow lists live in
+[`block-infra-commands.kiro.hook`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/hooks/block-infra-commands.kiro.hook).
+
+## Agent, MCP, specs
+
+Source: [`.kiro/agents/eks-migration.json`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/agents/eks-migration.json)
+
+```json
+{
+  "name": "eks-migration",
+  "description": "Migrates workloads onto EKS managed by Argo CD, following the gated migration workflow.",
+  "welcomeMessage": "EKS migration agent. Tell me what to migrate, for example: migrate the app in ./src to EKS.",
+  "tools": ["*"],
+  "resources": [
+    "file://.kiro/steering/*.md",
+    "skill://.kiro/skills/*/SKILL.md"
+  ]
+}
+```
+
+The `resources` array bundles every steering file and every skill by glob. Hooks stay out of
+this JSON on purpose — they are IDE-level.
+
+<Still
+  src="media/walkthrough/20-agent-config.png"
+  alt="eks-migration agent JSON wiring steering and skills"
+  caption="eks-migration wires steering and skills into one session bundle."
+/>
+
+<Tooltip term="mcp" label="MCP" /> servers:
+
+| Server | Purpose | Default state |
+| --- | --- | --- |
+| `aws-knowledge` | AWS docs search and regional availability | On |
+| `filesystem` | Read/write access to this repo | On |
+| `eks` | Live EKS reads | Off until credentials; `--read-only` |
+| `kubernetes` | Live cluster tools | Off until credentials; non-destructive only |
+
+<Still
+  src="media/walkthrough/21-mcp-servers.png"
+  alt="MCP server list with docs enabled and cluster adapters disabled"
+  caption="MCP keeps docs on; live cluster adapters stay off until creds exist."
+/>
+
+Specs under `.kiro/specs/<feature>/` hold `requirements.md`, `design.md`, and `tasks.md` as
+reviewable history (`initial-project-setup`, `gatekeeper-admission` upstream).
+
+<Still
+  src="media/walkthrough/22-specs-timeline.png"
+  alt="Specs timeline showing requirements design and tasks history"
+  caption="Specs persist requirements, design, and tasks as project history."
+/>
+
+## How the layers connect
+
+<Still
+  src="media/kiro-session-flow.svg"
+  darkSrc="media/kiro-session-flow-dark.svg"
+  alt="Session flow from thin prompt through agent skill file writes hooks PR human review and Argo CD sync"
+  caption="Prompt to sync: skills generate, hooks enforce, humans approve, Argo CD applies Git."
+/>
+
+**skills generate → hooks enforce → humans approve.**
+
+## Tradeoff
+
+**Choice:** steer with `always` for cheap global facts and `fileMatch` for heavy archetype
+rules. **Alternative:** load every steering file every turn. **Reason:** conditional inclusion
+keeps the context window clean during unrelated cluster work without losing web-service
+contracts when `apps/**` is in play.
+
+If a scaffold gets blocked here, the PDB scar is the usual cause — see
+[Known scars: the PDB scar at replicas 1](../gotchas/#the-pdb-scar-at-replicas-1) for the fix.
+
+Next: [Project profile map](../map-project-profile/) — deep dive on the always-on keys Lab C inherits.

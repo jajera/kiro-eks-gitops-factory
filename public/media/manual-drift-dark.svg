@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="200" viewBox="0 0 900 200" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect x="16" y="16" width="206" height="140" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <circle cx="48" cy="48" r="16" fill="#147EBA" fill-opacity="0.22"/>
+  <path d="M40 42h8l2 3h10v14H38V42h2zm2 5v10h12V47H50l-2-3h-6z" fill="#4DA8DA"/>
+  <text x="72" y="44" font-size="13" font-weight="700" fill="#E8EAED">Tree shape</text>
+  <text x="72" y="62" font-size="11" fill="#8B9DAF">diverges</text>
+  <text x="36" y="100" font-size="11" fill="#8B9DAF">deploy/ | k8s/envs/</text>
+  <text x="36" y="118" font-size="11" fill="#8B9DAF">| flat root</text>
+  <text x="36" y="140" font-size="11" fill="#6B7C8F">Cannot pattern-match</text>
+
+  <rect x="236" y="16" width="206" height="140" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <circle cx="268" cy="48" r="16" fill="#FF9900" fill-opacity="0.2"/>
+  <path d="M260 41h10l3 4v14h-16V45l3-4zm2 5v11h12V46h-2.5l-1.5-2h-4l-1.5 2H262z" fill="#FF9900"/>
+  <text x="292" y="44" font-size="13" font-weight="700" fill="#E8EAED">Naming</text>
+  <text x="292" y="62" font-size="11" fill="#8B9DAF">collisions</text>
+  <text x="256" y="100" font-size="11" fill="#8B9DAF">Same namespace or</text>
+  <text x="256" y="118" font-size="11" fill="#8B9DAF">app label twice</text>
+  <text x="256" y="140" font-size="11" fill="#6B7C8F">No convention held</text>
+
+  <rect x="456" y="16" width="206" height="140" rx="12" fill="#1A2332" stroke="#FF6B4A" stroke-width="2" filter="url(#s)"/>
+  <circle cx="488" cy="48" r="16" fill="#D13212" fill-opacity="0.22"/>
+  <circle cx="488" cy="48" r="9" fill="none" stroke="#FF6B4A" stroke-width="2"/>
+  <path d="M482 42l12 12M494 42l-12 12" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round"/>
+  <text x="512" y="44" font-size="13" font-weight="700" fill="#E8EAED">Policy gaps</text>
+  <text x="512" y="62" font-size="11" fill="#8B9DAF">slip through</text>
+  <text x="476" y="100" font-size="11" fill="#8B9DAF">Missing PDB</text>
+  <text x="476" y="118" font-size="11" fill="#8B9DAF">runAsRoot: true</text>
+  <text x="476" y="140" font-size="11" fill="#6B7C8F">Nothing blocked it</text>
+
+  <rect x="676" y="16" width="206" height="140" rx="12" fill="#1A2332" stroke="#B794F4" stroke-width="2" filter="url(#s)"/>
+  <circle cx="708" cy="48" r="16" fill="#7D3AC1" fill-opacity="0.25"/>
+  <path d="M708 39l2.2 6.5H717l-5.3 4 2.1 6.5-5.8-4.1-5.8 4.1 2.1-6.5-5.3-4h6.8z" fill="#B794F4"/>
+  <text x="732" y="44" font-size="13" font-weight="700" fill="#E8EAED">Prompt drift</text>
+  <text x="732" y="62" font-size="11" fill="#8B9DAF">each session</text>
+  <text x="696" y="100" font-size="11" fill="#8B9DAF">Unconstrained model</text>
+  <text x="696" y="118" font-size="11" fill="#8B9DAF">invents a new layout</text>
+  <text x="696" y="140" font-size="11" fill="#6B7C8F">Plausible != consistent</text>
+
+  <text x="450" y="186" text-anchor="middle" font-size="12" fill="#8B9DAF" font-style="italic">Small differences compound into a different shape in every directory</text>
+</svg>

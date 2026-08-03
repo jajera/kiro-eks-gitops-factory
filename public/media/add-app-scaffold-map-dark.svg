@@ -1,0 +1,310 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="2160" viewBox="0 0 1400 2160" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="11" markerHeight="11" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1.5,1.5 L8,5 L1.5,8.5" fill="none" stroke="#56657A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowsm" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2,2 L8,5 L2,8" fill="none" stroke="#56657A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="2160" fill="#0F1720"/>
+
+  <!-- ============ HEADER ============ -->
+  <text x="700" y="34" text-anchor="middle" font-size="19" font-weight="700" fill="#E8EAED">add-app — the seven ordered steps that produce a compliant app tree</text>
+  <text x="700" y="56" text-anchor="middle" font-size="12" fill="#8B9DAF">Creates the Kustomize base, both overlays, and an Argo CD Application for one app. Each step gates the next.</text>
+  <text x="700" y="76" text-anchor="middle" font-size="11" fill="#7C8CA0">.kiro/skills/add-app/SKILL.md · the skill Lab C's thin prompt actually runs</text>
+
+  <!-- ============ TRIGGER / WHEN NOT TO USE ============ -->
+  <rect x="40" y="94" width="1320" height="100" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <text x="60" y="118" font-size="13" font-weight="700" fill="#E8EAED">When this skill fires</text>
+  <text x="238" y="118" font-size="10.5" fill="#7C8CA0" font-style="italic">matched from the skill's own description field, not chosen by the user</text>
+
+  <text x="60" y="142" font-size="10.5" fill="#8B9DAF">"add a new app" · "create a new service" · "onboard a workload" · "add a cluster overlay to an existing app" · "deploy something new through Argo CD"</text>
+  <text x="60" y="158" font-size="10.5" fill="#8B9DAF">Lab C's prompt — <tspan font-style="italic">Add a web-service app named demo-nginx</tspan> — matches the first of these, which is why one sentence is enough to start the whole procedure.</text>
+
+  <rect x="60" y="166" width="1280" height="20" rx="5" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="72" y="180" font-size="10" fill="#E0B457"><tspan font-weight="700">Moving an app off existing infrastructure? Run migrate-workload instead</tspan> — it covers discovery, containerisation, and identity, then calls back into this workflow at its Phase 5.</text>
+
+  <line x1="700" y1="194" x2="700" y2="216" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STEP 1 : GATHER INPUTS ============ -->
+  <rect x="40" y="218" width="1320" height="150" rx="12" fill="#1A2332" stroke="#FF6B52" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="246" r="13" fill="#FF6B52"/>
+  <text x="72" y="251" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="96" y="251" font-size="13" font-weight="700" fill="#E8EAED">Gather inputs</text>
+  <text x="230" y="251" font-size="10.5" fill="#7C8CA0" font-style="italic">the gate that protects every later step</text>
+
+  <rect x="60" y="260" width="1280" height="22" rx="5" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="72" y="275" font-size="10.5" fill="#E0B457"><tspan font-weight="700">Create no files until the archetype and its required fields are known.</tspan> Scaffolding around a guess produces a tree that has to be unpicked rather than edited.</text>
+
+  <text x="60" y="302" font-size="10.5" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">Always ask for:</tspan> <tspan font-family="ui-monospace, monospace">app_name</tspan> · <tspan font-family="ui-monospace, monospace">archetype</tspan> · a source image (Docker Hub, GHCR, ECR, local build — wherever it currently lives)</text>
+  <text x="60" y="320" font-size="10.5" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">Then archetype-specific fields</tspan> from the workload archetypes steering file, plus <tspan font-family="ui-monospace, monospace">secrets</tspan>, egress destinations, and whether the app needs an Ingress.</text>
+  <text x="60" y="338" font-size="10.5" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">Everything else comes from the project profile</tspan> rather than from a question — that is what makes the prompt thin.</text>
+  <text x="60" y="358" font-size="10.5" fill="#4ADE80"><tspan font-weight="700">Both overlays are always created.</tspan> Do not ask which cluster — there is no valid answer other than "both".</text>
+
+  <line x1="700" y1="368" x2="700" y2="390" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STEP 2 : RESOLVE IMAGE INTO ECR ============ -->
+  <rect x="40" y="392" width="1320" height="200" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="420" r="13" fill="#FF9900"/>
+  <text x="72" y="425" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="96" y="425" font-size="13" font-weight="700" fill="#E8EAED">Resolve the image into ECR</text>
+  <text x="330" y="425" font-size="10.5" fill="#7C8CA0" font-style="italic">the source registry is an input; ECR is what gets deployed</text>
+
+  <rect x="60" y="436" width="1280" height="22" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="72" y="451" font-size="9.5" font-weight="700" fill="#7C8CA0">TARGET</text>
+  <text x="150" y="451" font-size="10" font-family="ui-monospace, monospace" fill="#E8EAED">111122223333.dkr.ecr.ap-southeast-2.amazonaws.com/&lt;app&gt;:&lt;tag&gt;</text>
+  <text x="640" y="451" font-size="9.5" fill="#7C8CA0">repository is managed elsewhere — assume it already exists, do not create it</text>
+
+  <rect x="60" y="466" width="630" height="50" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="76" y="484" font-size="10.5" font-weight="700" fill="#9CCBE8">Source is already that ECR repo</text>
+  <text x="76" y="502" font-size="10" fill="#9CCBE8">Record its digest and continue. Nothing to move.</text>
+
+  <rect x="710" y="466" width="630" height="50" rx="8" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="726" y="484" font-size="10.5" font-weight="700" fill="#E0B457">Source is anywhere else</text>
+  <text x="726" y="502" font-size="10" fill="#E0B457">1. Pull the source image  2. Retag to the ECR path above and push  3. Record the digest</text>
+
+  <rect x="60" y="524" width="1280" height="40" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="72" y="540" font-size="10" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">Image not pushed yet, so no real digest exists?</tspan> Use the 64-hex dummy so the scaffold still passes validation:</text>
+  <text x="72" y="557" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">dev  sha256:0000000000000000000000000000000000000000000000000000000000000001      prod  sha256:0000000000000000000000000000000000000000000000000000000000000002</text>
+
+  <rect x="60" y="568" width="1280" height="20" rx="5" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="72" y="582" font-size="10" fill="#E0B457"><tspan font-weight="700">Never write docker.io/... , ghcr.io/... , or any other upstream registry into the manifests.</tspan> Manifests only ever reference the project ECR.</text>
+
+  <line x1="700" y1="592" x2="700" y2="614" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STEP 3 : SCAFFOLD BASE ============ -->
+  <rect x="40" y="616" width="1320" height="280" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="644" r="13" fill="#4DA8DA"/>
+  <text x="72" y="649" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="96" y="649" font-size="13" font-weight="700" fill="#E8EAED">Scaffold base — <tspan font-family="ui-monospace, monospace">apps/&lt;app&gt;/base/</tspan></text>
+  <text x="360" y="649" font-size="10.5" fill="#7C8CA0" font-style="italic">what is identical across both clusters</text>
+
+  <rect x="60" y="660" width="630" height="24" fill="#24344A"/>
+  <text x="74" y="677" font-size="10.5" font-weight="700" fill="#ffffff">File</text>
+  <text x="270" y="677" font-size="10.5" font-weight="700" fill="#ffffff">Contents</text>
+
+  <rect x="60" y="684" width="630" height="22" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="74" y="699" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">namespace.yaml</text>
+  <text x="270" y="699" font-size="9.5" fill="#8B9DAF">labels.name: &lt;app&gt; and labels.owner: platform</text>
+
+  <rect x="60" y="706" width="630" height="22" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="74" y="721" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">application.yaml</text>
+  <text x="270" y="721" font-size="9.5" fill="#8B9DAF">Argo CD Application using the profile defaults</text>
+
+  <rect x="60" y="728" width="630" height="22" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="74" y="743" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">kustomization.yaml</text>
+  <text x="270" y="743" font-size="9.5" fill="#8B9DAF">Lists the above</text>
+
+  <rect x="60" y="750" width="630" height="22" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="74" y="765" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">manifests/</text>
+  <text x="270" y="765" font-size="9.5" fill="#8B9DAF">Archetype manifests — plain-manifest apps only</text>
+
+  <text x="74" y="788" font-size="9.5" fill="#8B9DAF">For plain-manifest apps <tspan font-family="ui-monospace, monospace" fill="#E8EAED">base/manifests/</tspan> holds <tspan font-family="ui-monospace, monospace" fill="#E8EAED">serviceaccount.yaml</tspan>,</text>
+  <text x="74" y="801" font-size="9.5" fill="#8B9DAF"><tspan font-family="ui-monospace, monospace" fill="#E8EAED">networkpolicy.yaml</tspan>, and the workload, with its own <tspan font-family="ui-monospace, monospace" fill="#E8EAED">kustomization.yaml</tspan>.</text>
+
+  <rect x="710" y="660" width="630" height="146" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="726" y="678" font-size="10.5" font-weight="700" fill="#9CCBE8">Label every resource (from gitops-conventions)</text>
+  <text x="726" y="696" font-size="9.5" font-family="ui-monospace, monospace" fill="#9CCBE8">Namespace                    name · owner</text>
+  <text x="726" y="712" font-size="9.5" font-family="ui-monospace, monospace" fill="#9CCBE8">Workloads / SA / NetPol / pod app.kubernetes.io/name · owner</text>
+  <text x="726" y="728" font-size="9.5" font-family="ui-monospace, monospace" fill="#9CCBE8">Selectors and podSelector    app.kubernetes.io/name</text>
+  <text x="726" y="744" font-size="9.5" font-family="ui-monospace, monospace" fill="#9CCBE8">manifests kustomization      app.kubernetes.io/part-of</text>
+  <text x="726" y="768" font-size="10.5" font-weight="700" fill="#9CCBE8">Base image</text>
+  <text x="726" y="784" font-size="9.5" font-family="ui-monospace, monospace" fill="#9CCBE8">...amazonaws.com/&lt;app&gt;:&lt;tag&gt;</text>
+  <text x="726" y="798" font-size="9.5" fill="#9CCBE8">Floating tag here; overlay digests pin the same repository.</text>
+
+  <rect x="60" y="814" width="1280" height="24" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="72" y="830" font-size="10" fill="#8B9DAF"><tspan font-family="ui-monospace, monospace" font-weight="700" fill="#E8EAED">networkpolicy.yaml</tspan> must include <tspan font-weight="700" fill="#E8EAED">default-deny-all</tspan> plus one allow per required flow (DNS always; HTTPS / Pod Identity / SSH / ingress as needed). Every container declares explicit CPU and memory <tspan font-family="ui-monospace, monospace">requests</tspan> and <tspan font-family="ui-monospace, monospace">limits</tspan>.</text>
+
+  <rect x="60" y="844" width="1280" height="44" rx="5" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="72" y="860" font-size="10" fill="#E0B457"><tspan font-weight="700">web-service:</tspan> readiness and liveness probes on every HTTP container. Deployment rolling update defaults to <tspan font-family="ui-monospace, monospace">maxUnavailable: 0</tspan> / <tspan font-family="ui-monospace, monospace">maxSurge: 1</tspan>.</text>
+  <text x="72" y="878" font-size="10" fill="#E0B457"><tspan font-weight="700">PDB only when replicas (or KEDA/HPA min) is &gt;= 2.</tspan> Never add <tspan font-family="ui-monospace, monospace">minAvailable: 1</tspan> while <tspan font-family="ui-monospace, monospace">replicas: 1</tspan> — it causes <tspan font-family="ui-monospace, monospace" font-weight="700">DisruptionBlocked</tspan> on node replacement.</text>
+
+  <line x1="700" y1="896" x2="700" y2="918" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STEP 4 : SCAFFOLD BOTH OVERLAYS ============ -->
+  <rect x="40" y="920" width="1320" height="180" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="948" r="13" fill="#2ECC71"/>
+  <text x="72" y="953" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="96" y="953" font-size="13" font-weight="700" fill="#E8EAED">Scaffold both overlays</text>
+  <text x="290" y="953" font-size="10.5" fill="#FF6B52" font-style="italic">both are required — never scaffold one and leave prod for promotion time</text>
+
+  <rect x="60" y="964" width="630" height="24" fill="#24344A"/>
+  <text x="74" y="981" font-size="10.5" font-weight="700" fill="#ffffff">File</text>
+  <text x="290" y="981" font-size="10.5" font-weight="700" fill="#ffffff">Contents</text>
+
+  <rect x="60" y="988" width="630" height="22" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="74" y="1003" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">kustomization.yaml</text>
+  <text x="290" y="1003" font-size="9.5" font-family="ui-monospace, monospace" fill="#8B9DAF">resources: [../../base]</text>
+  <text x="470" y="1003" font-size="9.5" fill="#8B9DAF">plus patches</text>
+
+  <rect x="60" y="1010" width="630" height="22" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <text x="74" y="1025" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">application-patch.yaml</text>
+  <text x="290" y="1025" font-size="9.5" fill="#8B9DAF">Rewrites <tspan font-family="ui-monospace, monospace">source.path</tspan> to this overlay's <tspan font-family="ui-monospace, monospace">manifests/</tspan></text>
+
+  <rect x="60" y="1032" width="630" height="22" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <text x="74" y="1047" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">manifests/</text>
+  <text x="290" y="1047" font-size="9.5" fill="#8B9DAF">Cluster-specific patches</text>
+
+  <rect x="710" y="964" width="630" height="90" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="726" y="982" font-size="10.5" font-weight="700" fill="#9CCBE8">Overlay patches cover exactly four things</text>
+  <text x="726" y="1000" font-size="9.5" fill="#9CCBE8">the pinned image digest · replica count or scaling bounds ·</text>
+  <text x="726" y="1014" font-size="9.5" fill="#9CCBE8">resource sizing · the ingress hostname</text>
+  <text x="726" y="1034" font-size="9.5" font-weight="700" fill="#9CCBE8">Start prod as a copy of dev</text>
+  <text x="726" y="1048" font-size="9.5" fill="#9CCBE8">and change only what genuinely differs.</text>
+
+  <rect x="60" y="1062" width="1280" height="32" rx="5" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="72" y="1077" font-size="10" fill="#E0B457">Digest unknown at scaffold time? Use the 64-hex dummy — <tspan font-family="ui-monospace, monospace">...0001</tspan> dev / <tspan font-family="ui-monospace, monospace">...0002</tspan> prod. These pass <tspan font-family="ui-monospace, monospace">gator test --deny-only</tspan> but are <tspan font-weight="700">not deployable</tspan>.</text>
+  <text x="72" y="1090" font-size="10" fill="#E0B457"><tspan font-weight="700">Never write REPLACE_WITH_ACTUAL_DIGEST</tspan> — it fails the disallowed-tags constraint. Replace with the real digest after pushing to ECR.</text>
+
+  <line x1="700" y1="1100" x2="700" y2="1122" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STEP 4b : ACCOUNT-SPECIFIC ANNOTATIONS ============ -->
+  <circle cx="72" cy="1140" r="13" fill="#FF6B52"/>
+  <text x="72" y="1145" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">4b</text>
+  <text x="100" y="1145" font-size="13" font-weight="700" fill="#E8EAED">Any annotation carrying an AWS account ID belongs in the overlay</text>
+  <text x="576" y="1145" font-size="10.5" fill="#7C8CA0" font-style="italic">dev and prod are separate accounts, so these ARNs always differ</text>
+
+  <rect x="40" y="1158" width="1320" height="28" fill="#24344A"/>
+  <text x="58" y="1177" font-size="11" font-weight="700" fill="#ffffff">Annotation</text>
+  <text x="420" y="1177" font-size="11" font-weight="700" fill="#ffffff">Dev overlay (111122223333)</text>
+  <text x="900" y="1177" font-size="11" font-weight="700" fill="#ffffff">Prod overlay (444455556666)</text>
+
+  <rect x="40" y="1186" width="1320" height="46" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="1186" width="5" height="46" fill="#FF6B52"/>
+  <text x="58" y="1206" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">alb.ingress.kubernetes.io/</text>
+  <text x="58" y="1220" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">certificate-arn</text>
+  <text x="420" y="1206" font-size="8.5" font-family="ui-monospace, monospace" fill="#E8EAED">arn:aws:acm:ap-southeast-2:111122223333:</text>
+  <text x="420" y="1219" font-size="8.5" font-family="ui-monospace, monospace" fill="#E8EAED">certificate/00000000-...-000000000001</text>
+  <text x="900" y="1206" font-size="8.5" font-family="ui-monospace, monospace" fill="#E8EAED">arn:aws:acm:ap-southeast-2:444455556666:</text>
+  <text x="900" y="1219" font-size="8.5" font-family="ui-monospace, monospace" fill="#E8EAED">certificate/00000000-...-000000000002</text>
+
+  <rect x="40" y="1232" width="1320" height="46" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="1232" width="5" height="46" fill="#FF6B52"/>
+  <text x="58" y="1252" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">alb.ingress.kubernetes.io/</text>
+  <text x="58" y="1266" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">wafv2-acl-arn</text>
+  <text x="420" y="1252" font-size="8.5" font-family="ui-monospace, monospace" fill="#E8EAED">arn:aws:wafv2:ap-southeast-2:111122223333:</text>
+  <text x="420" y="1265" font-size="8.5" font-family="ui-monospace, monospace" fill="#E8EAED">regional/webacl/&lt;app&gt;/00000000-...-0001</text>
+  <text x="900" y="1252" font-size="8.5" font-family="ui-monospace, monospace" fill="#E8EAED">arn:aws:wafv2:ap-southeast-2:444455556666:</text>
+  <text x="900" y="1265" font-size="8.5" font-family="ui-monospace, monospace" fill="#E8EAED">regional/webacl/&lt;app&gt;/00000000-...-0002</text>
+
+  <rect x="40" y="1286" width="645" height="76" rx="8" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <text x="58" y="1304" font-size="10.5" font-weight="700" fill="#4DA8DA">base/ingress.yaml — account-neutral only</text>
+  <text x="58" y="1322" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">scheme · target-type · listen-ports</text>
+  <text x="58" y="1336" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">kubernetes.io/ingress.allow-http: "false"</text>
+  <text x="58" y="1354" font-size="9.5" fill="#8B9DAF">No ARNs, no hostnames, no account IDs.</text>
+
+  <rect x="715" y="1286" width="645" height="76" rx="8" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <text x="733" y="1304" font-size="10.5" font-weight="700" fill="#FFB84D">each overlay's ingress-patch.yaml adds</text>
+  <text x="733" y="1322" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">certificate-arn · wafv2-acl-arn</text>
+  <text x="733" y="1336" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">spec.tls · spec.rules[].host</text>
+  <text x="733" y="1354" font-size="9.5" fill="#8B9DAF">TLS is overlay-specific too — the hostname differs per environment.</text>
+
+  <rect x="40" y="1370" width="1320" height="22" rx="5" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="58" y="1385" font-size="10" fill="#E0B457"><tspan font-weight="700">Never write bare tokens like REPLACE_WITH_CERT_ID or REPLACE_WITH_WEBACL_ID</tspan> — they fail Gatekeeper validation offline and in CI. The dummies above match the WAFv2 and ACM ARN regexes, so they pass.</text>
+
+  <line x1="700" y1="1392" x2="700" y2="1414" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STEP 5 : IAM ============ -->
+  <rect x="40" y="1416" width="1320" height="130" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1444" r="13" fill="#4DA8DA"/>
+  <text x="72" y="1449" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">5</text>
+  <text x="96" y="1449" font-size="13" font-weight="700" fill="#E8EAED">Declare the app's IAM — <tspan font-family="ui-monospace, monospace">apps/&lt;app&gt;/iam.tf</tspan></text>
+  <text x="420" y="1449" font-size="10.5" fill="#7C8CA0" font-style="italic">copy the shape from identity-and-secrets steering, then narrow it</text>
+
+  <text x="60" y="1474" font-size="10.5" fill="#8B9DAF">Holds the IAM policy and the Pod Identity association. Fill <tspan font-family="ui-monospace, monospace" fill="#E8EAED">&lt;app&gt;</tspan> / <tspan font-family="ui-monospace, monospace" fill="#E8EAED">&lt;cluster&gt;</tspan>, then replace the policy statement with what the app actually calls.</text>
+  <text x="60" y="1492" font-size="10.5" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">Explicit actions, explicit resource ARNs.</tspan> This is the step the factory deliberately does not automate — scoping a role is a judgement call.</text>
+
+  <rect x="60" y="1502" width="645" height="34" rx="5" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="74" y="1517" font-size="10" fill="#9CCBE8"><tspan font-weight="700">Using a SecretProviderClass?</tspan> The policy must include</text>
+  <text x="74" y="1530" font-size="9.5" font-family="ui-monospace, monospace" fill="#9CCBE8">secretsmanager:GetSecretValue</text>
+  <text x="262" y="1530" font-size="9.5" fill="#9CCBE8">(+ <tspan font-family="ui-monospace, monospace">kms:Decrypt</tspan> if CMK-encrypted), scoped to those ARNs.</text>
+
+  <rect x="715" y="1502" width="645" height="34" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="729" y="1517" font-size="10" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">App calls no AWS APIs and has no secrets?</tspan></text>
+  <text x="729" y="1530" font-size="10" fill="#8B9DAF">It still needs a ServiceAccount, but <tspan font-weight="700" fill="#E8EAED">no</tspan> <tspan font-family="ui-monospace, monospace">iam.tf</tspan> at all.</text>
+
+  <line x1="700" y1="1546" x2="700" y2="1568" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STEP 6 : SUPPORTING FILES ============ -->
+  <rect x="40" y="1570" width="1320" height="120" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1598" r="13" fill="#2ECC71"/>
+  <text x="72" y="1603" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">6</text>
+  <text x="96" y="1603" font-size="13" font-weight="700" fill="#E8EAED">Supporting files</text>
+
+  <rect x="60" y="1614" width="900" height="62" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="76" y="1632" font-size="10.5" font-weight="700" fill="#9CCBE8">apps/&lt;app&gt;/README.md — required for every app</text>
+  <text x="76" y="1648" font-size="9.5" fill="#9CCBE8">Purpose, then <tspan font-family="ui-monospace, monospace">## Inputs and outputs</tspan> with a Mermaid <tspan font-family="ui-monospace, monospace">flowchart LR</tspan>: <tspan font-family="ui-monospace, monospace">inputs</tspan> / workers / <tspan font-family="ui-monospace, monospace">outputs</tspan> subgraphs and</text>
+  <text x="76" y="1662" font-size="9.5" fill="#9CCBE8"><tspan font-weight="700">labeled edges derived from real config</tspan>, tables under the diagram, then image / IAM / networking as needed.</text>
+  <text x="76" y="1673" font-size="9" fill="#9CCBE8">Must pass markdown lint (<tspan font-family="ui-monospace, monospace">.markdownlint.json</tspan>).</text>
+
+  <rect x="970" y="1614" width="370" height="62" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="986" y="1632" font-size="10.5" font-weight="700" fill="#E8EAED">apps/&lt;app&gt;/renovate.json</text>
+  <text x="986" y="1650" font-size="9.5" fill="#8B9DAF">Digest bump config for the overlay pin</text>
+  <text x="986" y="1664" font-size="9.5" fill="#8B9DAF">files, if the repo uses Renovate.</text>
+  <text x="986" y="1675" font-size="9" fill="#7C8CA0">Extend it from the root config.</text>
+
+  <line x1="700" y1="1690" x2="700" y2="1712" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STEP 7 : VALIDATE ============ -->
+  <rect x="40" y="1714" width="1320" height="210" rx="12" fill="#1A2332" stroke="#FF6B52" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1742" r="13" fill="#FF6B52"/>
+  <text x="72" y="1747" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">7</text>
+  <text x="96" y="1747" font-size="13" font-weight="700" fill="#E8EAED">Validate before committing</text>
+  <text x="330" y="1747" font-size="10.5" fill="#7C8CA0" font-style="italic">the gate that decides whether the scaffold is actually done</text>
+
+  <rect x="60" y="1758" width="800" height="112" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="76" y="1776" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">kustomize build apps/&lt;app&gt;/base</text>
+  <text x="76" y="1790" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">for c in dev-eks-1 prod-eks-1; do</text>
+  <text x="76" y="1804" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  kustomize build apps/&lt;app&gt;/overlays/$c</text>
+  <text x="76" y="1818" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  kustomize build apps/&lt;app&gt;/overlays/$c/manifests</text>
+  <text x="76" y="1832" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">done</text>
+  <text x="76" y="1846" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">terraform fmt -check apps/&lt;app&gt;</text>
+  <text x="76" y="1860" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">npx --yes markdownlint-cli2 "apps/&lt;app&gt;/README.md"</text>
+
+  <rect x="870" y="1758" width="470" height="52" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="886" y="1776" font-size="10.5" font-weight="700" fill="#9CCBE8">Then the policy checks</text>
+  <text x="886" y="1792" font-size="9.5" fill="#9CCBE8">Whatever <tspan font-family="ui-monospace, monospace">policy_engine</tspan> is set to. Validate against</text>
+  <text x="886" y="1805" font-size="9.5" font-weight="700" fill="#9CCBE8">expanded Pod templates, not the controller manifests alone.</text>
+
+  <rect x="870" y="1818" width="470" height="52" rx="8" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="886" y="1836" font-size="10.5" font-weight="700" fill="#E0B457">Fix violations before committing</text>
+  <text x="886" y="1852" font-size="9.5" fill="#E0B457">An admission failure surfaces as an Argo CD sync sitting</text>
+  <text x="886" y="1865" font-size="9.5" fill="#E0B457">in a degraded state — a much slower way to learn about a</text>
+
+  <text x="886" y="1880" font-size="9.5" fill="#E0B457">missing resource limit.</text>
+  <text x="76" y="1888" font-size="9.5" fill="#8B9DAF">Base first, then both overlays and their <tspan font-family="ui-monospace, monospace">manifests/</tspan> — so a base-level error surfaces before either overlay is touched.</text>
+  <text x="76" y="1908" font-size="10" fill="#4ADE80" font-weight="700">All green? The scaffold is done. Commit, open a PR, and let a human review it.</text>
+
+  <line x1="700" y1="1924" x2="700" y2="1946" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ ROLLING OUT ============ -->
+  <rect x="40" y="1948" width="1320" height="110" rx="12" fill="#1A2332" stroke="#56657A" stroke-width="2" filter="url(#s)"/>
+  <text x="60" y="1972" font-size="13" font-weight="700" fill="#E8EAED">Rolling out — after the PR merges</text>
+  <text x="360" y="1972" font-size="10.5" fill="#FF6B52" font-style="italic">the skill stops at the PR; everything below is a human decision</text>
+
+  <rect x="60" y="1986" width="230" height="34" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="175" y="2007" text-anchor="middle" font-size="10" fill="#E8EAED">Apply the app's Terraform</text>
+  <line x1="292" y1="2003" x2="322" y2="2003" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="326" y="1986" width="230" height="34" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="441" y="2007" text-anchor="middle" font-size="10" fill="#9CCBE8">Let dev-eks-1 sync</text>
+  <line x1="558" y1="2003" x2="588" y2="2003" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="592" y="1986" width="290" height="34" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="737" y="2003" text-anchor="middle" font-size="10" fill="#9CCBE8">Confirm healthy + reaches AWS deps</text>
+  <line x1="884" y1="2003" x2="914" y2="2003" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="918" y="1986" width="290" height="34" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="1063" y="2003" text-anchor="middle" font-size="10" fill="#E8EAED">Only then promote the digest to prod</text>
+
+  <text x="60" y="2042" font-size="10" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">Order matters:</tspan> Terraform before manifests when <tspan font-style="italic">adding</tspan> a permission, and always reach <tspan font-family="ui-monospace, monospace">dev-eks-1</tspan> before <tspan font-family="ui-monospace, monospace">prod-eks-1</tspan> — see the GitOps conventions map.</text>
+
+  <!-- ============ FOOTER ============ -->
+  <rect x="40" y="2090" width="1320" height="34" rx="8" fill="#24344A"/>
+  <text x="700" y="2112" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">gather inputs → resolve the image → scaffold base → scaffold both overlays → declare IAM → supporting files → validate → PR → human review</text>
+</svg>

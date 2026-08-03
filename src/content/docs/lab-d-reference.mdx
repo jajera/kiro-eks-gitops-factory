@@ -1,0 +1,80 @@
+---
+title: "Lab D (out of scope): what the live path looks like"
+description: Reference shape of the post-merge live path — Argo CD Healthy, Ingress, curl — not a runnable lab on this site.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [Onboard an app (Lab C)](../lab-c/) produced a compliant dual-overlay app and a pull request with green checks.
+
+Lab D is **out of scope** as a runnable lab here. This page is reference only — nothing below was
+observed on a cluster belonging to this documentation. The live path starts only after a human
+reviews and merges the PR; changes reach the cluster through Git merge and{" "}
+<Tooltip term="argo-cd" label="Argo CD" /> sync, never through a chat-side apply.
+
+## The live path after merge
+
+<Still
+  src="media/lab-d-live-path.svg"
+  darkSrc="media/lab-d-live-path-dark.svg"
+  alt="Live path after merge: PR merge, Argo CD sync, Synced Healthy, Ingress ADDRESS, curl HTTP 200, promote digest to prod"
+  caption="After merge: sync, prove Healthy, hit the host, then promote the same digest."
+/>
+
+## The visual checklist
+
+| Step | Capture | Pass when |
+| --- | --- | --- |
+| Placeholders / ECR image ready | - | real account IDs, digest in <Tooltip term="ecr" label="ECR" /> |
+| IAM applied if needed | - | Pod Identity association exists |
+| Argo parent + child | `23-argocd-healthy.png` | `Synced` / `Healthy` |
+| Ingress ADDRESS | `24-alb-ingress.png` | <Tooltip term="alb" label="ALB" /> hostname present |
+| curl host | `25-curl-ok.png` | HTTP 200 |
+| Promote to prod overlay | - | same digest only after above |
+
+Use these verification commands against the app Lab C scaffolded (`demo-nginx` naming) in
+[jajera/kiro-eks-argocd-migration](https://github.com/jajera/kiro-eks-argocd-migration). They are
+not a substitute for a cluster — they are what “pass when” looks like on a real one:
+
+1. Confirm Argo CD sees the app as `Synced` / `Healthy` on the target cluster.
+2. Confirm the Ingress has an ALB ADDRESS and the Service / PDB objects exist.
+3. Confirm the hostname returns HTTP 200 end to end.
+4. Only then promote the verified image digest into the prod overlay.
+
+```bash
+argocd app get demo-nginx-dev-eks-1
+argocd app get demo-nginx
+kubectl -n demo-nginx get deploy,svc,ingress,pdb
+kubectl -n demo-nginx get ingress demo-nginx -o wide
+curl -sS -o /dev/null -w "%{http_code}\n" https://demo-nginx.dev.example.com/
+```
+
+## Reading the checklist
+
+Each row narrows from account setup to a response body:
+
+- Real account IDs and an ECR digest confirm the image the overlays reference actually exists.
+- A Pod Identity association means the workload can assume its role without a long-lived key.
+- `Synced` / `Healthy` on both applications means Argo CD read the tree you reviewed and it came up.
+- An ALB hostname in the Ingress means the controller reconciled the annotations.
+- HTTP 200 means DNS, TLS, the load balancer, the Service, and the probes all agree.
+- The same digest in prod means promotion moved a known artifact, not a re-resolved tag.
+
+This site stops at Labs A–C on purpose. Lab D is out of scope here — a live cluster, real
+hostname, and certificate would be needed to run it, and faking those frames would be worse than
+omitting them. Treat the pass-when column as the shape of the answer, not a guarantee for your
+cluster.
+
+Managed or self-hosted Argo CD does not change this checklist’s meaning — both must report
+`Synced` / `Healthy` against Git. Bootstrap and control-plane wiring differ; the verify steps do not.
+
+## What bites
+
+Promoting to prod before the digest is pinned. If the prod overlay resolves a tag instead of a
+digest, both overlays can run different bytes while both report `Synced` and `Healthy` — the drift
+is invisible because both Applications match their sources exactly. Pin the digest from the
+verified <Tooltip term="overlay" label="dev overlay" />, and promotion becomes a diff you can read
+instead of a hope that the tag has not moved.
+
+Next: [Choose an autonomy mode](../autonomy-modes/) settles how much of each editing turn you review before it lands.

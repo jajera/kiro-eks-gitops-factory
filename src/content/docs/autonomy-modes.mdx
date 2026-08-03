@@ -1,0 +1,50 @@
+---
+title: "Choose an autonomy mode: Autopilot or Supervised"
+description: Autopilot applies edits and yields at the end; Supervised yields for hunk-level approval after every file-editing turn. When each one earns its keep.
+---
+
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [Lab D (out of scope)](../lab-d-reference/) showed what the live path looks like once a human has merged.
+
+<Tooltip term="kiro" label="Kiro" /> runs a session in one of two modes.{" "}
+<Tooltip term="autopilot" label="Autopilot" /> is the default: it applies its edits and yields when the turn is done.{" "}
+<Tooltip term="supervised" label="Supervised" /> yields for approval after each turn that edits files, and presents the changes as individual hunks you accept or reject. [Onboard an app (Lab C)](../lab-c/) ran in Autopilot, which is why the whole scaffold appeared at once rather than a file at a time.
+
+## What a Supervised turn does
+
+One turn in Supervised mode is three beats, and the third is the one that changes how the session feels.
+
+1. Kiro proposes its edits as individual hunks rather than writing them straight to disk.
+2. You accept or reject each hunk on its own.
+3. The turn yields before continuing, so nothing further happens until you have answered.
+
+|                        | Autopilot                       | Supervised                                |
+| ---------------------- | ------------------------------- | ----------------------------------------- |
+| Default                | yes                             | no                                        |
+| When it yields         | at the end of the turn          | after every turn that edits files         |
+| How changes arrive     | applied, then reviewed          | proposed as hunks, accepted or rejected   |
+| Your unit of review    | the finished change set         | one hunk                                  |
+| What catches a mistake | hooks, then pull request review | you, then hooks, then pull request review |
+
+## Choosing a mode
+
+Autopilot fits work whose shape is already decided: scaffolding a known archetype, running validation over what was scaffolded, creating files in bulk. In all three the output is checkable in one pass, and the hooks plus pull request review are the safety net that makes a wrong turn cheap.
+
+Supervised fits work where one wrong line is expensive before anyone reads it. Editing live bootstrap manifests is the clearest case, and changing a policy enforcement action is the sharpest: flipping an audit rule to deny, or widening a match scope, can block cluster syncs for every application at once. Reviewing hunk by hunk costs you time you would otherwise spend reading a diff, and buys the ability to stop at the line that was wrong instead of after it.
+
+## Both modes keep the gates
+
+The mode changes when you review, not what enforces. <Tooltip term="hooks" label="Hooks" /> fire in both, including the shell gate that inspects every command before it runs, so a Supervised session cannot reach a live cluster any more than an Autopilot session can. And both end in the same place: a human merges, and only then does <Tooltip term="argo-cd" label="Argo CD" /> see anything. Nothing in either mode shortens that path.
+
+## Mode is not session type
+
+Autonomy mode and the vibe-versus-spec choice are two independent decisions, and it is easy to collapse them into one. Mode controls when you review edits, turn by turn or at the end. Session type controls whether requirements are negotiated before implementation starts at all. A Supervised <Tooltip term="vibe" label="vibe" /> session and an Autopilot <Tooltip term="spec" label="spec" /> session are both perfectly ordinary; see [Vibe or spec, and when](../vibe-vs-spec/) for the second decision.
+
+## What bites
+
+Autopilot by default, with hooks as the net, is the recommendation here, and the alternative it beat was running Supervised everywhere. Supervised everywhere is genuinely safer per line, and it is also how a 45-minute app scaffold becomes an afternoon of clicking through hunks that were never going to be wrong. The cost of that choice is that some edits land before you have looked at them, which is exactly why the reviewing happens somewhere else rather than not at all.
+
+Which brings up the thing worth knowing before you trust Autopilot too far: the shell gate, `block-infra-commands`, is an `askAgent` hook. It instructs the agent rather than hard-blocking the process, so it is a strong convention enforced by the model, not a kernel-level refusal. Autopilot plus a soft gate is precisely why merge review is still the real boundary, and why the [hook file](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/hooks/block-infra-commands.kiro.hook) is worth reading rather than assuming.
+
+Next: [Vibe or spec, and when](../vibe-vs-spec/) settles whether to negotiate requirements before any file is written.

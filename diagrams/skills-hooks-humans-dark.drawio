@@ -1,0 +1,31 @@
+<mxfile host="65bd71144e">
+    <diagram id="skills-hooks-humans-dark" name="Skills Hooks Humans Dark">
+        <mxGraphModel dx="900" dy="180" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="180" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="The factory pipeline: decisions live in the repo, not the prompt" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=15;fontStyle=1;fontColor=#E8EAED;" parent="1" vertex="1">
+                    <mxGeometry x="0" y="4" width="900" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="box1" value="&lt;b style=&quot;font-size:14px&quot;&gt;Skills&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#8B9DAF&quot;&gt;generate&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#8B9DAF&quot;&gt;Ordered steps produce&lt;br&gt;the correct tree shape&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A2332;strokeColor=#4DA8DA;strokeWidth=2;arcSize=12;verticalAlign=top;spacing=12;fontColor=#E8EAED;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="44" width="210" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="box2" value="&lt;b style=&quot;font-size:14px&quot;&gt;Hooks&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#8B9DAF&quot;&gt;enforce&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#8B9DAF&quot;&gt;Block forbidden paths&lt;br&gt;regardless of prompt&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A2332;strokeColor=#FF9900;strokeWidth=2;arcSize=12;verticalAlign=top;spacing=12;fontColor=#E8EAED;" parent="1" vertex="1">
+                    <mxGeometry x="345" y="44" width="210" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="box3" value="&lt;b style=&quot;font-size:14px&quot;&gt;Humans&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#8B9DAF&quot;&gt;approve&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#8B9DAF&quot;&gt;PR review + merge —&lt;br&gt;judgement stays human&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A2332;strokeColor=#2ECC71;strokeWidth=2;arcSize=12;verticalAlign=top;spacing=12;fontColor=#E8EAED;" parent="1" vertex="1">
+                    <mxGeometry x="630" y="44" width="210" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FF9900;strokeWidth=2.5;endArrow=classic;endFill=1;" parent="1" source="box1" target="box2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#FF9900;strokeWidth=2.5;endArrow=classic;endFill=1;" parent="1" source="box2" target="box3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note" value="Prompting harder does not fix it — structure in the repo does" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontColor=#8B9DAF;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="0" y="162" width="900" height="18" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

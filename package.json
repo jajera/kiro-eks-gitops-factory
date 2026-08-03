@@ -1,0 +1,35 @@
+{
+  "name": "kiro-eks-gitops-factory",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "validate": "prettier --check . && markdownlint-cli2 \"src/**/*.mdx\"",
+    "test": "npm run build",
+    "format": "prettier --write .",
+    "lint": "markdownlint-cli2 \"src/**/*.mdx\"",
+    "check:content": "node scripts/check-content.mjs",
+    "verify:artifacts": "node scripts/verify-artifacts.mjs"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.41.6",
+    "astro": "^7.1.6",
+    "starlight-base-path": "^0.2.1",
+    "starlight-theme-vintage": "^0.1.0"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1",
+    "js-yaml": "^4.2.0",
+    "markdown-it": "^14.2.0",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "^0.22.1",
+    "prettier": "^3.5.0",
+    "sharp": "^0.35.3",
+    "typescript": "^5.8.0"
+  }
+}

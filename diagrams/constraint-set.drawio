@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net" agent="kiro-eks-gitops-factory" version="22.1.0">
+  <diagram id="constraint-set" name="Constraint Set">
+    <mxGraphModel dx="1000" dy="400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="230" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="c1" value="&lt;b&gt;Ingress and edge&lt;/b&gt;&lt;br&gt;httpsonly&lt;br&gt;k8singresswafv2&lt;br&gt;&lt;br&gt;TLS + WAFv2 on ALB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#147EBA;strokeWidth=2;arcSize=12;verticalAlign=top;spacing=10;fontColor=#232F3E;align=left;" vertex="1" parent="1">
+          <mxGeometry x="16" y="16" width="210" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2" value="&lt;b&gt;Workload hygiene&lt;/b&gt;&lt;br&gt;requiredlabels&lt;br&gt;disallowedtags&lt;br&gt;containerlimits&lt;br&gt;&lt;br&gt;Labels, tags, limits" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#FF9900;strokeWidth=2;arcSize=12;verticalAlign=top;spacing=10;fontColor=#232F3E;align=left;" vertex="1" parent="1">
+          <mxGeometry x="236" y="16" width="210" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3" value="&lt;b&gt;Privilege and host&lt;/b&gt;&lt;br&gt;privileged-containers&lt;br&gt;allow-privilege-escalation&lt;br&gt;host-namespaces&lt;br&gt;host-filesystem" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#D13212;strokeWidth=2;arcSize=12;verticalAlign=top;spacing=10;fontColor=#232F3E;align=left;" vertex="1" parent="1">
+          <mxGeometry x="456" y="16" width="210" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="c4" value="&lt;b&gt;Network and identity&lt;/b&gt;&lt;br&gt;block-nodeport-services&lt;br&gt;disallow-default-namespace&lt;br&gt;disallowanonymous&lt;br&gt;networkpolicy-egress-defined&lt;br&gt;verifydeprecatedapi" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#27AE60;strokeWidth=2;arcSize=12;verticalAlign=top;spacing=10;fontColor=#232F3E;align=left;" vertex="1" parent="1">
+          <mxGeometry x="676" y="16" width="210" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="note" value="Fourteen Gatekeeper constraints in four buckets — starter set, not a closed catalog" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontColor=#5A6A7E;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="0" y="200" width="900" height="22" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

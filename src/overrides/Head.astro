@@ -1,0 +1,21 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/Head.astro";
+---
+
+<Default {...Astro.props}><slot /></Default>
+<script>
+  import "../scripts/image-zoom.ts";
+</script>
+<style is:global>
+  /* Keep grouped sidebar entries visually uniform with peers. */
+  .sidebar-pane .top-level > li + li:has(details),
+  .sidebar-pane .top-level > li:has(details) + li:not(:has(details)) {
+    margin-top: 0.5rem;
+  }
+
+  /* Align top-level group labels with top-level links. */
+  .sidebar-pane .top-level > li > details > summary {
+    padding-inline: 0.625rem;
+  }
+</style>
