@@ -1,0 +1,16 @@
+<mxfile host="app.diagrams.net" agent="kiro-eks-gitops-factory" version="22.1.0">
+  <diagram id="gitops-backstop" name="GitOps Backstop">
+    <mxGraphModel dx="1000" dy="400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="220" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="c0" value="Chat / out-of-band&lt;br&gt;kubectl apply urge" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#D13212;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=10;" vertex="1" parent="1"><mxGeometry x="40" y="40" width="200" height="110" as="geometry"/></mxCell>
+        <mxCell id="c1" value="1 · Shell gate&lt;br&gt;Deny apply from chat&lt;br&gt;Allow kustomize build" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#147EBA;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=10;" vertex="1" parent="1"><mxGeometry x="320" y="40" width="240" height="110" as="geometry"/></mxCell>
+        <mxCell id="c2" value="2 · Argo CD sync&lt;br&gt;Cluster matches Git&lt;br&gt;Out-of-band apply does not stick" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#27AE60;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=10;" vertex="1" parent="1"><mxGeometry x="640" y="40" width="260" height="110" as="geometry"/></mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#879596;endArrow=block;endFill=1;" edge="1" parent="1" source="c0" target="c1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#879596;endArrow=block;endFill=1;" edge="1" parent="1" source="c1" target="c2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="note" value="Prevention in the IDE — Git remains authoritative on the cluster" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=12;fontColor=#5A6A7E;fontStyle=2;" vertex="1" parent="1"><mxGeometry x="0" y="180" width="960" height="20" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

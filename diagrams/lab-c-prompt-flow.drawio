@@ -1,0 +1,34 @@
+<mxfile host="app.diagrams.net" agent="kiro-eks-gitops-factory" version="22.1.0">
+  <diagram id="lab-c-prompt-flow" name="Lab C Prompt Flow">
+    <mxGraphModel dx="1000" dy="400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="840" pageHeight="320" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="c0" value="1 · Empty apps/&lt;br&gt;Only .gitkeep in the repo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#147EBA;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="24" width="200" height="88" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1" value="2 · Thin prompt&lt;br&gt;Name, image, host, replicas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#FF9900;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="320" y="24" width="200" height="88" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2" value="3 · add-app&lt;br&gt;Steering + skill fill the rest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#147EBA;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="600" y="24" width="200" height="88" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3" value="4 · Dual overlays&lt;br&gt;dev-eks-1 and prod-eks-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#FF9900;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="184" width="200" height="88" as="geometry"/>
+        </mxCell>
+        <mxCell id="c4" value="5 · PR + human&lt;br&gt;Review, then merge" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#27AE60;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="320" y="184" width="200" height="88" as="geometry"/>
+        </mxCell>
+        <mxCell id="c5" value="6 · Argo CD sync&lt;br&gt;Git wins on the cluster" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#147EBA;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="600" y="184" width="200" height="88" as="geometry"/>
+        </mxCell>
+        <mxCell id="e0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#879596;endArrow=block;endFill=1;" edge="1" parent="1" source="c0" target="c1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#879596;endArrow=block;endFill=1;" edge="1" parent="1" source="c1" target="c2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#879596;endArrow=block;endFill=1;" edge="1" parent="1" source="c3" target="c4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#879596;endArrow=block;endFill=1;" edge="1" parent="1" source="c4" target="c5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#879596;endArrow=block;endFill=1;" edge="1" parent="1" source="c2" target="c3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="note" value="Prompt names the app — the factory shapes the tree, then GitOps lands it" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=12;fontColor=#5A6A7E;fontStyle=2;" vertex="1" parent="1"><mxGeometry x="0" y="300" width="840" height="20" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

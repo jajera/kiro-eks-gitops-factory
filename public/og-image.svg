@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none" role="img" aria-label="EKS GitOps Factory">
+  <defs>
+    <linearGradient id="ogBg" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#232F3E"/>
+      <stop offset="1" stop-color="#131a22"/>
+    </linearGradient>
+    <radialGradient id="ogGlow" cx="0.78" cy="0.28" r="0.48" gradientUnits="objectBoundingBox">
+      <stop stop-color="#FF9900" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FF9900" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ogGlowTeal" cx="0.22" cy="0.78" r="0.42" gradientUnits="objectBoundingBox">
+      <stop stop-color="#48A9A6" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#48A9A6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" rx="12" fill="url(#ogBg)"/>
+  <rect width="1200" height="630" fill="url(#ogGlow)"/>
+  <rect width="1200" height="630" fill="url(#ogGlowTeal)"/>
+  <rect x="1" y="1" width="1198" height="628" rx="11" stroke="#FF9900" stroke-width="1" fill="none" opacity="0.35"/>
+
+  <!-- Brand mark + title -->
+  <g transform="translate(80, 64)">
+    <rect width="52" height="52" rx="12" fill="#1a2332"/>
+    <g transform="translate(2, 2) scale(1.5)">
+      <path d="M16 2.8 L27.6 9.4 V22.6 L16 29.2 L4.4 22.6 V9.4 Z" fill="#FF9900"/>
+      <path d="M10.2 16.2 L14.2 20.2 L22.2 11.4" stroke="#1a2332" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+  <text x="152" y="98" fill="#f4f1f8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="46" font-weight="700">EKS GitOps Factory</text>
+  <text x="152" y="140" fill="#b8c0cc" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24">Migrate existing apps onto EKS and Argo CD without inventing a new process</text>
+
+  <!-- Formula lock -->
+  <rect x="80" y="176" width="1040" height="58" rx="14" fill="#1a2332" stroke="#3d4f63" stroke-width="1"/>
+  <text x="600" y="213" text-anchor="middle" fill="#f4f1f8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24" font-weight="700">skills generate -&gt; hooks enforce -&gt; humans approve</text>
+
+  <!-- Migration converge -->
+  <rect x="80" y="258" width="1040" height="278" rx="14" fill="#1a2332" stroke="#3d4f63" stroke-width="1"/>
+  <text x="600" y="298" text-anchor="middle" fill="#879596" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="0.12em">ONE GITOPS PATH</text>
+
+  <!-- Sources -->
+  <rect x="112" y="324" width="150" height="56" rx="10" fill="#243040" stroke="#5A6A7E" stroke-width="1.5"/>
+  <text x="187" y="358" text-anchor="middle" fill="#f4f1f8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Podman</text>
+  <rect x="112" y="394" width="150" height="56" rx="10" fill="#243040" stroke="#5A6A7E" stroke-width="1.5"/>
+  <text x="187" y="428" text-anchor="middle" fill="#f4f1f8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Docker</text>
+  <rect x="112" y="464" width="150" height="56" rx="10" fill="#243040" stroke="#5A6A7E" stroke-width="1.5"/>
+  <text x="187" y="498" text-anchor="middle" fill="#f4f1f8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">ECS</text>
+
+  <!-- Arrow into factory -->
+  <path d="M 278 410 L 330 410" stroke="#879596" stroke-width="2.5"/>
+  <polygon points="326,402 340,410 326,418" fill="#879596"/>
+
+  <!-- Factory -->
+  <rect x="348" y="348" width="280" height="124" rx="14" fill="#243040" stroke="#FF9900" stroke-width="2"/>
+  <text x="488" y="392" text-anchor="middle" fill="#FF9900" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" letter-spacing="0.08em">FACTORY</text>
+  <text x="488" y="428" text-anchor="middle" fill="#f4f1f8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700">steering / skills / hooks</text>
+  <text x="488" y="456" text-anchor="middle" fill="#9aa5b5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15">thin prompt / dual overlays</text>
+
+  <!-- Arrow out -->
+  <path d="M 644 410 L 696 410" stroke="#879596" stroke-width="2.5"/>
+  <polygon points="692,402 706,410 692,418" fill="#879596"/>
+
+  <!-- Destination -->
+  <rect x="714" y="348" width="366" height="124" rx="14" fill="#243040" stroke="#48A9A6" stroke-width="2"/>
+  <text x="897" y="392" text-anchor="middle" fill="#48A9A6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" letter-spacing="0.08em">DESTINATION</text>
+  <text x="897" y="428" text-anchor="middle" fill="#f4f1f8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700">EKS + Argo CD</text>
+  <text x="897" y="456" text-anchor="middle" fill="#9aa5b5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15">Git is the path / humans merge</text>
+
+  <!-- Footer chips -->
+  <rect x="348" y="500" width="78" height="30" rx="15" fill="#243040" stroke="#FF9900" stroke-width="1"/>
+  <text x="387" y="520" text-anchor="middle" fill="#e8e0f4" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Lab A</text>
+  <rect x="438" y="500" width="78" height="30" rx="15" fill="#243040" stroke="#FF9900" stroke-width="1"/>
+  <text x="477" y="520" text-anchor="middle" fill="#e8e0f4" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Lab B</text>
+  <rect x="528" y="500" width="78" height="30" rx="15" fill="#243040" stroke="#FF9900" stroke-width="1"/>
+  <text x="567" y="520" text-anchor="middle" fill="#e8e0f4" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Lab C</text>
+  <rect x="620" y="500" width="220" height="30" rx="15" fill="#243040" stroke="#48A9A6" stroke-width="1"/>
+  <text x="730" y="520" text-anchor="middle" fill="#e8e0f4" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">docs companion / factory repo</text>
+</svg>

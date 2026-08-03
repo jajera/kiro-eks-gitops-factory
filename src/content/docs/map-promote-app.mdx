@@ -1,0 +1,29 @@
+---
+title: promote-app map
+description: Visual map of the promote-app skill — preconditions, the digest copy, what not to do, and the rollback.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [migrate-workload map](../map-migrate-workload/) covered the gated path for existing workloads.
+
+Deep dive for [`.kiro/skills/promote-app/SKILL.md`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/skills/promote-app/SKILL.md)
+— the smallest <Tooltip term="skill" label="skill" /> in the factory, and the last one. It is what
+Phase 7 of `migrate-workload` calls out to, and what every routine release runs.
+
+## The map
+
+<Still
+  src="media/promote-app-map.svg"
+  darkSrc="media/promote-app-map-dark.svg"
+  alt="Four-part promote-app map: the core move copying an identical image digest string from the dev overlay pin to the prod overlay pin, four preconditions to confirm before changing anything, the five promotion steps ending in a one-line pull request and a prod health confirmation, four things not to do, and the three-step rollback that leaves dev untouched"
+  caption="Copy the digest, one-line PR, confirm prod — and revert the PR if it is not healthy."
+/>
+
+The whole skill rests on one idea: promotion copies a digest, it does not rebuild. Prod runs the
+exact bytes verified on dev, so the diff is ideally a single line and the rollback is reverting
+that line. Rebuilding or retagging during promotion turns a reviewable one-line change into a
+deploy of untested bytes.
+
+Next: [Onboard an app (Lab C)](../lab-c/) runs the thin prompt that exercises all of this.

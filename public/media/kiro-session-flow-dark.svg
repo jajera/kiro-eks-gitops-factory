@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="304" viewBox="0 0 1040 304" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.28"/>
+    </filter>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6B7C8F"/></marker>
+  </defs>
+
+  <rect x="24" y="24" width="200" height="70" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <text x="38" y="52" font-size="13" font-weight="700" fill="#E8EAED">1 · Prompt</text>
+  <text x="38" y="74" font-size="12" fill="#8B9DAF">Thin user intent</text>
+  <rect x="280" y="24" width="200" height="70" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <text x="294" y="52" font-size="13" font-weight="700" fill="#E8EAED">2 · Agent</text>
+  <text x="294" y="74" font-size="12" fill="#8B9DAF">Loads steering + skills</text>
+  <rect x="536" y="24" width="200" height="70" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <text x="550" y="52" font-size="13" font-weight="700" fill="#E8EAED">3 · Skill</text>
+  <text x="550" y="74" font-size="12" fill="#8B9DAF">Orders the work</text>
+  <rect x="792" y="24" width="200" height="70" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <text x="806" y="52" font-size="13" font-weight="700" fill="#E8EAED">4 · File writes</text>
+  <text x="806" y="74" font-size="12" fill="#8B9DAF">Manifests on disk</text>
+  <rect x="24" y="182" width="200" height="70" rx="12" fill="#1A2332" stroke="#FF6B4A" stroke-width="2" filter="url(#s)"/>
+  <text x="38" y="210" font-size="13" font-weight="700" fill="#E8EAED">5 · Hooks</text>
+  <text x="38" y="232" font-size="12" fill="#8B9DAF">Validate / gate / deny</text>
+  <rect x="280" y="182" width="200" height="70" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <text x="294" y="210" font-size="13" font-weight="700" fill="#E8EAED">6 · Commit + PR</text>
+  <text x="294" y="232" font-size="12" fill="#8B9DAF">Git change proposed</text>
+  <rect x="536" y="182" width="200" height="70" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <text x="550" y="210" font-size="13" font-weight="700" fill="#E8EAED">7 · Human review</text>
+  <text x="550" y="232" font-size="12" fill="#8B9DAF">Merge judgement</text>
+  <rect x="792" y="182" width="200" height="70" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <text x="806" y="210" font-size="13" font-weight="700" fill="#E8EAED">8 · Argo CD sync</text>
+  <text x="806" y="232" font-size="12" fill="#8B9DAF">Cluster matches Git</text>
+  <line x1="230" y1="59" x2="274" y2="59" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="486" y1="59" x2="530" y2="59" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="742" y1="59" x2="786" y2="59" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M892,96 V138 H124 V172" fill="none" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="230" y1="217" x2="274" y2="217" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="486" y1="217" x2="530" y2="217" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="742" y1="217" x2="786" y2="217" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="520" y="288" text-anchor="middle" font-size="12" fill="#8B9DAF" font-style="italic">skills generate → hooks enforce → humans approve — then Argo CD syncs Git</text>
+</svg>

@@ -1,0 +1,304 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="1880" viewBox="0 0 1120 1880" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="11" markerHeight="11" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1.5,1.5 L8,5 L1.5,8.5" fill="none" stroke="#879596" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowsm" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2,2 L8,5 L2,8" fill="none" stroke="#879596" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1120" height="1880" fill="#FBFBFB"/>
+
+  <!-- ============ HEADER ============ -->
+  <text x="560" y="34" text-anchor="middle" font-size="19" font-weight="700" fill="#232F3E">Workload archetypes — pick first, then scaffold</text>
+  <text x="560" y="56" text-anchor="middle" font-size="12" fill="#5A6A7E">The contract a thin prompt inherits: one archetype decides which manifests exist and which inputs are mandatory</text>
+  <text x="560" y="76" text-anchor="middle" font-size="11" fill="#879596">.kiro/steering/workload-archetypes.md · loads conditionally on apps/** paths</text>
+
+  <!-- ============ STAGE 1 ============ -->
+  <rect x="310" y="96" width="500" height="56" rx="12" fill="#ffffff" stroke="#147EBA" stroke-width="2" filter="url(#s)"/>
+  <circle cx="342" cy="124" r="13" fill="#147EBA"/>
+  <text x="342" y="129" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="368" y="119" font-size="13" font-weight="700" fill="#232F3E">Migrated workload arrives</text>
+  <text x="368" y="139" font-size="11" fill="#5A6A7E">Maps to exactly one archetype — never two, never none</text>
+  <line x1="560" y1="152" x2="560" y2="174" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 2 : DECISION TREE ============ -->
+  <rect x="40" y="176" width="1040" height="196" rx="12" fill="#ffffff" stroke="#879596" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="204" r="13" fill="#879596"/>
+  <text x="72" y="209" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="96" y="209" font-size="13" font-weight="700" fill="#232F3E">Choosing between them — three traps that look like the wrong archetype</text>
+
+  <!-- row 1 -->
+  <rect x="60" y="226" width="330" height="38" rx="8" fill="#F4F6F8" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="76" y="250" font-size="11" fill="#232F3E">Process loops with an internal <tspan font-family="ui-monospace, monospace">sleep</tspan></text>
+  <line x1="392" y1="245" x2="418" y2="245" stroke="#879596" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+  <rect x="422" y="226" width="150" height="38" rx="8" fill="#27AE60"/>
+  <text x="497" y="250" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">scheduled-job</text>
+  <text x="588" y="242" font-size="10.5" fill="#5A6A7E">Not a worker. Let the CronJob controller own the schedule</text>
+  <text x="588" y="257" font-size="10.5" fill="#5A6A7E">so failures surface as failed Jobs instead of silent sleeps.</text>
+
+  <!-- row 2 -->
+  <rect x="60" y="274" width="330" height="38" rx="8" fill="#F4F6F8" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="76" y="298" font-size="11" fill="#232F3E">Worker polls a queue on a timer</text>
+  <line x1="392" y1="293" x2="418" y2="293" stroke="#879596" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+  <rect x="422" y="274" width="150" height="38" rx="8" fill="#FF9900"/>
+  <text x="497" y="298" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">queue-worker</text>
+  <text x="588" y="290" font-size="10.5" fill="#5A6A7E">Scaling on queue depth is the whole reason to migrate it.</text>
+  <text x="588" y="305" font-size="10.5" fill="#5A6A7E">A timer poll throws that away.</text>
+
+  <!-- row 3 -->
+  <rect x="60" y="322" width="330" height="38" rx="8" fill="#F4F6F8" stroke="#C9D3DB" stroke-width="1"/>
+  <text x="76" y="346" font-size="11" fill="#232F3E">Serves HTTP <tspan font-weight="700">and</tspan> consumes a queue</text>
+  <line x1="392" y1="341" x2="418" y2="341" stroke="#879596" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+  <rect x="422" y="322" width="150" height="38" rx="8" fill="#232F3E"/>
+  <text x="497" y="341" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">split into</text>
+  <text x="497" y="354" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">two apps</text>
+  <text x="588" y="338" font-size="10.5" fill="#5A6A7E">Unless they genuinely share in-process state — two</text>
+  <text x="588" y="353" font-size="10.5" fill="#5A6A7E">scaling profiles fighting over one Deployment is the smell.</text>
+
+  <line x1="560" y1="372" x2="560" y2="394" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 3 : ARCHETYPE MATRIX ============ -->
+  <circle cx="72" cy="412" r="13" fill="#147EBA"/>
+  <text x="72" y="417" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="96" y="417" font-size="13" font-weight="700" fill="#232F3E">The five archetypes — what each one is and what it costs you in inputs</text>
+
+  <!-- table header -->
+  <rect x="40" y="430" width="1040" height="32" fill="#232F3E"/>
+  <text x="58" y="451" font-size="11" font-weight="700" fill="#ffffff">Archetype</text>
+  <text x="200" y="451" font-size="11" font-weight="700" fill="#ffffff">Use when</text>
+  <text x="452" y="451" font-size="11" font-weight="700" fill="#ffffff">Core manifests in base</text>
+  <text x="784" y="451" font-size="11" font-weight="700" fill="#ffffff">Also required as input</text>
+
+  <!-- web-service -->
+  <rect x="40" y="462" width="1040" height="58" fill="#ffffff" stroke="#E3E8EC" stroke-width="1"/>
+  <rect x="40" y="462" width="5" height="58" fill="#147EBA"/>
+  <text x="58" y="486" font-size="11.5" font-weight="700" fill="#147EBA">web-service</text>
+  <text x="58" y="503" font-size="10" fill="#879596">HTTP archetype</text>
+  <text x="200" y="486" font-size="10.5" fill="#5A6A7E">Serves HTTP to users or</text>
+  <text x="200" y="502" font-size="10.5" fill="#5A6A7E">other services</text>
+  <text x="452" y="486" font-size="10.5" fill="#5A6A7E">Deployment, Service, Ingress</text>
+  <text x="452" y="502" font-size="10.5" fill="#27AE60">+ serviceaccount, networkpolicy</text>
+  <text x="784" y="480" font-size="10.5" fill="#5A6A7E">container port, health check path,</text>
+  <text x="784" y="495" font-size="10.5" fill="#5A6A7E">hostname (if ingress), readiness</text>
+  <text x="784" y="510" font-size="10.5" fill="#5A6A7E">+ liveness probes</text>
+
+  <!-- worker -->
+  <rect x="40" y="520" width="1040" height="58" fill="#FAFBFC" stroke="#E3E8EC" stroke-width="1"/>
+  <rect x="40" y="520" width="5" height="58" fill="#5A6A7E"/>
+  <text x="58" y="544" font-size="11.5" font-weight="700" fill="#5A6A7E">worker</text>
+  <text x="58" y="561" font-size="10" fill="#879596">background archetype</text>
+  <text x="200" y="544" font-size="10.5" fill="#5A6A7E">Always-on background</text>
+  <text x="200" y="560" font-size="10.5" fill="#5A6A7E">processing, no inbound traffic</text>
+  <text x="452" y="544" font-size="10.5" fill="#5A6A7E">Deployment</text>
+  <text x="452" y="560" font-size="10.5" fill="#27AE60">+ serviceaccount, networkpolicy</text>
+  <text x="784" y="544" font-size="10.5" fill="#879596" font-style="italic">none beyond the common set</text>
+  <text x="784" y="560" font-size="10.5" fill="#879596">(cheapest archetype to onboard)</text>
+
+  <!-- queue-worker -->
+  <rect x="40" y="578" width="1040" height="58" fill="#ffffff" stroke="#E3E8EC" stroke-width="1"/>
+  <rect x="40" y="578" width="5" height="58" fill="#FF9900"/>
+  <text x="58" y="602" font-size="11.5" font-weight="700" fill="#CC7A00">queue-worker</text>
+  <text x="58" y="619" font-size="10" fill="#879596">event-driven archetype</text>
+  <text x="200" y="602" font-size="10.5" fill="#5A6A7E">Event-driven, scales on</text>
+  <text x="200" y="618" font-size="10.5" fill="#5A6A7E">queue depth</text>
+  <text x="452" y="596" font-size="10.5" fill="#5A6A7E">Deployment, ScaledObject,</text>
+  <text x="452" y="611" font-size="10.5" fill="#5A6A7E">TriggerAuthentication</text>
+  <text x="452" y="627" font-size="10.5" fill="#27AE60">+ serviceaccount, networkpolicy</text>
+  <text x="784" y="596" font-size="10.5" fill="#5A6A7E">queue URL or name per worker</text>
+  <text x="784" y="611" font-size="10.5" fill="#5A6A7E">role, number of roles,</text>
+  <text x="784" y="627" font-size="10.5" fill="#5A6A7E">scaling bounds</text>
+
+  <!-- scheduled-job -->
+  <rect x="40" y="636" width="1040" height="58" fill="#FAFBFC" stroke="#E3E8EC" stroke-width="1"/>
+  <rect x="40" y="636" width="5" height="58" fill="#27AE60"/>
+  <text x="58" y="660" font-size="11.5" font-weight="700" fill="#1E8449">scheduled-job</text>
+  <text x="58" y="677" font-size="10" fill="#879596">periodic archetype</text>
+  <text x="200" y="660" font-size="10.5" fill="#5A6A7E">Runs periodically</text>
+  <text x="200" y="676" font-size="10.5" fill="#5A6A7E">then exits</text>
+  <text x="452" y="660" font-size="10.5" fill="#5A6A7E">CronJob</text>
+  <text x="452" y="676" font-size="10.5" fill="#27AE60">+ serviceaccount, networkpolicy</text>
+  <text x="784" y="660" font-size="10.5" fill="#5A6A7E">schedule (cron expression),</text>
+  <text x="784" y="676" font-size="10.5" fill="#5A6A7E">timeZone (defaults from profile)</text>
+
+  <!-- helm-chart -->
+  <rect x="40" y="694" width="1040" height="58" fill="#ffffff" stroke="#E3E8EC" stroke-width="1"/>
+  <rect x="40" y="694" width="5" height="58" fill="#D13212"/>
+  <text x="58" y="718" font-size="11.5" font-weight="700" fill="#D13212">helm-chart</text>
+  <text x="58" y="735" font-size="10" fill="#879596">escape hatch</text>
+  <text x="200" y="718" font-size="10.5" fill="#5A6A7E">An upstream chart fits better</text>
+  <text x="200" y="734" font-size="10.5" fill="#5A6A7E">than raw manifests</text>
+  <text x="452" y="718" font-size="10.5" fill="#5A6A7E">Application pointing at the chart</text>
+  <text x="452" y="734" font-size="10.5" fill="#D13212">no serviceaccount / networkpolicy</text>
+  <text x="784" y="718" font-size="10.5" fill="#5A6A7E">chart repo, chart name,</text>
+  <text x="784" y="734" font-size="10.5" fill="#5A6A7E">chart version</text>
+
+  <rect x="40" y="760" width="1040" height="30" rx="6" fill="#EAF4FB" stroke="#9CCBE8" stroke-width="1"/>
+  <text x="58" y="779" font-size="10.5" fill="#0F5E8C">Every archetype except <tspan font-weight="700">helm-chart</tspan> also gets <tspan font-weight="700">serviceaccount.yaml</tspan> and <tspan font-weight="700">networkpolicy.yaml</tspan> in base — that is why helm-chart is the escape hatch, not a default.</text>
+
+  <line x1="560" y1="790" x2="560" y2="812" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 4 : ALWAYS REQUIRED ============ -->
+  <rect x="40" y="814" width="1040" height="146" rx="12" fill="#ffffff" stroke="#147EBA" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="842" r="13" fill="#147EBA"/>
+  <text x="72" y="847" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="96" y="847" font-size="13" font-weight="700" fill="#232F3E">Collect before creating any files</text>
+  <text x="330" y="847" font-size="10.5" fill="#D13212" font-style="italic">a half-populated tree is harder to fix than an empty one</text>
+
+  <text x="60" y="872" font-size="11" fill="#232F3E"><tspan font-weight="700">Always required:</tspan> app_name · archetype · source image (any registry or a local build)</text>
+  <text x="60" y="893" font-size="11" fill="#232F3E"><tspan font-weight="700">Never scaffold with placeholders</tspan> for archetype-critical fields — ask instead</text>
+
+  <rect x="60" y="903" width="1000" height="44" rx="8" fill="#FFF8EC" stroke="#F0C070" stroke-width="1"/>
+  <text x="76" y="921" font-size="10.5" fill="#7A4E00"><tspan font-weight="700">The deployed image is never the source registry.</tspan> Mirror into the existing project ECR repo named after the app:</text>
+  <text x="76" y="938" font-size="10.5" font-family="ui-monospace, monospace" fill="#7A4E00">111122223333.dkr.ecr.ap-southeast-2.amazonaws.com/&lt;app&gt;<tspan font-family="-apple-system, sans-serif" font-style="italic"> — do not create the ECR repository</tspan></text>
+
+  <line x1="560" y1="960" x2="560" y2="982" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 5 : ASK WHEN RELEVANT ============ -->
+  <rect x="40" y="984" width="1040" height="120" rx="12" fill="#ffffff" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1012" r="13" fill="#FF9900"/>
+  <text x="72" y="1017" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">5</text>
+  <text x="96" y="1017" font-size="13" font-weight="700" fill="#232F3E">Ask about these when relevant to any archetype</text>
+
+  <rect x="60" y="1032" width="196" height="58" rx="8" fill="#F4F6F8" stroke="#C9D3DB"/>
+  <text x="70" y="1051" font-size="11" font-weight="700" fill="#232F3E">secrets</text>
+  <text x="70" y="1068" font-size="10" fill="#5A6A7E">store paths and keys,</text>
+  <text x="70" y="1082" font-size="10" fill="#5A6A7E">or none</text>
+
+  <rect x="266" y="1032" width="196" height="58" rx="8" fill="#F4F6F8" stroke="#C9D3DB"/>
+  <text x="276" y="1051" font-size="11" font-weight="700" fill="#232F3E">config</text>
+  <text x="276" y="1068" font-size="10" fill="#5A6A7E">ConfigMap, or a remote</text>
+  <text x="276" y="1082" font-size="10" fill="#5A6A7E">object the app fetches</text>
+
+  <rect x="472" y="1032" width="196" height="58" rx="8" fill="#F4F6F8" stroke="#C9D3DB"/>
+  <text x="482" y="1051" font-size="11" font-weight="700" fill="#232F3E">egress</text>
+  <text x="482" y="1068" font-size="10" fill="#5A6A7E">which destinations and</text>
+  <text x="482" y="1082" font-size="10" fill="#5A6A7E">ports it must reach</text>
+
+  <rect x="678" y="1032" width="186" height="58" rx="8" fill="#F4F6F8" stroke="#C9D3DB"/>
+  <text x="688" y="1051" font-size="11" font-weight="700" fill="#232F3E">ingress</text>
+  <text x="688" y="1068" font-size="10" fill="#5A6A7E">whether it needs an</text>
+  <text x="688" y="1082" font-size="10" fill="#5A6A7E">Ingress at all</text>
+
+  <rect x="874" y="1032" width="186" height="58" rx="8" fill="#F4F6F8" stroke="#C9D3DB"/>
+  <text x="884" y="1051" font-size="11" font-weight="700" fill="#232F3E">iam</text>
+  <text x="884" y="1068" font-size="10" fill="#5A6A7E">which AWS APIs it calls,</text>
+  <text x="884" y="1082" font-size="10" fill="#5A6A7E">so the role stays scoped</text>
+
+  <line x1="560" y1="1104" x2="560" y2="1126" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 6 : CONFIGURATION ============ -->
+  <rect x="40" y="1128" width="1040" height="94" rx="12" fill="#ffffff" stroke="#879596" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1156" r="13" fill="#879596"/>
+  <text x="72" y="1161" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">6</text>
+  <text x="96" y="1161" font-size="13" font-weight="700" fill="#232F3E">Configuration — do not rewrite a working config path</text>
+
+  <text x="60" y="1186" font-size="11" fill="#5A6A7E">Prefer a <tspan font-weight="700" fill="#232F3E">ConfigMap</tspan> for small, mostly-static configuration.</text>
+  <text x="60" y="1207" font-size="11" fill="#5A6A7E">If the app already reads config from object storage (<tspan font-family="ui-monospace, monospace" fill="#232F3E">-config s3://bucket/key.json</tspan>), keep that mechanism and grant <tspan font-family="ui-monospace, monospace" fill="#232F3E">GetObject</tspan> — translating it is migration risk with no payoff.</text>
+
+  <line x1="560" y1="1222" x2="560" y2="1244" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 7 : HARDENING ============ -->
+  <rect x="40" y="1246" width="1040" height="188" rx="12" fill="#ffffff" stroke="#27AE60" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1274" r="13" fill="#27AE60"/>
+  <text x="72" y="1279" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">7</text>
+  <text x="96" y="1279" font-size="13" font-weight="700" fill="#232F3E">Harden every plain-manifest app</text>
+  <text x="330" y="1279" font-size="10.5" fill="#879596" font-style="italic">(all archetypes except helm-chart)</text>
+
+  <circle cx="66" cy="1300" r="2.5" fill="#27AE60"/>
+  <text x="78" y="1304" font-size="10.5" fill="#5A6A7E">Explicit CPU and memory <tspan font-weight="700" fill="#232F3E">requests and limits on every container</tspan> — including init containers and sidecars.</text>
+
+  <circle cx="66" cy="1322" r="2.5" fill="#27AE60"/>
+  <text x="78" y="1326" font-size="10.5" fill="#5A6A7E"><tspan font-family="ui-monospace, monospace" fill="#232F3E">networkpolicy.yaml</tspan> with <tspan font-weight="700" fill="#232F3E">default-deny-all</tspan>, then one allow per required flow (DNS always; HTTPS / Pod Identity / SSH / ingress as needed). <tspan fill="#D13212">Never combine allows into one object.</tspan></text>
+
+  <circle cx="66" cy="1344" r="2.5" fill="#27AE60"/>
+  <text x="78" y="1348" font-size="10.5" fill="#5A6A7E">Labels per gitops-conventions: Namespace <tspan font-family="ui-monospace, monospace" fill="#232F3E">name</tspan> + <tspan font-family="ui-monospace, monospace" fill="#232F3E">owner</tspan>; everything else <tspan font-family="ui-monospace, monospace" fill="#232F3E">app.kubernetes.io/name</tspan> + <tspan font-family="ui-monospace, monospace" fill="#232F3E">owner</tspan>;</text>
+  <text x="78" y="1363" font-size="10.5" fill="#5A6A7E">selectors and NetPol <tspan font-family="ui-monospace, monospace" fill="#232F3E">podSelector</tspan> use <tspan font-family="ui-monospace, monospace" fill="#232F3E">app.kubernetes.io/name</tspan>; manifests kustomization adds <tspan font-family="ui-monospace, monospace" fill="#232F3E">app.kubernetes.io/part-of</tspan>.</text>
+
+  <circle cx="66" cy="1381" r="2.5" fill="#27AE60"/>
+  <text x="78" y="1385" font-size="10.5" fill="#5A6A7E">When secrets are needed: overlay <tspan font-family="ui-monospace, monospace" fill="#232F3E">secretproviderclass.yaml</tspan> in <tspan font-weight="700" fill="#232F3E">both clusters</tspan>, plus CSI mount, <tspan font-family="ui-monospace, monospace" fill="#232F3E">secretKeyRef</tspan>, and <tspan font-family="ui-monospace, monospace" fill="#232F3E">secretsmanager:GetSecretValue</tspan> in <tspan font-family="ui-monospace, monospace" fill="#232F3E">iam.tf</tspan>.</text>
+
+  <circle cx="66" cy="1403" r="2.5" fill="#27AE60"/>
+  <text x="78" y="1407" font-size="10.5" fill="#5A6A7E"><tspan font-weight="700" fill="#147EBA">web-service only:</tspan> readiness and liveness probes on every HTTP container; Deployment <tspan font-family="ui-monospace, monospace" fill="#232F3E">rollingUpdate.maxUnavailable: 0</tspan> / <tspan font-family="ui-monospace, monospace" fill="#232F3E">maxSurge: 1</tspan>.</text>
+
+  <rect x="60" y="1414" width="1000" height="0" fill="none"/>
+  <circle cx="66" cy="1425" r="2.5" fill="#D13212"/>
+  <text x="78" y="1429" font-size="10.5" fill="#5A6A7E">replicas (or autoscaler min) <tspan font-weight="700" fill="#232F3E">&gt;= 2</tspan>: add <tspan font-family="ui-monospace, monospace" fill="#232F3E">poddisruptionbudget.yaml</tspan> with <tspan font-family="ui-monospace, monospace" fill="#232F3E">minAvailable: 1</tspan>. <tspan fill="#D13212" font-weight="700">Never on a single-replica app — it blocks drains.</tspan></text>
+
+  <line x1="560" y1="1434" x2="560" y2="1456" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 8 : PER-ARCHETYPE SPECIFICS ============ -->
+  <circle cx="72" cy="1474" r="13" fill="#FF9900"/>
+  <text x="72" y="1479" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">8</text>
+  <text x="96" y="1479" font-size="13" font-weight="700" fill="#232F3E">Two archetypes carry extra rules the manifests alone will not teach you</text>
+
+  <!-- queue-worker column -->
+  <rect x="40" y="1492" width="510" height="188" rx="12" fill="#ffffff" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <rect x="40" y="1492" width="510" height="30" rx="12" fill="#FF9900"/>
+  <rect x="40" y="1510" width="510" height="12" fill="#FF9900"/>
+  <text x="56" y="1512" font-size="11.5" font-weight="700" fill="#ffffff">queue-worker specifics</text>
+
+  <text x="56" y="1542" font-size="10.5" font-weight="700" fill="#232F3E">One app, N Deployments</text>
+  <text x="56" y="1557" font-size="10" fill="#5A6A7E">Multiple worker roles sharing an image belong in a single</text>
+  <text x="56" y="1571" font-size="10" fill="#5A6A7E">app, differentiated by queue env var in overlay patches.</text>
+
+  <text x="56" y="1592" font-size="10.5" font-weight="700" fill="#232F3E">Scaling</text>
+  <text x="56" y="1607" font-size="10" fill="#5A6A7E">One ScaledObject per Deployment. Share a single</text>
+  <text x="56" y="1621" font-size="10" fill="#5A6A7E">TriggerAuthentication across all of them.</text>
+
+  <text x="56" y="1642" font-size="10.5" font-weight="700" fill="#232F3E">Sync waves — order is load-bearing</text>
+  <rect x="56" y="1650" width="86" height="20" rx="4" fill="#EAF4FB" stroke="#9CCBE8"/>
+  <text x="99" y="1664" text-anchor="middle" font-size="9.5" fill="#0F5E8C">SA + TriggerAuth</text>
+  <text x="99" y="1650" text-anchor="middle" font-size="8.5" font-weight="700" fill="#0F5E8C">wave 0</text>
+  <line x1="144" y1="1660" x2="158" y2="1660" stroke="#879596" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+  <rect x="162" y="1650" width="86" height="20" rx="4" fill="#EAF4FB" stroke="#9CCBE8"/>
+  <text x="205" y="1664" text-anchor="middle" font-size="9.5" fill="#0F5E8C">Deployments</text>
+  <text x="205" y="1650" text-anchor="middle" font-size="8.5" font-weight="700" fill="#0F5E8C">wave 1</text>
+  <line x1="250" y1="1660" x2="264" y2="1660" stroke="#879596" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+  <rect x="268" y="1650" width="86" height="20" rx="4" fill="#EAF4FB" stroke="#9CCBE8"/>
+  <text x="311" y="1664" text-anchor="middle" font-size="9.5" fill="#0F5E8C">ScaledObjects</text>
+  <text x="311" y="1650" text-anchor="middle" font-size="8.5" font-weight="700" fill="#0F5E8C">wave 2</text>
+  <text x="366" y="1657" font-size="9.5" fill="#D13212">The autoscaler must not</text>
+  <text x="366" y="1669" font-size="9.5" fill="#D13212">start before its auth exists.</text>
+
+  <!-- scheduled-job column -->
+  <rect x="570" y="1492" width="510" height="188" rx="12" fill="#ffffff" stroke="#27AE60" stroke-width="2" filter="url(#s)"/>
+  <rect x="570" y="1492" width="510" height="30" rx="12" fill="#27AE60"/>
+  <rect x="570" y="1510" width="510" height="12" fill="#27AE60"/>
+  <text x="586" y="1512" font-size="11.5" font-weight="700" fill="#ffffff">scheduled-job specifics</text>
+
+  <circle cx="592" cy="1541" r="2.5" fill="#27AE60"/>
+  <text x="604" y="1545" font-size="10" fill="#5A6A7E">Mount secrets on <tspan font-weight="700" fill="#232F3E">each Job pod directly.</tspan></text>
+  <text x="604" y="1559" font-size="10" fill="#5A6A7E">No long-lived pause Deployment to keep a secret synced —</text>
+  <text x="604" y="1573" font-size="10" fill="#5A6A7E">it costs a pod around the clock for nothing.</text>
+
+  <circle cx="592" cy="1592" r="2.5" fill="#27AE60"/>
+  <text x="604" y="1596" font-size="10" fill="#5A6A7E">Set <tspan font-family="ui-monospace, monospace" fill="#232F3E">readOnlyRootFilesystem: true</tspan> and give the job an</text>
+  <text x="604" y="1610" font-size="10" fill="#5A6A7E"><tspan font-family="ui-monospace, monospace" fill="#232F3E">emptyDir</tspan> at <tspan font-family="ui-monospace, monospace" fill="#232F3E">/tmp</tspan>.</text>
+
+  <circle cx="592" cy="1629" r="2.5" fill="#27AE60"/>
+  <text x="604" y="1633" font-size="10" fill="#5A6A7E">Set <tspan font-family="ui-monospace, monospace" fill="#232F3E">successfulJobsHistoryLimit</tspan> and <tspan font-family="ui-monospace, monospace" fill="#232F3E">failedJobsHistoryLimit</tspan></text>
+  <text x="604" y="1647" font-size="10" fill="#5A6A7E">so completed Jobs do not accumulate.</text>
+
+  <circle cx="592" cy="1663" r="2.5" fill="#D13212"/>
+  <text x="604" y="1667" font-size="10" fill="#5A6A7E">Set <tspan font-family="ui-monospace, monospace" fill="#232F3E">concurrencyPolicy: Forbid</tspan> unless overlapping runs are safe.</text>
+
+  <line x1="560" y1="1680" x2="560" y2="1702" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 9 : DOCUMENTATION ============ -->
+  <rect x="40" y="1704" width="1040" height="96" rx="12" fill="#ffffff" stroke="#27AE60" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1732" r="13" fill="#27AE60"/>
+  <text x="72" y="1737" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">9</text>
+  <text x="96" y="1737" font-size="13" font-weight="700" fill="#232F3E">Documentation closes the scaffold</text>
+
+  <text x="60" y="1762" font-size="10.5" fill="#5A6A7E">Every app gets <tspan font-family="ui-monospace, monospace" fill="#232F3E">apps/&lt;app&gt;/README.md</tspan>: what it does, its inputs and outputs, its schedule or trigger, and which AWS resources it touches.</text>
+  <text x="60" y="1783" font-size="10.5" fill="#5A6A7E"><tspan font-weight="700" fill="#232F3E">queue-worker and scheduled-job also get a small Mermaid data-flow diagram</tspan> — those are the apps whose behaviour is least obvious from the manifests.</text>
+
+  <!-- ============ FOOTER ============ -->
+  <rect x="40" y="1822" width="1040" height="34" rx="8" fill="#232F3E"/>
+  <text x="560" y="1844" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">pick → choose carefully → collect inputs → scaffold → harden → document</text>
+</svg>

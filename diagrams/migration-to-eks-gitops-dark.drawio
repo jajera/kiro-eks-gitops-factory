@@ -1,0 +1,110 @@
+<mxfile host="65bd71144e">
+    <diagram id="migration-to-eks-gitops" name="Migrate to EKS GitOps">
+        <mxGraphModel dx="287" dy="238" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1260" pageHeight="540" background="#131A22" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="Migrate existing containers onto one EKS + Argo CD GitOps path" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#F4F1F8;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="16" width="1200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="subtitle" value="Hundreds of containers · multiple teams · one factory process instead of each person inventing a layout" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontColor=#94A3B8;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="46" width="1200" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="left" value="Existing today" style="swimlane;horizontal=0;startSize=32;fillColor=#1E2936;strokeColor=#5A6A7E;fontColor=#F4F1F8;fontStyle=1;fontSize=13;rounded=1;arcSize=8;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="84" width="400" height="420" as="geometry"/>
+                </mxCell>
+                <mxCell id="docker-icon" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://jajera.github.io/arch-icons/icons/docker/docker-mark-white.svg;" vertex="1" parent="left">
+                    <mxGeometry x="56" y="36" width="48" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="docker-label" value="&lt;b&gt;Docker&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#94A3B8&quot;&gt;Compose / hosts&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontColor=#F4F1F8;fontSize=13;" vertex="1" parent="left">
+                    <mxGeometry x="120" y="36" width="220" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="podman-icon" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://jajera.github.io/arch-icons/icons/podman/podman-icon-white.svg;" vertex="1" parent="left">
+                    <mxGeometry x="56" y="116" width="48" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="podman-label" value="&lt;b&gt;Podman&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#94A3B8&quot;&gt;local / VM hosts&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontColor=#F4F1F8;fontSize=13;" vertex="1" parent="left">
+                    <mxGeometry x="120" y="116" width="220" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="ecs-icon" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://jajera.github.io/aws-icons/icons/service/containers/Arch_Amazon-Elastic-Container-Service_64.svg;" parent="left" vertex="1">
+                    <mxGeometry x="56" y="196" width="48" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="ecs-label" value="&lt;b&gt;Amazon ECS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#94A3B8&quot;&gt;tasks / services already on AWS&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontColor=#F4F1F8;fontSize=13;" parent="left" vertex="1">
+                    <mxGeometry x="120" y="196" width="240" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="vm-icon" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://jajera.github.io/arch-icons/icons/libvirt/logo-square.svg;" vertex="1" parent="left">
+                    <mxGeometry x="56" y="276" width="48" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="vm-label" value="&lt;b&gt;VM hosts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#94A3B8&quot;&gt;libvirt / VMs / bare metal&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontColor=#F4F1F8;fontSize=13;" vertex="1" parent="left">
+                    <mxGeometry x="120" y="276" width="240" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="left-note" value="Many teams · each app onboarded a different way" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontColor=#94A3B8;fontStyle=2;" parent="left" vertex="1">
+                    <mxGeometry x="30" y="360" width="340" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="factory" value="&lt;b&gt;GitOps factory&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;skills generate&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;→ hooks enforce&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;→ humans approve&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F1720;strokeColor=#FF9900;strokeWidth=2;fontColor=#FFFFFF;align=center;verticalAlign=middle;spacing=10;arcSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="239" width="180" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="factory-sub" value="Same repo shape&lt;br&gt;for every app" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontColor=#94A3B8;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="390" width="180" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7A8A9A;strokeWidth=2;endArrow=classic;endFill=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="docker-icon" target="factory" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7A8A9A;strokeWidth=2;endArrow=classic;endFill=1;" parent="1" source="podman-icon" target="factory" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7A8A9A;strokeWidth=2;endArrow=classic;endFill=1;" parent="1" source="ecs-icon" target="factory" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7A8A9A;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" parent="1" source="vm-icon" target="factory" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="right" value="Target path" style="swimlane;horizontal=0;startSize=32;fillColor=#1A2332;strokeColor=#3B9DD6;fontColor=#F4F1F8;fontStyle=1;fontSize=13;rounded=1;arcSize=8;" parent="1" vertex="1">
+                    <mxGeometry x="740" y="84" width="480" height="420" as="geometry"/>
+                </mxCell>
+                <mxCell id="eks-icon" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://jajera.github.io/aws-icons/icons/service/containers/Arch_Amazon-Elastic-Kubernetes-Service_64.svg;" parent="right" vertex="1">
+                    <mxGeometry x="56" y="28" width="52" height="52" as="geometry"/>
+                </mxCell>
+                <mxCell id="eks-label" value="&lt;b&gt;Amazon EKS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#94A3B8&quot;&gt;cluster already running&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontColor=#F4F1F8;fontSize=13;" parent="right" vertex="1">
+                    <mxGeometry x="124" y="28" width="260" height="52" as="geometry"/>
+                </mxCell>
+                <mxCell id="k8s-icon" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://jajera.github.io/cncf-icons/icons/kubernetes/kubernetes-icon-white.svg;" vertex="1" parent="right">
+                    <mxGeometry x="56" y="108" width="48" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="k8s-label" value="&lt;b&gt;Kubernetes&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#94A3B8&quot;&gt;API / workloads on the cluster&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontColor=#F4F1F8;fontSize=13;" vertex="1" parent="right">
+                    <mxGeometry x="120" y="108" width="260" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="argo-icon" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://jajera.github.io/cncf-icons/icons/argo/argo-icon-white.svg;" vertex="1" parent="right">
+                    <mxGeometry x="56" y="188" width="48" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="argo-label" value="&lt;b&gt;Argo CD&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#94A3B8&quot;&gt;GitOps sync to the cluster&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontColor=#F4F1F8;fontSize=13;" vertex="1" parent="right">
+                    <mxGeometry x="120" y="188" width="260" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="git-icon" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://jajera.github.io/arch-icons/icons/git/git-icon.svg;" vertex="1" parent="right">
+                    <mxGeometry x="56" y="256" width="48" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="ecr-icon" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://jajera.github.io/aws-icons/icons/service/containers/Arch_Amazon-Elastic-Container-Registry_64.svg;" parent="right" vertex="1">
+                    <mxGeometry x="56" y="320" width="48" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="ecr-label" value="&lt;b&gt;Amazon ECR&lt;/b&gt; &lt;font style=&quot;font-size:11px&quot; color=&quot;#94A3B8&quot;&gt;(images when used)&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontColor=#F4F1F8;fontSize=13;" parent="right" vertex="1">
+                    <mxGeometry x="120" y="320" width="260" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="right-note" value="Humans still merge · Argo syncs what lands in Git" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontColor=#94A3B8;fontStyle=2;" parent="right" vertex="1">
+                    <mxGeometry x="30" y="380" width="420" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="&lt;b&gt;Git repository&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#94A3B8&quot;&gt;one app tree shape · PRs for changes&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontColor=#F4F1F8;fontSize=13;" vertex="1" parent="right">
+                    <mxGeometry x="120" y="256" width="280" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="a5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FF9900;strokeWidth=3;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="factory" target="git-icon" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="690" y="300" as="sourcePoint"/>
+                        <mxPoint x="790" y="376" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="710" y="304"/>
+                            <mxPoint x="710" y="364"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

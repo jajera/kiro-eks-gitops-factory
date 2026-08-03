@@ -1,0 +1,31 @@
+---
+title: migrate-workload map
+description: Visual map of the migrate-workload skill — eight gated phases, the rollback path, and what to fix after cutover.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [manage-clusters map](../map-manage-clusters/) covered cluster-wide configuration.
+
+Deep dive for [`.kiro/skills/migrate-workload/SKILL.md`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/skills/migrate-workload/SKILL.md)
+— the largest <Tooltip term="skill" label="skill" /> in the factory, and the only one built as a
+gated pipeline rather than a scaffold. It is what runs when an app is moving off EC2, ECS, or
+Compose rather than being created new.
+
+## The map
+
+<Still
+  src="media/migrate-workload-map.svg"
+  darkSrc="media/migrate-workload-map-dark.svg"
+  alt="Eight-phase migrate-workload map with a gate on every phase: discover and inventory thirteen properties, containerise, publish the image to ECR, confirm cluster readiness, declare identity and secrets, generate GitOps manifests via a source-to-Kubernetes translation table, sync and verify on dev behind a human merge, promote and cut over at DNS, a named rollback path kept available until decommission, human-confirmed decommission, and the observability, alerting, and runbook work that follows cutover"
+  caption="Eight phases, a gate on each, and a rollback path that stays open until Phase 8."
+/>
+
+The gates are the design. Nothing starts until the previous gate passes, and a failed gate means
+re-running that phase rather than working around it. Everything through Phase 6 is purely
+additive, so the source workload keeps serving traffic and rollback stays a DNS change — right up
+until decommission, which needs explicit human confirmation and is the one step that cannot be
+undone with a flip.
+
+Next: [promote-app map](../map-promote-app/) covers the digest copy Phase 7 calls out to.

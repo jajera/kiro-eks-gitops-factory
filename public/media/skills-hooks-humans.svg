@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="180" viewBox="0 0 900 180" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#FF9900"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="180" fill="#F7F8F8"/>
+
+  <!-- Title -->
+  <text x="450" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#232F3E">The factory pipeline: decisions live in the repo, not the prompt</text>
+
+  <!-- Stage 1: Skills -->
+  <rect x="60" y="50" width="210" height="110" rx="12" fill="#ffffff" stroke="#147EBA" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="105" cy="82" r="18" fill="#147EBA" opacity="0.12"/>
+  <text x="105" y="87" text-anchor="middle" font-size="16" fill="#147EBA">⚙️</text>
+  <text x="165" y="80" font-size="14" font-weight="700" fill="#232F3E">Skills</text>
+  <text x="165" y="98" font-size="11" fill="#5A6A7E">generate</text>
+  <text x="100" y="126" font-size="11" fill="#5A6A7E">Ordered steps produce</text>
+  <text x="100" y="142" font-size="11" fill="#5A6A7E">the correct tree shape</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="270" y1="105" x2="330" y2="105" stroke="#FF9900" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: Hooks -->
+  <rect x="340" y="50" width="210" height="110" rx="12" fill="#ffffff" stroke="#FF9900" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="385" cy="82" r="18" fill="#FF9900" opacity="0.12"/>
+  <text x="385" y="87" text-anchor="middle" font-size="16" fill="#FF9900">🛡️</text>
+  <text x="445" y="80" font-size="14" font-weight="700" fill="#232F3E">Hooks</text>
+  <text x="445" y="98" font-size="11" fill="#5A6A7E">enforce</text>
+  <text x="380" y="126" font-size="11" fill="#5A6A7E">Block forbidden paths</text>
+  <text x="380" y="142" font-size="11" fill="#5A6A7E">regardless of prompt</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="550" y1="105" x2="610" y2="105" stroke="#FF9900" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 3: Humans -->
+  <rect x="620" y="50" width="210" height="110" rx="12" fill="#ffffff" stroke="#27AE60" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="665" cy="82" r="18" fill="#27AE60" opacity="0.12"/>
+  <text x="665" y="87" text-anchor="middle" font-size="16" fill="#27AE60">👤</text>
+  <text x="725" y="80" font-size="14" font-weight="700" fill="#232F3E">Humans</text>
+  <text x="725" y="98" font-size="11" fill="#5A6A7E">approve</text>
+  <text x="660" y="126" font-size="11" fill="#5A6A7E">PR review + merge —</text>
+  <text x="660" y="142" font-size="11" fill="#5A6A7E">judgement stays human</text>
+
+  <!-- Bottom note -->
+  <text x="450" y="175" text-anchor="middle" font-size="11" fill="#5A6A7E" font-style="italic">Prompting harder does not fix it — structure in the repo does</text>
+</svg>

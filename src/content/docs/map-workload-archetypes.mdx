@@ -1,0 +1,29 @@
+---
+title: Workload archetypes map
+description: Visual map of workload-archetypes steering — pick, collect inputs, scaffold, harden, document.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [Project profile map](../map-project-profile/) covered always-on environment keys.
+
+Deep dive for [`.kiro/steering/workload-archetypes.md`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/steering/workload-archetypes.md)
+— conditional on `apps/**`. One <Tooltip term="web-service" label="web-service" /> (or other)
+archetype decides which manifests exist and which inputs are mandatory. Lab C's `demo-nginx`
+uses `web-service`.
+
+## The map
+
+<Still
+  src="media/workload-archetypes-flow.svg"
+  darkSrc="media/workload-archetypes-flow-dark.svg"
+  alt="Nine-stage workload archetype contract: map the workload, three tie-break rules, a five-archetype comparison matrix, always-required inputs, per-archetype inputs, optional inputs, configuration guidance, hardening rules, queue-worker and scheduled-job specifics, and required documentation"
+  caption="The whole archetype contract: pick, collect inputs, scaffold, harden, document."
+/>
+
+Two reviewer traps worth naming: a `sleep` loop shipped as a `worker` hides failures that a
+`scheduled-job` would surface as failed Jobs; and queue-worker sync waves matter — a
+`ScaledObject` that starts before its `TriggerAuthentication` comes up unauthenticated.
+
+Next: [GitOps conventions map](../map-gitops-conventions/) covers the shape every app lands in.

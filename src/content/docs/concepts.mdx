@@ -1,0 +1,148 @@
+---
+title: Building blocks you will touch
+description: Short orientation for EKS, Argo CD, Gatekeeper, gator, and MCP before you install tools or run labs.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [Why manual onboarding breaks](../why/) settled why multi-team hand migration drifts.
+
+This page is orientation only — no install steps. Glossary tooltips cover one-line definitions;
+here is how the pieces fit **this** factory story. If you already live in these tools, skim and
+move on to [Install the toolchain](../setup/). Commands and trees live in
+[jajera/kiro-eks-argocd-migration](https://github.com/jajera/kiro-eks-argocd-migration).
+
+## The path you already have
+
+### EKS
+
+<Tooltip term="eks" label="Amazon EKS" /> is the managed Kubernetes control plane. This factory
+**assumes a cluster already exists**. Labs A–C do not create EKS; they shape app trees and prove
+policy offline so you are not inventing layout on a live API.
+
+### Argo CD
+
+<Tooltip term="argo-cd" label="Argo CD" /> is the GitOps sync engine. Humans merge a PR; Argo
+syncs what landed in Git. The factory drafts manifests and Application wiring — it does not bypass
+review, and it does not `kubectl apply` from chat.
+
+Together: **EKS runs workloads; Argo CD reconciles desired state from Git.** The factory makes
+the Git side consistent so both stay predictable at scale.
+
+## Policy offline before the cluster
+
+### Gatekeeper
+
+<Tooltip term="gatekeeper" label="OPA Gatekeeper" /> is the in-cluster admission controller. Once
+installed, it evaluates <Tooltip term="constraint-template" label="ConstraintTemplates" /> against
+objects as they enter the API. Live Lab D (out of scope here) is where that webhook matters on a
+real cluster.
+
+### gator
+
+<Tooltip term="gator" label="gator" /> is the **offline** Gatekeeper CLI. Lab A runs
+`gator verify` against constraint suites on your laptop — no cluster credentials, no webhook.
+That is why setup pins a gator version and why chart skew is called out separately: the CLI and
+the vendored Helm chart are related but not the same binary pin.
+
+**Rule of thumb:** Gatekeeper enforces on the cluster; gator proves the same rules before the
+cluster is in the loop. Which violations actually fail depends on each Constraint's
+`enforcementAction` — see below.
+
+### The constraint set
+
+Every rule below is a ConstraintTemplate under
+[`infrastructure/gatekeeper/constraint-templates/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/infrastructure/gatekeeper/constraint-templates),
+each bound to a scope by a matching <Tooltip term="constraint" label="Constraint" />, each proven
+by a gator suite. Lab A walks the full chain for one of these (`httpsonly`); the rest follow the
+same pattern.
+
+<Still
+  src="media/constraint-set.svg"
+  darkSrc="media/constraint-set-dark.svg"
+  alt="Four buckets of Gatekeeper constraints: ingress and edge, workload hygiene, privilege and host, network and identity"
+  caption="Fourteen constraints grouped by concern — the visual map of the table below."
+/>
+
+| Constraint | What it checks |
+| --- | --- |
+| `httpsonly` | <Tooltip term="ingress" label="Ingress" /> without `kubernetes.io/ingress.allow-http: "false"` — no plaintext HTTP ingress |
+| `k8singresswafv2` | Internet-facing <Tooltip term="alb" label="ALB" /> Ingress missing a valid regional <Tooltip term="wafv2" label="WAFv2" />{" "}<Tooltip term="web-acl" label="Web ACL" /> ARN |
+| `requiredlabels` | Resources missing required labels or with label values that fail the pattern |
+| `disallowedtags` | Container images pinned to a blocked tag (for example `latest`) |
+| `containerlimits` | Containers without memory/CPU limits, or limits above the allowed ceiling |
+| `privileged-containers` | Pods running with <Tooltip term="privileged" label="privileged: true" /> |
+| `allow-privilege-escalation` | Containers with <Tooltip term="allow-privilege-escalation" label="allowPrivilegeEscalation: true" /> |
+| `host-namespaces` | Pods sharing the <Tooltip term="host-namespaces" label="host PID or IPC namespace" /> |
+| `host-filesystem` | Pods mounting <Tooltip term="host-filesystem" label="host paths" /> outside the allowed list |
+| `block-nodeport-services` | Any `Service` of type <Tooltip term="nodeport" label="NodePort" /> |
+| `disallow-default-namespace` | Namespaced resources deployed into `default` |
+| `disallowanonymous` | <Tooltip term="rbac" label="RBAC" /> bindings that grant `system:anonymous` or `system:unauthenticated` |
+| `networkpolicy-egress-defined` | Namespaces missing a <Tooltip term="networkpolicy" label="NetworkPolicy" /> that defines egress |
+| `verifydeprecatedapi` | Objects using a <Tooltip term="deprecated-api" label="deprecated Kubernetes API version" /> for the cluster's version |
+
+:::note
+This table is a **starter set**, not a closed catalog. Keep, drop, or add constraints to match
+what your reviews actually catch — for example stricter image digests, egress defaults, or
+extra Ingress annotations. The set evolves with policy maturity, cluster version, and which
+failure modes show up in PRs. The <Tooltip term="pdb" label="PDB" /> rule
+(`minAvailable: 1` only when `replicas >= 2`) is enforced by a Kiro hook, not a Gatekeeper
+constraint — see [Lab B](../lab-b/) for that distinction.
+:::
+
+### Defined is not the same as enforced
+
+The table above is an **inventory of Rego checks**. Whether a violation actually fails is
+`spec.enforcementAction` on each <Tooltip term="constraint" label="Constraint" />:
+
+```yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sHttpsOnly
+metadata:
+  name: ingress-https-only
+spec:
+  enforcementAction: deny # dryrun | deny
+  match:
+    kinds:
+      - apiGroups: ["extensions", "networking.k8s.io"]
+        kinds: ["Ingress"]
+```
+
+Under **`dryrun`**, Gatekeeper still evaluates the object and can record a violation — but it does
+**not** reject admission, and app checks that run `gator test --deny-only` stay green. Nothing in
+the PR path fails, so non-compliant manifests keep shipping. The bite comes later: the day you
+flip the same field to **`deny`**, every accumulated violation starts blocking at once.
+
+:::caution
+If you are going to run Gatekeeper, introduce it **from the start** and ship constraints as
+**`deny`** once the house pattern exists. Treat dryrun as a short observe window, not a steady
+state — otherwise “green” CI only means deny-only gates passed, not that the inventory above is
+clean.
+:::
+
+This factory follows that stance for ready rules (including `httpsonly`): they ship as **`deny`**.
+The rare holdout is rules that need real account-specific values you do not have yet — notably
+<Tooltip term="wafv2" label="WAFv2" /> Web ACL ARNs — which stay **`dryrun`** until those ARNs
+exist. Lab A walks one Constraint end to end, including this field.
+
+## How Kiro reaches context
+
+### MCP
+
+<Tooltip term="mcp" label="MCP" /> (Model Context Protocol) is how <Tooltip term="kiro" label="Kiro" />
+attaches tools and doc sources to a session. In this factory:
+
+- **Docs MCP stays on** so the agent can read project guidance without inventing APIs.
+- **Live cluster adapters stay off** until a human intentionally enables them — the Git-only hook
+  story in Lab C depends on that boundary.
+
+MCP is not something you install in setup for Labs A–C beyond what Kiro already ships. You will
+see the config map in [Lab B](../lab-b/); you do not need a custom MCP server to start Lab A.
+
+## What you install next
+
+Setup only gets you a clone of the upstream factory repo, gator, kustomize, and Kiro. Concepts
+above are the map; install is the checklist.
+
+Next: [Install the toolchain](../setup/) — clone, pin gator, and confirm Lab prerequisites.

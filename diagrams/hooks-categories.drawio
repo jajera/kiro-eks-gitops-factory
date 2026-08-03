@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net" agent="kiro-eks-gitops-factory" version="22.1.0">
+  <diagram id="hooks-categories" name="Hooks Categories">
+    <mxGraphModel dx="1000" dy="400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="c0" value="Shell gate&lt;br&gt;block-infra-commands&lt;br&gt;preToolUse" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#D13212;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=8;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="280" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1" value="Scaffold checks&lt;br&gt;validate-app / infra&lt;br&gt;fileEdited" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#FF9900;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=8;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="310" y="20" width="280" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2" value="Build / policy&lt;br&gt;kustomize + gator&lt;br&gt;policy-validate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#147EBA;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=8;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="600" y="20" width="280" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="note" value="IDE-level hooks — enforce for every agent" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=12;fontColor=#5A6A7E;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="0" y="170" width="900" height="20" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

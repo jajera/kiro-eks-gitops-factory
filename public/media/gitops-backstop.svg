@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="220" viewBox="0 0 960 220" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
+    </filter>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#879596"/></marker>
+  </defs>
+
+  <rect x="40" y="40" width="200" height="110" rx="12" fill="#ffffff" stroke="#D13212" stroke-width="2" filter="url(#s)"/>
+  <text x="56" y="72" font-size="13" font-weight="700" fill="#232F3E">Chat / out-of-band</text>
+  <text x="56" y="96" font-size="12" fill="#5A6A7E">`kubectl apply` urge</text>
+  <text x="56" y="118" font-size="12" fill="#5A6A7E">or live cluster mutate</text>
+
+  <rect x="320" y="40" width="240" height="110" rx="12" fill="#ffffff" stroke="#147EBA" stroke-width="2" filter="url(#s)"/>
+  <text x="336" y="72" font-size="13" font-weight="700" fill="#147EBA">1 · Shell gate</text>
+  <text x="336" y="96" font-size="12" fill="#5A6A7E">Deny apply from chat</text>
+  <text x="336" y="118" font-size="12" fill="#5A6A7E">Allow `kustomize build`</text>
+
+  <rect x="640" y="40" width="260" height="110" rx="12" fill="#ffffff" stroke="#27AE60" stroke-width="2" filter="url(#s)"/>
+  <text x="656" y="72" font-size="13" font-weight="700" fill="#27AE60">2 · Argo CD sync</text>
+  <text x="656" y="96" font-size="12" fill="#5A6A7E">Cluster matches Git</text>
+  <text x="656" y="118" font-size="12" fill="#5A6A7E">Out-of-band apply does not stick</text>
+
+  <line x1="240" y1="95" x2="318" y2="95" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="560" y1="95" x2="638" y2="95" stroke="#879596" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="480" y="190" text-anchor="middle" font-size="12" fill="#5A6A7E" font-style="italic">Prevention in the IDE — Git remains authoritative on the cluster</text>
+</svg>

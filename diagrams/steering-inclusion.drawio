@@ -1,0 +1,28 @@
+<mxfile host="app.diagrams.net" agent="kiro-eks-gitops-factory" version="22.1.0">
+  <diagram id="steering-inclusion" name="Steering Inclusion">
+    <mxGraphModel dx="1100" dy="400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1040" pageHeight="360" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="c0" value="&lt;b&gt;Session starts&lt;/b&gt;&lt;br&gt;Kiro opens a turn&lt;br&gt;against this repo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#147EBA;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=10;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="108" width="210" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1" value="&lt;b&gt;&lt;font color=&quot;#147EBA&quot;&gt;always&lt;/font&gt;&lt;/b&gt;&lt;br&gt;project-profile.md&lt;br&gt;gitops-conventions.md&lt;br&gt;Cheap facts — load every turn" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#147EBA;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=10;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="480" y="24" width="320" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2" value="&lt;b&gt;&lt;font color=&quot;#FF9900&quot;&gt;fileMatch (conditional)&lt;/font&gt;&lt;/b&gt;&lt;br&gt;archetypes · identity · policy&lt;br&gt;ci-workflows (.github/**)&lt;br&gt;Load only when paths match" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#FF9900;strokeWidth=2;arcSize=12;fontColor=#232F3E;align=left;spacing=10;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="480" y="184" width="320" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#879596;endArrow=block;endFill=1;" edge="1" parent="1" source="c0" target="c1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#879596;endArrow=block;endFill=1;" edge="1" parent="1" source="c0" target="c2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="note" value="Heavy archetype rules stay out of the window until apps/** is in play" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=12;fontColor=#5A6A7E;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="0" y="340" width="1040" height="20" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

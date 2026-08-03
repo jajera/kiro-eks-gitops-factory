@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1220" viewBox="0 0 1400 1220" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="11" markerHeight="11" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1.5,1.5 L8,5 L1.5,8.5" fill="none" stroke="#56657A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowbig" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="14" markerHeight="14" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1.5,1.5 L8,5 L1.5,8.5" fill="none" stroke="#4ADE80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="1220" fill="#0F1720"/>
+
+  <!-- ============ HEADER ============ -->
+  <text x="700" y="34" text-anchor="middle" font-size="19" font-weight="700" fill="#E8EAED">promote-app — a digest copy, not a rebuild</text>
+  <text x="700" y="56" text-anchor="middle" font-size="12" fill="#8B9DAF">Prod must run the exact bytes verified on dev-eks-1. Nothing is built, retagged, or resolved again during promotion.</text>
+  <text x="700" y="76" text-anchor="middle" font-size="11" fill="#7C8CA0">.kiro/skills/promote-app/SKILL.md · fires on "promote", "ship to prod", "roll out to production", "copy a digest from dev to prod"</text>
+
+  <!-- ============ THE CORE MOVE ============ -->
+  <rect x="40" y="94" width="1320" height="118" rx="12" fill="#1A2332" stroke="#4ADE80" stroke-width="2" filter="url(#s)"/>
+  <text x="60" y="118" font-size="13" font-weight="700" fill="#E8EAED">The entire operation, in one move</text>
+  <text x="330" y="118" font-size="10.5" fill="#7C8CA0" font-style="italic">one file changes, ideally one line of diff</text>
+
+  <text x="60" y="142" font-size="10.5" fill="#8B9DAF">Read the pinned image string from the dev overlay and write <tspan font-weight="700" fill="#E8EAED">that same string, character for character</tspan>, into the matching prod overlay pin file.</text>
+
+  <rect x="60" y="154" width="590" height="46" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="74" y="170" font-size="9.5" font-weight="700" fill="#9CCBE8">DEV OVERLAY PIN · verified</text>
+  <text x="74" y="188" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">...amazonaws.com/&lt;app&gt;:&lt;tag&gt;<tspan font-weight="700" fill="#4ADE80">@sha256:&lt;digest&gt;</tspan></text>
+
+  <line x1="658" y1="177" x2="698" y2="177" stroke="#4ADE80" stroke-width="2.5" marker-end="url(#arrowbig)"/>
+  <text x="678" y="168" text-anchor="middle" font-size="8.5" font-weight="700" fill="#4ADE80">copy</text>
+
+  <rect x="706" y="154" width="634" height="46" rx="8" fill="#12301A" stroke="#3E7A50" stroke-width="1"/>
+  <text x="720" y="170" font-size="9.5" font-weight="700" fill="#4ADE80">PROD OVERLAY PIN · receives the identical string</text>
+  <text x="720" y="188" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">...amazonaws.com/&lt;app&gt;:&lt;tag&gt;<tspan font-weight="700" fill="#4ADE80">@sha256:&lt;digest&gt;</tspan></text>
+
+  <line x1="700" y1="212" x2="700" y2="234" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 1 : PRECONDITIONS ============ -->
+  <rect x="40" y="236" width="1320" height="231" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="264" r="13" fill="#4DA8DA"/>
+  <text x="72" y="269" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="96" y="269" font-size="13" font-weight="700" fill="#E8EAED">Preconditions — confirm all four before changing anything</text>
+
+  <text x="60" y="293" font-size="10.5" fill="#8B9DAF">These establish that the digest you are about to copy is actually worth copying.</text>
+
+  <rect x="60" y="303" width="1280" height="26" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="316" r="8" fill="#4DA8DA"/>
+  <text x="78" y="320" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">1</text>
+  <text x="98" y="320" font-size="10" fill="#8B9DAF">Argo CD Application <tspan font-family="ui-monospace, monospace" fill="#E8EAED">&lt;app&gt;-dev-eks-1</tspan> is <tspan font-family="ui-monospace, monospace" fill="#4ADE80">Synced</tspan> and <tspan font-family="ui-monospace, monospace" fill="#4ADE80">Healthy</tspan>.</text>
+
+  <rect x="60" y="333" width="1280" height="26" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="346" r="8" fill="#4DA8DA"/>
+  <text x="78" y="350" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">2</text>
+  <text x="98" y="350" font-size="10" fill="#8B9DAF">The app reaches its AWS dependencies on dev — proving the role and secret wiring actually work.</text>
+
+  <rect x="60" y="363" width="1280" height="26" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="376" r="8" fill="#4DA8DA"/>
+  <text x="78" y="380" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">3</text>
+  <text x="98" y="380" font-size="10" fill="#8B9DAF">Health and readiness checks pass on the new endpoint, if the app serves traffic.</text>
+
+  <rect x="60" y="393" width="1280" height="26" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="406" r="8" fill="#4DA8DA"/>
+  <text x="78" y="410" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">4</text>
+  <text x="98" y="410" font-size="10" fill="#8B9DAF"><tspan font-family="ui-monospace, monospace" fill="#E8EAED">apps/&lt;app&gt;/overlays/prod-eks-1/</tspan> already exists — every app has both overlays from the day it was scaffolded.</text>
+
+  <rect x="60" y="429" width="1280" height="26" rx="5" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="74" y="446" font-size="10" fill="#E0B457"><tspan font-weight="700">If any precondition fails, stop.</tspan> Do not promote a broken digest — promotion carries the problem to prod rather than revealing it.</text>
+
+  <line x1="700" y1="467" x2="700" y2="489" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 2 : STEPS ============ -->
+  <rect x="40" y="491" width="1320" height="295" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="519" r="13" fill="#FF9900"/>
+  <text x="72" y="524" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="96" y="524" font-size="13" font-weight="700" fill="#E8EAED">The five steps</text>
+
+  <rect x="60" y="535" width="1280" height="46" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="552" r="8" fill="#FF9900"/>
+  <text x="78" y="556" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">1</text>
+  <text x="98" y="552" font-size="10" fill="#8B9DAF">Read the pinned image from the dev overlay — the single pin file, usually <tspan font-family="ui-monospace, monospace" fill="#E8EAED">deployment-patch.yaml</tspan> or <tspan font-family="ui-monospace, monospace" fill="#E8EAED">cronjob-patch.yaml</tspan>:</text>
+  <text x="98" y="570" font-size="9" font-family="ui-monospace, monospace" fill="#E8EAED">111122223333.dkr.ecr.ap-southeast-2.amazonaws.com/&lt;app&gt;:&lt;tag&gt;@sha256:&lt;digest&gt;</text>
+
+  <rect x="60" y="588" width="1280" height="30" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="603" r="8" fill="#FF9900"/>
+  <text x="78" y="607" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">2</text>
+  <text x="98" y="607" font-size="10" fill="#8B9DAF">Apply <tspan font-family="ui-monospace, monospace" fill="#E8EAED">apps/&lt;app&gt;/iam.tf</tspan> for <tspan font-family="ui-monospace, monospace" fill="#E8EAED">prod-eks-1</tspan> if the prod Pod Identity association or policy is not already in place.</text>
+
+  <rect x="60" y="626" width="1280" height="44" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="643" r="8" fill="#FF9900"/>
+  <text x="78" y="647" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">3</text>
+  <text x="98" y="643" font-size="10" fill="#8B9DAF">Copy that <tspan font-weight="700" fill="#E8EAED">exact</tspan> image string into the matching prod overlay pin file.</text>
+  <text x="98" y="657" font-size="10" fill="#8B9DAF"><tspan font-weight="700" fill="#FF6B52">Change nothing else in the same commit</tspan> — unless prod genuinely needs a different secret path or hostname, and those are separate from promotion.</text>
+
+  <rect x="60" y="678" width="1280" height="44" rx="6" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <circle cx="78" cy="695" r="8" fill="#4DA8DA"/>
+  <text x="78" y="699" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">4</text>
+  <text x="98" y="695" font-size="10" fill="#9CCBE8">Open a PR whose diff is <tspan font-weight="700">ideally one line</tspan> — the digest.</text>
+  <text x="98" y="709" font-size="10" fill="#9CCBE8">Wait for CI: <tspan font-family="ui-monospace, monospace">kustomize-build</tspan> plus the hygiene workflows. A one-line diff is what makes this reviewable in seconds.</text>
+
+  <rect x="60" y="730" width="1280" height="44" rx="6" fill="#12301A" stroke="#3E7A50" stroke-width="1"/>
+  <circle cx="78" cy="747" r="8" fill="#4ADE80"/>
+  <text x="78" y="751" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">5</text>
+  <text x="98" y="747" font-size="10" fill="#4ADE80">After merge, confirm Argo CD Application <tspan font-family="ui-monospace, monospace">&lt;app&gt;-prod-eks-1</tspan> is <tspan font-weight="700">Synced</tspan> and <tspan font-weight="700">Healthy</tspan>,</text>
+  <text x="98" y="761" font-size="10" fill="#4ADE80">and the health endpoint responds if applicable.</text>
+
+  <line x1="700" y1="786" x2="700" y2="808" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 3 : DO NOT ============ -->
+  <rect x="40" y="810" width="1320" height="112" rx="12" fill="#1A2332" stroke="#FF6B52" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="838" r="13" fill="#FF6B52"/>
+  <text x="72" y="843" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="96" y="843" font-size="13" font-weight="700" fill="#E8EAED">Do not</text>
+  <text x="180" y="843" font-size="10.5" fill="#7C8CA0" font-style="italic">each of these turns a promotion back into a deploy</text>
+
+  <rect x="60" y="854" width="634" height="26" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="74" y="871" font-size="10" fill="#E0B457">Rebuild or retag the image during promotion.</text>
+
+  <rect x="706" y="854" width="634" height="26" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="720" y="871" font-size="10" fill="#E0B457">Create the prod overlay at promotion time — it must already exist.</text>
+
+  <rect x="60" y="884" width="634" height="26" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="74" y="901" font-size="10" fill="#E0B457">Promote while digests differ for reasons other than the intended bump.</text>
+
+  <rect x="706" y="884" width="634" height="26" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="720" y="901" font-size="10" fill="#E0B457">Skip applying prod IAM when the association is missing.</text>
+
+  <line x1="700" y1="922" x2="700" y2="944" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 4 : ROLLBACK ============ -->
+  <rect x="40" y="946" width="1320" height="177" rx="12" fill="#1A2332" stroke="#FF6B52" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="974" r="13" fill="#FF6B52"/>
+  <text x="72" y="979" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="96" y="979" font-size="13" font-weight="700" fill="#E8EAED">Rollback of a bad promotion</text>
+  <text x="330" y="979" font-size="10.5" fill="#7C8CA0" font-style="italic">three steps, and none of them touch dev</text>
+
+  <text x="60" y="1003" font-size="10.5" fill="#8B9DAF">If prod is unhealthy after the digest lands — the rollback is as small as the promotion was:</text>
+
+  <rect x="60" y="1013" width="1280" height="30" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="1028" r="8" fill="#FF6B52"/>
+  <text x="78" y="1032" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">1</text>
+  <text x="98" y="1032" font-size="10" fill="#8B9DAF">Revert the PR, or copy the previous prod digest back.</text>
+
+  <rect x="60" y="1047" width="1280" height="30" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="1062" r="8" fill="#FF6B52"/>
+  <text x="78" y="1066" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">2</text>
+  <text x="98" y="1066" font-size="10" fill="#8B9DAF">Confirm <tspan font-family="ui-monospace, monospace" fill="#E8EAED">&lt;app&gt;-prod-eks-1</tspan> returns to <tspan font-family="ui-monospace, monospace" fill="#4ADE80">Healthy</tspan>.</text>
+
+  <rect x="60" y="1081" width="1280" height="30" rx="6" fill="#12301A" stroke="#3E7A50" stroke-width="1"/>
+  <circle cx="78" cy="1096" r="8" fill="#4ADE80"/>
+  <text x="78" y="1100" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">3</text>
+  <text x="98" y="1100" font-size="10" fill="#4ADE80"><tspan font-weight="700">Leave dev-eks-1 alone</tspan> — it stays on the new digest so you can keep debugging the thing that failed.</text>
+
+  <!-- ============ FOOTER ============ -->
+  <rect x="40" y="1156" width="1320" height="34" rx="8" fill="#24344A"/>
+  <text x="700" y="1178" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">verify dev → apply prod IAM if missing → copy the digest → one-line PR → confirm prod Healthy → revert the PR if it is not</text>
+</svg>

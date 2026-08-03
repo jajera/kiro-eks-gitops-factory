@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="320" viewBox="0 0 840 320" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.28"/>
+    </filter>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6B7C8F"/></marker>
+  </defs>
+
+  <rect x="40" y="24" width="200" height="88" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <text x="54" y="54" font-size="13" font-weight="700" fill="#E8EAED">1 · Empty apps/</text>
+  <text x="54" y="78" font-size="12" fill="#8B9DAF">Only `.gitkeep` in the repo</text>
+  <rect x="320" y="24" width="200" height="88" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <text x="334" y="54" font-size="13" font-weight="700" fill="#E8EAED">2 · Thin prompt</text>
+  <text x="334" y="78" font-size="12" fill="#8B9DAF">Name, image, host, replicas</text>
+  <rect x="600" y="24" width="200" height="88" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <text x="614" y="54" font-size="13" font-weight="700" fill="#E8EAED">3 · add-app</text>
+  <text x="614" y="78" font-size="12" fill="#8B9DAF">Steering + skill fill the rest</text>
+  <rect x="40" y="184" width="200" height="88" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <text x="54" y="214" font-size="13" font-weight="700" fill="#E8EAED">4 · Dual overlays</text>
+  <text x="54" y="238" font-size="12" fill="#8B9DAF">dev-eks-1 and prod-eks-1</text>
+  <rect x="320" y="184" width="200" height="88" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <text x="334" y="214" font-size="13" font-weight="700" fill="#E8EAED">5 · PR + human</text>
+  <text x="334" y="238" font-size="12" fill="#8B9DAF">Review, then merge</text>
+  <rect x="600" y="184" width="200" height="88" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <text x="614" y="214" font-size="13" font-weight="700" fill="#E8EAED">6 · Argo CD sync</text>
+  <text x="614" y="238" font-size="12" fill="#8B9DAF">Git wins on the cluster</text>
+  <line x1="246" y1="68" x2="314" y2="68" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="526" y1="68" x2="594" y2="68" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M700,114 V148 H140 V176" fill="none" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="246" y1="228" x2="314" y2="228" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="526" y1="228" x2="594" y2="228" stroke="#6B7C8F" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="420" y="304" text-anchor="middle" font-size="12" fill="#8B9DAF" font-style="italic">Prompt names the app — the factory shapes the tree, then GitOps lands it</text>
+</svg>

@@ -1,0 +1,107 @@
+---
+title: Why manual onboarding breaks
+description: Why hand-migrating containers onto GitOps fails at scale, and what the factory does — and does not — take off your hands.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [Home](../) framed the migration problem and the factory shape of the argument.
+
+You already have <Tooltip term="eks" label="EKS" /> and{" "}
+<Tooltip term="argo-cd" label="Argo CD" /> running. The cluster is fine. The problem is getting
+the next hundred apps onto it without every team inventing a different repo shape, a different
+naming scheme, and a different set of shortcuts that nobody else can review.
+
+## The manual path does not scale
+
+One experienced engineer can migrate a single app in half a day: read the existing compose file or
+task definition, write the Kubernetes manifests, slot them into a{" "}
+<Tooltip term="kustomize" label="Kustomize" />{" "}<Tooltip term="overlay" label="overlay" />, wire
+an Argo CD Application, and open the <Tooltip term="pr" label="PR" />. That is fine for five apps.
+
+At a hundred apps, spread across multiple teams with mixed Kubernetes experience, the math changes:
+
+| Path | Per app | For 100 apps |
+| --- | --- | --- |
+| Manual (experienced engineer) | ~3–6 h | ~450 h |
+| Manual (mixed experience) | ~1–2 days | ~150 person-days |
+| Factory + <Tooltip term="kiro" label="Kiro" /> + human review | ~45–90 min | ~75–150 h after initial setup |
+
+The time savings are real, but they are not the main point. The main point is **consistency**. When
+every app lands in the same tree shape, reviewers know where to look, policy checks work without
+per-app exceptions, and Argo CD syncs predictably.
+
+## What goes wrong without the factory
+
+Without a shared structure, each migration attempt drifts in small ways that compound:
+
+- **Tree shape diverges.** One team nests overlays inside `deploy/`, another uses `k8s/envs/`,
+  a third puts everything flat at the root. Reviewers cannot pattern-match across PRs.
+- **Naming collisions.** Two apps pick the same namespace, or the same `app` label value,
+  because nobody enforced a convention.
+- **Policy gaps.** An app ships without a <Tooltip term="pdb" label="PodDisruptionBudget" />, or
+  with `runAsRoot: true`, because the author did not know the constraint existed and nothing
+  blocked the PR.
+- **Prompt drift.** If you use an AI assistant without{" "}
+  <Tooltip term="steering" label="steering" />, each session invents a slightly different layout.
+  The model is not wrong — it is just unconstrained, so it picks a plausible answer each time
+  rather than the same answer.
+
+<Still
+  src="media/manual-drift.svg"
+  darkSrc="media/manual-drift-dark.svg"
+  alt="Four failure modes without a shared factory: tree shape diverges, naming collisions, policy gaps, and prompt drift"
+  caption="Without a shared structure, every PR invents a slightly different answer."
+/>
+
+:::note
+These four are a **starter set**, not a closed catalog. Keep, drop, or add modes to match what
+actually hurts your reviews — for example image-tag chaos, secret sprawl, or overlay sprawl
+across more than two environments. The list evolves with your org's conventions, policy
+maturity, how many teams onboard in parallel, which runtimes you migrate from, and how much
+AI-assisted drafting you allow without steering.
+:::
+
+The result is a repo that looks different in every directory. Reviews slow down, onboarding new
+team members gets harder, and automated checks require per-app configuration.
+
+## What the factory removes — and what it does not
+
+| The factory handles | You still own |
+| --- | --- |
+| Deciding tree shape for every app | Understanding the workload |
+| Creating base + overlay scaffolding | Shrinking <Tooltip term="iam" label="IAM" /> to least privilege |
+| Enforcing naming, labels, and policy | <Tooltip term="dns" label="DNS" />, <Tooltip term="tls" label="TLS" />, and certificate setup |
+| Blocking forbidden patterns at prompt time | Cutover risk and rollback planning |
+| Producing a reviewable PR | The actual merge decision |
+
+The factory accelerates **drafting**. It does not merge, it does not promote to production, and it
+does not make judgement calls about your workload. A human still reviews the PR and carries the
+deploy risk.
+
+## Where the contract lives
+
+The rules that make this work are not in the prompt — they are in the repository:
+
+- **<Tooltip term="steering" label="Steering" />** encodes what a reviewer would otherwise carry in
+  their head: naming patterns, required labels, overlay structure, image registry conventions.
+  [`kiro-eks-argocd-migration/.kiro/steering/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/steering)
+
+- **<Tooltip term="hooks" label="Hooks" />** enforce hard constraints that no prompt can override:
+  block writes outside the app tree, refuse `hostNetwork`, reject missing PDBs.
+  [`kiro-eks-argocd-migration/.kiro/hooks/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/hooks)
+
+- **<Tooltip term="skills" label="Skills" />** fix the migration procedure into ordered steps so
+  the agent does not skip ahead or improvise a different sequence.
+  [`kiro-eks-argocd-migration/.kiro/skills/`](https://github.com/jajera/kiro-eks-argocd-migration/tree/main/.kiro/skills)
+
+Together: skills generate → hooks enforce → humans approve. The rest of this site proves each
+clause.
+
+For a walkthrough of what each layer actually contains — steering documents, skill definitions,
+hook rules, the agent bundle, MCP config, and specs — see
+[Lab B: What makes prompts safe](../lab-b/). It walks the real files with screenshots, not just
+the folder links above.
+
+Next: [Building blocks you will touch](../concepts/) orients EKS, Argo CD, Gatekeeper, gator, and MCP.

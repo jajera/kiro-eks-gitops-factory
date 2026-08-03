@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1330" viewBox="0 0 1400 1330" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="11" markerHeight="11" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1.5,1.5 L8,5 L1.5,8.5" fill="none" stroke="#56657A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowsm" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2,2 L8,5 L2,8" fill="none" stroke="#56657A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="1330" fill="#0F1720"/>
+
+  <!-- ============ HEADER ============ -->
+  <text x="700" y="34" text-anchor="middle" font-size="19" font-weight="700" fill="#E8EAED">manage-clusters — cluster-wide changes, not app changes</text>
+  <text x="700" y="56" text-anchor="middle" font-size="12" fill="#8B9DAF">Argo CD bootstrap, ApplicationSet discovery, and cluster add-ons for dev-eks-1 and prod-eks-1.</text>
+  <text x="700" y="76" text-anchor="middle" font-size="11" fill="#7C8CA0">.kiro/skills/manage-clusters/SKILL.md · the smallest of the four skills, and the one with the widest blast radius</text>
+
+  <!-- ============ WHEN IT FIRES / SCOPE ============ -->
+  <rect x="40" y="94" width="1320" height="114" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <text x="60" y="118" font-size="13" font-weight="700" fill="#E8EAED">When this skill fires</text>
+  <text x="238" y="118" font-size="10.5" fill="#7C8CA0" font-style="italic">matched from the skill's own description field</text>
+
+  <text x="60" y="142" font-size="10.5" fill="#8B9DAF">"changing how apps are discovered" · "editing bootstrap manifests" · "onboarding a cluster" · "an app needs a controller or CRD that is not installed"</text>
+
+  <rect x="60" y="154" width="645" height="42" rx="6" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="74" y="170" font-size="10.5" font-weight="700" fill="#9CCBE8">Use this skill when the change is cluster-wide</text>
+  <text x="74" y="184" font-size="9.5" fill="#9CCBE8">Discovery, bootstrap, add-ons — anything that affects every app on a cluster.</text>
+
+  <rect x="715" y="154" width="625" height="42" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="729" y="170" font-size="10.5" font-weight="700" fill="#E0B457">App-level changes belong in apps/&lt;app&gt;/</text>
+  <text x="729" y="184" font-size="9.5" fill="#E0B457">If only one app is affected, this is the wrong skill — use <tspan font-family="ui-monospace, monospace">add-app</tspan> or edit the app tree.</text>
+
+  <line x1="700" y1="208" x2="700" y2="230" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 1 : WHERE CLUSTER CONFIG LIVES ============ -->
+  <rect x="40" y="232" width="1320" height="128" rx="12" fill="#1A2332" stroke="#56657A" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="260" r="13" fill="#7C8CA0"/>
+  <text x="72" y="265" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="96" y="265" font-size="13" font-weight="700" fill="#E8EAED">Where cluster-wide configuration lives</text>
+  <text x="386" y="265" font-size="10.5" fill="#7C8CA0" font-style="italic">in this repo, alongside the apps — there is no separate platform repo</text>
+
+  <rect x="60" y="276" width="1280" height="72" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="76" y="296" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">bootstrap/               <tspan fill="#7C8CA0"># Argo CD install and the root manifest list per cluster</tspan></text>
+  <text x="76" y="316" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">clusters/dev-eks-1/      <tspan fill="#7C8CA0"># ApplicationSet discovering apps/*/overlays/dev-eks-1</tspan></text>
+  <text x="76" y="336" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">clusters/prod-eks-1/     <tspan fill="#7C8CA0"># ApplicationSet discovering apps/*/overlays/prod-eks-1</tspan></text>
+
+  <line x1="700" y1="360" x2="700" y2="382" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 2 : DISCOVERY ============ -->
+  <rect x="40" y="384" width="1320" height="230" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="412" r="13" fill="#4DA8DA"/>
+  <text x="72" y="417" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="96" y="417" font-size="13" font-weight="700" fill="#E8EAED">Discovery — one ApplicationSet per cluster, one Application per matching overlay</text>
+
+  <rect x="60" y="430" width="330" height="42" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="225" y="446" text-anchor="middle" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">apps/*/overlays/dev-eks-1</text>
+  <text x="225" y="460" text-anchor="middle" font-size="9" fill="#7C8CA0">every app's dev overlay</text>
+  <line x1="392" y1="451" x2="422" y2="451" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="426" y="430" width="290" height="42" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="571" y="446" text-anchor="middle" font-size="10" font-weight="700" fill="#9CCBE8">ApplicationSet</text>
+  <text x="571" y="460" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" fill="#9CCBE8">clusters/dev-eks-1/applicationset.yaml</text>
+  <line x1="718" y1="451" x2="748" y2="451" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="752" y="430" width="588" height="42" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="768" y="446" font-size="10" fill="#E8EAED">One Argo CD Application per match, named</text>
+  <text x="768" y="460" font-size="9.5" font-family="ui-monospace, monospace" fill="#4ADE80">&lt;app&gt;-&lt;cluster&gt;</text>
+  <text x="880" y="460" font-size="9" fill="#7C8CA0">e.g. demo-nginx-dev-eks-1</text>
+
+  <rect x="60" y="480" width="330" height="42" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="225" y="496" text-anchor="middle" font-size="9.5" font-family="ui-monospace, monospace" fill="#E8EAED">apps/*/overlays/prod-eks-1</text>
+  <text x="225" y="510" text-anchor="middle" font-size="9" fill="#7C8CA0">every app's prod overlay</text>
+  <line x1="392" y1="501" x2="422" y2="501" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="426" y="480" width="290" height="42" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="571" y="496" text-anchor="middle" font-size="10" font-weight="700" fill="#9CCBE8">ApplicationSet</text>
+  <text x="571" y="510" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" fill="#9CCBE8">clusters/prod-eks-1/applicationset.yaml</text>
+  <line x1="718" y1="501" x2="748" y2="501" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="752" y="480" width="588" height="42" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="768" y="496" font-size="10" fill="#E8EAED">One Argo CD Application per match, named</text>
+  <text x="768" y="510" font-size="9.5" font-family="ui-monospace, monospace" fill="#4ADE80">&lt;app&gt;-&lt;cluster&gt;</text>
+  <text x="880" y="510" font-size="9" fill="#7C8CA0">e.g. demo-nginx-prod-eks-1</text>
+
+  <rect x="60" y="532" width="645" height="70" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="74" y="549" font-size="10.5" font-weight="700" fill="#E0B457">Re-apply an ApplicationSet after editing it</text>
+  <text x="74" y="563" font-size="9.5" fill="#E0B457">An ApplicationSet does <tspan font-weight="700">not</tspan> pick up its own definition from a Git change</text>
+  <text x="74" y="577" font-size="9.5" fill="#E0B457">unless it is itself managed by an Application. Editing the file in Git and</text>
+  <text x="74" y="591" font-size="9.5" fill="#E0B457">waiting for a sync that never comes is the trap here.</text>
+
+  <rect x="715" y="532" width="625" height="70" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="729" y="549" font-size="10.5" font-weight="700" fill="#E0B457">Check what a changed path pattern matches — before applying</text>
+  <text x="729" y="563" font-size="9.5" fill="#E0B457">Widening the pattern can create Applications for overlays you did not</text>
+  <text x="729" y="577" font-size="9.5" fill="#E0B457">intend to deploy. The generator runs against whatever is in the repo,</text>
+  <text x="729" y="591" font-size="9.5" fill="#FF6B52" font-weight="700">so a loose glob deploys work-in-progress trees.</text>
+
+  <line x1="700" y1="614" x2="700" y2="636" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 3 : KEEP THE TWO CLUSTERS IN STEP ============ -->
+  <rect x="40" y="638" width="1320" height="138" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="666" r="13" fill="#2ECC71"/>
+  <text x="72" y="671" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="96" y="671" font-size="13" font-weight="700" fill="#E8EAED">Keep the two clusters in step</text>
+  <text x="322" y="671" font-size="10.5" fill="#7C8CA0" font-style="italic">dev is a rehearsal for prod, or it is nothing</text>
+
+  <text x="60" y="696" font-size="10.5" fill="#8B9DAF">A change to <tspan font-family="ui-monospace, monospace" fill="#E8EAED">clusters/dev-eks-1/</tspan> almost always needs the same change in <tspan font-family="ui-monospace, monospace" fill="#E8EAED">clusters/prod-eks-1/</tspan>.</text>
+
+  <rect x="60" y="706" width="645" height="58" rx="6" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="74" y="723" font-size="10.5" font-weight="700" fill="#9CCBE8">Where they legitimately differ</text>
+  <text x="74" y="737" font-size="9.5" fill="#9CCBE8">sync policy · prune behaviour · a stricter <tspan font-family="ui-monospace, monospace">AppProject</tspan></text>
+  <text x="74" y="751" font-size="9.5" font-weight="700" fill="#9CCBE8">Make the difference deliberate, and note why in the manifest.</text>
+
+  <rect x="715" y="706" width="625" height="58" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="729" y="723" font-size="10.5" font-weight="700" fill="#E0B457">Why divergence is expensive</text>
+  <text x="729" y="737" font-size="9.5" fill="#E0B457">Divergence between the two ApplicationSets means dev stops being a</text>
+  <text x="729" y="751" font-size="9.5" fill="#FF6B52" font-weight="700">rehearsal for prod — which is the only reason dev exists.</text>
+
+  <line x1="700" y1="776" x2="700" y2="798" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 4 : CLUSTER ADD-ONS ============ -->
+  <rect x="40" y="800" width="1320" height="204" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="828" r="13" fill="#FF9900"/>
+  <text x="72" y="833" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="96" y="833" font-size="13" font-weight="700" fill="#E8EAED">Cluster add-ons</text>
+  <text x="230" y="833" font-size="10.5" fill="#7C8CA0" font-style="italic">an app needing an uninstalled controller is a cluster change, not an app change</text>
+
+  <rect x="60" y="846" width="410" height="42" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="265" y="862" text-anchor="middle" font-size="10" fill="#E8EAED">App needs a controller or CRD</text>
+  <text x="265" y="876" text-anchor="middle" font-size="9" fill="#7C8CA0">that is not installed on the cluster</text>
+  <line x1="472" y1="867" x2="502" y2="867" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="506" y="846" width="400" height="42" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="706" y="862" text-anchor="middle" font-size="10" font-weight="700" fill="#9CCBE8">Add it under bootstrap/ or as its own Application</text>
+  <text x="706" y="876" text-anchor="middle" font-size="9" fill="#9CCBE8">not into the app's manifests</text>
+  <line x1="908" y1="867" x2="938" y2="867" stroke="#56657A" stroke-width="1.5" marker-end="url(#arrowsm)"/>
+
+  <rect x="942" y="846" width="398" height="42" rx="8" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="1141" y="862" text-anchor="middle" font-size="10" font-weight="700" fill="#9CCBE8">Roll it out to dev-eks-1 first</text>
+  <text x="1141" y="876" text-anchor="middle" font-size="9" fill="#9CCBE8">same ordering rule as everything else</text>
+
+  <rect x="60" y="898" width="645" height="58" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="74" y="915" font-size="10.5" font-weight="700" fill="#E0B457">Do not vendor a controller into an app's manifests</text>
+  <text x="74" y="929" font-size="9.5" fill="#E0B457">It looks like a quick unblock for one app, but the second app that</text>
+  <text x="74" y="943" font-size="9.5" fill="#FF6B52" font-weight="700">needs it inherits a duplicate.</text>
+
+  <rect x="715" y="898" width="625" height="58" rx="6" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="729" y="915" font-size="10.5" font-weight="700" fill="#9CCBE8">On EKS Auto Mode, some add-ons already exist</text>
+  <text x="729" y="929" font-size="9.5" fill="#9CCBE8">The load balancer controller, storage driver, and node lifecycle are</text>
+  <text x="729" y="943" font-size="9.5" font-weight="700" fill="#FF6B52">already managed. Do not install competing add-ons.</text>
+
+  <rect x="60" y="966" width="1280" height="26" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="74" y="981" font-size="10" fill="#8B9DAF">This is the same conclusion the project profile reaches from the other direction: <tspan font-family="ui-monospace, monospace" fill="#E8EAED">compute_mode: auto</tspan> is why those three add-ons must not be scaffolded.</text>
+
+  <line x1="700" y1="1004" x2="700" y2="1026" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ 5 : ONBOARDING ANOTHER CLUSTER ============ -->
+  <rect x="40" y="1028" width="1320" height="206" rx="12" fill="#1A2332" stroke="#FF6B52" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1056" r="13" fill="#FF6B52"/>
+  <text x="72" y="1061" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">5</text>
+  <text x="96" y="1061" font-size="13" font-weight="700" fill="#E8EAED">Onboarding a third cluster</text>
+  <text x="316" y="1061" font-size="10.5" fill="#7C8CA0" font-style="italic">both current clusters are fixed — this is the contingency path</text>
+
+  <rect x="60" y="1074" width="1280" height="30" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="1089" r="8" fill="#7C8CA0"/>
+  <text x="78" y="1093" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">1</text>
+  <text x="98" y="1093" font-size="10" fill="#8B9DAF">Copy an existing <tspan font-family="ui-monospace, monospace" fill="#E8EAED">clusters/&lt;cluster&gt;/</tspan> directory and update the discovery path and the generated Application name template.</text>
+
+  <rect x="60" y="1108" width="1280" height="30" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="1123" r="8" fill="#7C8CA0"/>
+  <text x="78" y="1127" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">2</text>
+  <text x="98" y="1127" font-size="10" fill="#8B9DAF">Add the new manifest to that cluster's <tspan font-family="ui-monospace, monospace" fill="#E8EAED">bootstrap/</tspan> list.</text>
+
+  <rect x="60" y="1142" width="1280" height="30" rx="6" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <circle cx="78" cy="1157" r="8" fill="#7C8CA0"/>
+  <text x="78" y="1161" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">3</text>
+  <text x="98" y="1161" font-size="10" fill="#8B9DAF">Confirm the <tspan font-family="ui-monospace, monospace" fill="#E8EAED">AppProject</tspan> exists and permits the destination.</text>
+
+  <rect x="60" y="1176" width="1280" height="46" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <circle cx="78" cy="1191" r="8" fill="#FF6B52"/>
+  <text x="78" y="1195" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">4</text>
+  <text x="98" y="1195" font-size="10" fill="#E0B457">Add an overlay under <tspan font-weight="700">every</tspan> app, plus the cluster to <tspan font-weight="700">every</tspan> app's <tspan font-family="ui-monospace, monospace">iam.tf</tspan>.</text>
+  <text x="98" y="1210" font-size="10" fill="#FF6B52" font-weight="700">Step 4 is the expensive one — every app needs an overlay and a Pod Identity association before it can run there.</text>
+
+  <!-- ============ FOOTER ============ -->
+  <rect x="40" y="1268" width="1320" height="34" rx="8" fill="#24344A"/>
+  <text x="700" y="1290" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">cluster-wide only → discovery per cluster → keep both in step → add-ons in bootstrap, dev first → a third cluster costs every app an overlay</text>
+</svg>

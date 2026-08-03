@@ -1,0 +1,266 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="1850" viewBox="0 0 1120 1850" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="s" x="-4%" y="-4%" width="108%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="11" markerHeight="11" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1.5,1.5 L8,5 L1.5,8.5" fill="none" stroke="#56657A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowsm" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2,2 L8,5 L2,8" fill="none" stroke="#56657A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+
+    <clipPath id="cs1540"><rect x="40" y="1540" width="1040" height="58" rx="10"/></clipPath>
+    <clipPath id="cs1606"><rect x="40" y="1606" width="1040" height="58" rx="10"/></clipPath>
+    <clipPath id="cs1672"><rect x="40" y="1672" width="1040" height="76" rx="10"/></clipPath>
+  </defs>
+
+  <rect x="0" y="0" width="1120" height="1850" fill="#0F1720"/>
+
+  <!-- ============ HEADER ============ -->
+  <text x="560" y="34" text-anchor="middle" font-size="19" font-weight="700" fill="#E8EAED">Project profile — the one file everything else refers to</text>
+  <text x="560" y="56" text-anchor="middle" font-size="12" fill="#8B9DAF">Ten keys, two clusters, one registry. Change a value here and every skill, hook, and manifest follows.</text>
+  <text x="560" y="76" text-anchor="middle" font-size="11" fill="#7C8CA0">.kiro/steering/project-profile.md · inclusion: always — loads on every single turn</text>
+
+  <!-- ============ STAGE 1 ============ -->
+  <rect x="40" y="96" width="1040" height="110" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="124" r="13" fill="#4DA8DA"/>
+  <text x="72" y="129" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="96" y="129" font-size="13" font-weight="700" fill="#E8EAED">Why this file is always-on</text>
+  <text x="316" y="129" font-size="10.5" fill="#7C8CA0" font-style="italic">small enough to justify loading every turn</text>
+
+  <text x="60" y="154" font-size="11" fill="#8B9DAF">Values that vary per environment. Every other file in <tspan font-family="ui-monospace, monospace" fill="#E8EAED">.kiro/</tspan> refers to <tspan font-weight="700" fill="#E8EAED">these keys</tspan> instead of hard-coding a name.</text>
+  <text x="60" y="174" font-size="11" fill="#8B9DAF">When a skill or steering file writes <tspan font-family="ui-monospace, monospace" fill="#E8EAED">&lt;app&gt;</tspan>, <tspan font-family="ui-monospace, monospace" fill="#E8EAED">&lt;cluster&gt;</tspan>, or <tspan font-family="ui-monospace, monospace" fill="#E8EAED">&lt;owner&gt;</tspan>, the value is substituted from here.</text>
+
+  <rect x="60" y="182" width="1000" height="18" rx="5" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="70" y="195" font-size="10" fill="#E0B457"><tspan font-weight="700">If a value is still a placeholder, ask the user for it before generating files.</tspan> Guessing here propagates into every app.</text>
+
+  <line x1="560" y1="206" x2="560" y2="228" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 2 : VALUES TABLE ============ -->
+  <circle cx="72" cy="246" r="13" fill="#4DA8DA"/>
+  <text x="72" y="251" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="96" y="251" font-size="13" font-weight="700" fill="#E8EAED">The ten values</text>
+  <text x="222" y="251" font-size="10.5" fill="#7C8CA0" font-style="italic">colour banding groups them by what they govern</text>
+
+  <rect x="40" y="264" width="1040" height="30" fill="#24344A"/>
+  <text x="58" y="284" font-size="11" font-weight="700" fill="#ffffff">Key</text>
+  <text x="288" y="284" font-size="11" font-weight="700" fill="#ffffff">Value</text>
+  <text x="498" y="284" font-size="11" font-weight="700" fill="#ffffff">Meaning</text>
+
+  <!-- Argo CD / Git group -->
+  <rect x="40" y="294" width="1040" height="26" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="294" width="5" height="26" fill="#4DA8DA"/>
+  <text x="58" y="311" font-size="10.5" font-family="ui-monospace, monospace" fill="#4DA8DA">argocd_project</text>
+  <text x="288" y="311" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">default</text>
+  <text x="498" y="311" font-size="10.5" fill="#8B9DAF">Argo CD AppProject for generated Applications</text>
+
+  <rect x="40" y="320" width="1040" height="26" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="320" width="5" height="26" fill="#4DA8DA"/>
+  <text x="58" y="337" font-size="10.5" font-family="ui-monospace, monospace" fill="#4DA8DA">default_branch</text>
+  <text x="288" y="337" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">main</text>
+  <text x="498" y="337" font-size="10.5" fill="#8B9DAF">Git targetRevision for Application sources</text>
+
+  <!-- labels / time group -->
+  <rect x="40" y="346" width="1040" height="26" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="346" width="5" height="26" fill="#8B9DAF"/>
+  <text x="58" y="363" font-size="10.5" font-family="ui-monospace, monospace" fill="#8B9DAF">owner_label</text>
+  <text x="288" y="363" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">platform</text>
+  <text x="498" y="363" font-size="10.5" fill="#8B9DAF">Value written to metadata.labels.owner — Gatekeeper requires it on every Namespace</text>
+
+  <rect x="40" y="372" width="1040" height="26" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="372" width="5" height="26" fill="#8B9DAF"/>
+  <text x="58" y="389" font-size="10.5" font-family="ui-monospace, monospace" fill="#8B9DAF">default_timezone</text>
+  <text x="288" y="389" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">UTC</text>
+  <text x="498" y="389" font-size="10.5" fill="#8B9DAF">spec.timeZone for CronJobs — the scheduled-job archetype default</text>
+
+  <!-- AWS group -->
+  <rect x="40" y="398" width="1040" height="26" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="398" width="5" height="26" fill="#FF9900"/>
+  <text x="58" y="415" font-size="10.5" font-family="ui-monospace, monospace" fill="#FFB84D">aws_region</text>
+  <text x="288" y="415" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">ap-southeast-2</text>
+  <text x="498" y="415" font-size="10.5" fill="#8B9DAF">Region for both clusters and all app resources</text>
+
+  <rect x="40" y="424" width="1040" height="26" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="424" width="5" height="26" fill="#FF9900"/>
+  <text x="58" y="441" font-size="10.5" font-family="ui-monospace, monospace" fill="#FFB84D">compute_mode</text>
+  <text x="288" y="441" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">auto</text>
+  <text x="498" y="441" font-size="10.5" fill="#8B9DAF">EKS Auto Mode <tspan fill="#FF6B52">— see the constraints this implies in stage 8</tspan></text>
+
+  <rect x="40" y="450" width="1040" height="26" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="450" width="5" height="26" fill="#FF9900"/>
+  <text x="58" y="467" font-size="10.5" font-family="ui-monospace, monospace" fill="#FFB84D">identity_mode</text>
+  <text x="288" y="467" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">pod-identity</text>
+  <text x="498" y="467" font-size="10.5" fill="#8B9DAF">Per-app IAM, declared in each app's iam.tf <tspan fill="#FF6B52">— see stage 8</tspan></text>
+
+  <!-- platform choices group -->
+  <rect x="40" y="476" width="1040" height="26" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="476" width="5" height="26" fill="#2ECC71"/>
+  <text x="58" y="493" font-size="10.5" font-family="ui-monospace, monospace" fill="#4ADE80">policy_engine</text>
+  <text x="288" y="493" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">gatekeeper</text>
+  <text x="498" y="493" font-size="10.5" fill="#8B9DAF">Switchable: <tspan font-family="ui-monospace, monospace">gatekeeper</tspan> or <tspan font-family="ui-monospace, monospace">none</tspan> — <tspan font-family="ui-monospace, monospace">none</tspan> skips every policy check but the Kustomize builds</text>
+
+  <rect x="40" y="502" width="1040" height="26" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="502" width="5" height="26" fill="#2ECC71"/>
+  <text x="58" y="519" font-size="10.5" font-family="ui-monospace, monospace" fill="#4ADE80">secrets_backend</text>
+  <text x="288" y="519" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">secrets-store-csi</text>
+  <text x="498" y="519" font-size="10.5" fill="#8B9DAF">Switchable: <tspan font-family="ui-monospace, monospace">secrets-store-csi</tspan>, <tspan font-family="ui-monospace, monospace">external-secrets</tspan>, or <tspan font-family="ui-monospace, monospace">none</tspan></text>
+
+  <rect x="40" y="528" width="1040" height="26" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="528" width="5" height="26" fill="#2ECC71"/>
+  <text x="58" y="545" font-size="10.5" font-family="ui-monospace, monospace" fill="#4ADE80">ingress_class</text>
+  <text x="288" y="545" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">alb</text>
+  <text x="498" y="545" font-size="10.5" fill="#8B9DAF">Ingress controller class — the WAFv2 constraint only matches internet-facing ALB Ingress</text>
+
+  <line x1="560" y1="554" x2="560" y2="576" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 3 : CLUSTERS AND ACCOUNTS ============ -->
+  <circle cx="72" cy="594" r="13" fill="#FF9900"/>
+  <text x="72" y="599" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="96" y="599" font-size="13" font-weight="700" fill="#E8EAED">Two clusters, two accounts</text>
+  <text x="300" y="599" font-size="10.5" fill="#7C8CA0" font-style="italic">use these exact values wherever an account ID is needed — never a bare &lt;account&gt;</text>
+
+  <rect x="40" y="612" width="1040" height="28" fill="#24344A"/>
+  <text x="58" y="631" font-size="11" font-weight="700" fill="#ffffff">Cluster</text>
+  <text x="248" y="631" font-size="11" font-weight="700" fill="#ffffff">Environment</text>
+  <text x="398" y="631" font-size="11" font-weight="700" fill="#ffffff">Account</text>
+  <text x="648" y="631" font-size="11" font-weight="700" fill="#ffffff">AWS profile</text>
+  <text x="828" y="631" font-size="11" font-weight="700" fill="#ffffff">Role in the flow</text>
+
+  <rect x="40" y="640" width="1040" height="34" fill="#1A2332" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="640" width="5" height="34" fill="#4DA8DA"/>
+  <text x="58" y="661" font-size="11" font-family="ui-monospace, monospace" font-weight="700" fill="#4DA8DA">dev-eks-1</text>
+  <text x="248" y="661" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">dev</text>
+  <text x="398" y="661" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">111122223333</text>
+  <text x="648" y="661" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">dev</text>
+  <text x="828" y="661" font-size="10" fill="#8B9DAF">Hosts the ECR registry; verified first</text>
+
+  <rect x="40" y="674" width="1040" height="34" fill="#16202E" stroke="#2A3646" stroke-width="1"/>
+  <rect x="40" y="674" width="5" height="34" fill="#2ECC71"/>
+  <text x="58" y="695" font-size="11" font-family="ui-monospace, monospace" font-weight="700" fill="#4ADE80">prod-eks-1</text>
+  <text x="248" y="695" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">prod</text>
+  <text x="398" y="695" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">444455556666</text>
+  <text x="648" y="695" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">prod</text>
+  <text x="828" y="695" font-size="10" fill="#8B9DAF">Pulls from dev's ECR; promoted to</text>
+
+  <rect x="40" y="716" width="1040" height="32" rx="6" fill="#33280F" stroke="#8A6A2A" stroke-width="1"/>
+  <text x="58" y="729" font-size="10.5" fill="#E0B457"><tspan font-weight="700">Both account IDs are placeholders</tspan> from the AWS documentation convention.</text>
+  <text x="58" y="743" font-size="10.5" fill="#E0B457">Replace both with real values <tspan font-weight="700">in one pass</tspan> — they appear in every app's <tspan font-family="ui-monospace, monospace">iam.tf</tspan>, not just in this file.</text>
+
+  <line x1="560" y1="748" x2="560" y2="770" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 4 : CONTAINER IMAGES ============ -->
+  <rect x="40" y="772" width="1040" height="200" rx="12" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="800" r="13" fill="#FF9900"/>
+  <text x="72" y="805" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="96" y="805" font-size="13" font-weight="700" fill="#E8EAED">One registry, three image shapes</text>
+  <text x="356" y="805" font-size="10.5" fill="#7C8CA0" font-style="italic">the source registry never reaches a manifest</text>
+
+  <text x="60" y="830" font-size="10.5" fill="#8B9DAF">Every app image lives in a <tspan font-weight="700" fill="#E8EAED">single ECR registry in the dev account</tspan>, with a repository policy granting <tspan font-family="ui-monospace, monospace" fill="#E8EAED">444455556666</tspan> pull access.</text>
+  <text x="60" y="848" font-size="10.5" fill="#8B9DAF">The repository is created elsewhere — assume it exists, named after the app. Source may be Docker Hub, GHCR, or a local build; that is <tspan font-style="italic">only the input</tspan>.</text>
+
+  <rect x="60" y="858" width="1000" height="24" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="70" y="874" font-size="9.5" font-weight="700" fill="#7C8CA0">REPOSITORY</text>
+  <text x="196" y="874" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">111122223333.dkr.ecr.ap-southeast-2.amazonaws.com/&lt;app&gt;</text>
+
+  <rect x="60" y="886" width="1000" height="24" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="70" y="902" font-size="9.5" font-weight="700" fill="#4DA8DA">BASE</text>
+  <text x="196" y="902" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">111122223333.dkr.ecr.ap-southeast-2.amazonaws.com/&lt;app&gt;:&lt;tag&gt;</text>
+  <text x="700" y="902" font-size="9.5" fill="#7C8CA0">floating tag</text>
+
+  <rect x="60" y="914" width="1000" height="24" rx="5" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="70" y="930" font-size="9.5" font-weight="700" fill="#2ECC71">EACH OVERLAY</text>
+  <text x="196" y="930" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED">111122223333.dkr.ecr.ap-southeast-2.amazonaws.com/&lt;app&gt;:&lt;tag&gt;@sha256:&lt;digest&gt;</text>
+  <text x="700" y="930" font-size="9.5" fill="#7C8CA0">pinned digest</text>
+
+  <rect x="60" y="946" width="1000" height="18" rx="5" fill="#12303F" stroke="#3E7A9E" stroke-width="1"/>
+  <text x="70" y="959" font-size="10" fill="#9CCBE8">One registry means <tspan font-weight="700">promoting to prod is promoting a digest</tspan> — no cross-account copy that could change the bytes.</text>
+
+  <line x1="560" y1="972" x2="560" y2="994" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 5 : STANDALONE REPO ============ -->
+  <rect x="40" y="996" width="1040" height="216" rx="12" fill="#1A2332" stroke="#56657A" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1024" r="13" fill="#7C8CA0"/>
+  <text x="72" y="1029" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">5</text>
+  <text x="96" y="1029" font-size="13" font-weight="700" fill="#E8EAED">This repo is standalone</text>
+  <text x="290" y="1029" font-size="10.5" fill="#FF6B52" font-style="italic">no sibling platform repo, no external Terraform repo — do not reference one</text>
+
+  <text x="60" y="1054" font-size="10.5" fill="#8B9DAF">Everything an app needs lives here: manifests, cluster configuration, and the IAM that grants it AWS access.</text>
+
+  <rect x="60" y="1066" width="1000" height="138" rx="8" fill="#202C3C" stroke="#3A4759" stroke-width="1"/>
+  <text x="76" y="1086" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">apps/&lt;app&gt;/</text>
+  <text x="76" y="1100" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  base/                  <tspan fill="#7C8CA0"># Shared across both clusters</tspan></text>
+  <text x="76" y="1114" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  overlays/dev-eks-1/    <tspan fill="#4ADE80" font-weight="700"># Required</tspan></text>
+  <text x="76" y="1128" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  overlays/prod-eks-1/   <tspan fill="#4ADE80" font-weight="700"># Required</tspan></text>
+  <text x="76" y="1142" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">  iam.tf                 <tspan fill="#7C8CA0"># IAM policy + Pod Identity association</tspan></text>
+  <text x="76" y="1156" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">bootstrap/               <tspan fill="#7C8CA0"># Argo CD install and root manifests per cluster</tspan></text>
+  <text x="76" y="1170" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">clusters/&lt;cluster&gt;/      <tspan fill="#7C8CA0"># ApplicationSet discovering apps/*/overlays/&lt;cluster&gt;</tspan></text>
+  <text x="76" y="1184" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">scripts/                 <tspan fill="#7C8CA0"># Validation helpers</tspan></text>
+  <text x="76" y="1198" font-size="10.5" font-family="ui-monospace, monospace" fill="#E8EAED" xml:space="preserve">policies/                <tspan fill="#7C8CA0"># Gatekeeper bundle: base + overlays/&lt;cluster&gt;</tspan></text>
+
+  <line x1="560" y1="1212" x2="560" y2="1234" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 6 : BOTH CLUSTERS ============ -->
+  <rect x="40" y="1236" width="1040" height="136" rx="12" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1264" r="13" fill="#2ECC71"/>
+  <text x="72" y="1269" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">6</text>
+  <text x="96" y="1269" font-size="13" font-weight="700" fill="#E8EAED">Every app targets both clusters</text>
+  <text x="342" y="1269" font-size="10.5" fill="#7C8CA0" font-style="italic">no app deploys from base alone; none ships to one cluster</text>
+
+  <text x="60" y="1293" font-size="10.5" fill="#8B9DAF">An app is <tspan font-weight="700" fill="#E8EAED">complete</tspan> only when all three exist:</text>
+
+  <rect x="292" y="1280" width="180" height="22" rx="5" fill="#12303F" stroke="#3E7A9E"/>
+  <text x="382" y="1295" text-anchor="middle" font-size="10" font-family="ui-monospace, monospace" fill="#9CCBE8">overlays/dev-eks-1/</text>
+  <text x="480" y="1295" font-size="11" fill="#7C8CA0">+</text>
+  <rect x="494" y="1280" width="184" height="22" rx="5" fill="#12303F" stroke="#3E7A9E"/>
+  <text x="586" y="1295" text-anchor="middle" font-size="10" font-family="ui-monospace, monospace" fill="#9CCBE8">overlays/prod-eks-1/</text>
+  <text x="686" y="1295" font-size="11" fill="#7C8CA0">+</text>
+  <rect x="700" y="1280" width="80" height="22" rx="5" fill="#12303F" stroke="#3E7A9E"/>
+  <text x="740" y="1295" text-anchor="middle" font-size="10" font-family="ui-monospace, monospace" fill="#9CCBE8">iam.tf</text>
+
+  <text x="60" y="1325" font-size="10.5" fill="#8B9DAF"><tspan font-weight="700" fill="#E8EAED">Promotion is a change to the prod overlay</tspan> — usually a newer image digest — not the creation of a prod overlay that did not exist.</text>
+  <text x="60" y="1343" font-size="10.5" fill="#8B9DAF">Creating prod at promotion time means the first prod deploy is also the first time that overlay was ever built,</text>
+  <text x="60" y="1361" font-size="10.5" fill="#FF6B52">which is exactly when you discover the missing value.</text>
+
+  <line x1="560" y1="1372" x2="560" y2="1394" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 7 : IAM ============ -->
+  <rect x="40" y="1396" width="1040" height="86" rx="12" fill="#1A2332" stroke="#4DA8DA" stroke-width="2" filter="url(#s)"/>
+  <circle cx="72" cy="1424" r="13" fill="#4DA8DA"/>
+  <text x="72" y="1429" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">7</text>
+  <text x="96" y="1429" font-size="13" font-weight="700" fill="#E8EAED">Each app declares its own IAM</text>
+
+  <text x="60" y="1454" font-size="10.5" fill="#8B9DAF"><tspan font-family="ui-monospace, monospace" fill="#E8EAED">apps/&lt;app&gt;/iam.tf</tspan> holds the app's IAM policy and its EKS Pod Identity association <tspan font-weight="700" fill="#E8EAED">for both clusters</tspan>. Nothing else.</text>
+  <text x="60" y="1472" font-size="10.5" fill="#8B9DAF">The exact shape lives in the identity and secrets steering file — and because identity is per-app, an over-broad role is a per-app review question, not a platform default.</text>
+
+  <line x1="560" y1="1482" x2="560" y2="1504" stroke="#56657A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============ STAGE 8 : CONSTRAINTS IMPLIED ============ -->
+  <circle cx="72" cy="1522" r="13" fill="#FF6B52"/>
+  <text x="72" y="1527" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">8</text>
+  <text x="96" y="1527" font-size="13" font-weight="700" fill="#E8EAED">Constraints these values imply</text>
+  <text x="336" y="1527" font-size="10.5" fill="#7C8CA0" font-style="italic">three keys above quietly decide what you must not scaffold</text>
+
+  <rect x="40" y="1540" width="1040" height="58" rx="10" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <rect x="40" y="1540" width="5" height="58" fill="#FF9900" clip-path="url(#cs1540)"/>
+  <text x="60" y="1562" font-size="10.5" font-family="ui-monospace, monospace" font-weight="700" fill="#FFB84D">compute_mode: auto</text>
+  <text x="60" y="1580" font-size="10.5" fill="#8B9DAF">The AWS Load Balancer Controller, EBS CSI driver, and node lifecycle are all managed by EKS Auto Mode.</text>
+  <text x="60" y="1592" font-size="10.5" font-weight="700" fill="#FF6B52">Do not scaffold those add-ons.</text>
+
+  <rect x="40" y="1606" width="1040" height="58" rx="10" fill="#1A2332" stroke="#FF9900" stroke-width="2" filter="url(#s)"/>
+  <rect x="40" y="1606" width="5" height="58" fill="#FF9900" clip-path="url(#cs1606)"/>
+  <text x="60" y="1628" font-size="10.5" font-family="ui-monospace, monospace" font-weight="700" fill="#FFB84D">identity_mode: pod-identity</text>
+  <text x="60" y="1646" font-size="10.5" fill="#8B9DAF">The ServiceAccount needs <tspan font-weight="700" fill="#E8EAED">no IAM annotation</tspan> — the association itself is the binding.</text>
+  <text x="60" y="1658" font-size="10.5" font-weight="700" fill="#4ADE80">So manifests stay free of account IDs and role ARNs entirely.</text>
+
+  <rect x="40" y="1672" width="1040" height="76" rx="10" fill="#1A2332" stroke="#2ECC71" stroke-width="2" filter="url(#s)"/>
+  <rect x="40" y="1672" width="5" height="76" fill="#2ECC71" clip-path="url(#cs1672)"/>
+  <text x="60" y="1694" font-size="10.5" font-family="ui-monospace, monospace" font-weight="700" fill="#4ADE80">policy_engine: gatekeeper</text>
+  <text x="60" y="1712" font-size="10.5" fill="#8B9DAF">Require Namespace <tspan font-family="ui-monospace, monospace" fill="#E8EAED">labels.owner</tspan> and CPU and memory <tspan font-family="ui-monospace, monospace" fill="#E8EAED">requests</tspan>/<tspan font-family="ui-monospace, monospace" fill="#E8EAED">limits</tspan> on every container — including init containers and sidecars.</text>
+  <text x="60" y="1730" font-size="10.5" fill="#8B9DAF">Run local <tspan font-family="ui-monospace, monospace" fill="#E8EAED">gator</tspan> checks against the in-repo bundle: <tspan font-family="ui-monospace, monospace" fill="#E8EAED">policies/base</tspan> with per-cluster overlays at <tspan font-family="ui-monospace, monospace" fill="#E8EAED">policies/overlays/&lt;cluster&gt;</tspan>.</text>
+  <text x="60" y="1743" font-size="10" fill="#7C8CA0" font-style="italic">Setting this key to none skips every policy check except the Kustomize builds.</text>
+
+  <!-- ============ FOOTER ============ -->
+  <rect x="40" y="1790" width="1040" height="34" rx="8" fill="#24344A"/>
+  <text x="560" y="1812" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">one always-on file → ten keys → two clusters → one registry → every manifest downstream</text>
+</svg>

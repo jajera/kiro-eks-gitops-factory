@@ -1,0 +1,31 @@
+---
+title: GitOps conventions map
+description: Visual map of always-on gitops-conventions steering — layout, naming, labels, image pinning, and mandatory hardening.
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+Before this: [Workload archetypes map](../map-workload-archetypes/) covered the conditional apps contract.
+
+Deep dive for [`.kiro/steering/gitops-conventions.md`](https://github.com/jajera/kiro-eks-argocd-migration/blob/main/.kiro/steering/gitops-conventions.md)
+— the second always-on file, and the largest single piece of the contract. Where the project
+profile answers *what are the values*, this one answers *what is the shape*.
+
+## The map
+
+<Still
+  src="media/gitops-conventions-map.svg"
+  darkSrc="media/gitops-conventions-map-dark.svg"
+  alt="Fifteen-stage GitOps conventions map: base and overlay layout, the seven legitimate dev and prod differences, account-specific Ingress annotations, shape-valid scaffold placeholders, the two-layer Argo CD pattern, Application defaults, kind-based file naming, required labels, image pinning and promotion, mandatory resources NetworkPolicy and probes, the RollingUpdate versus PodDisruptionBudget distinction with its replicas matrix, Terraform ordering, Helm vendoring, autoscaler-owned replicas, and the required app README"
+  caption="Layout, naming, labels, pinning, hardening — the shape a reviewer checks against."
+/>
+
+Three things carry most of the review weight. Only seven values may differ between overlays, so
+anything else appearing in one and not the other is drift. `app.kubernetes.io/name` is the
+selector key, so if it drifts between a Deployment and its <Tooltip term="networkpolicy" label="NetworkPolicy" />
+the allow rules match nothing and traffic is silently denied. And `RollingUpdate` covers rollouts
+while a <Tooltip term="pdb" label="PDB" /> covers node drains — they are not substitutes, which is
+why the replicas matrix exists.
+
+Next: [add-app scaffold map](../map-add-app/) walks the skill that turns these facts into a tree.

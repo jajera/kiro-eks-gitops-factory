@@ -1,0 +1,95 @@
+---
+title: EKS GitOps Factory
+description: You already run EKS and Argo CD. This site shows how to migrate
+  hundreds of existing containers onto that GitOps path without each team
+  inventing its own process.
+template: splash
+hero:
+  tagline: EKS and Argo CD are already in place. Migrate existing apps — from
+    Podman, Docker, ECS, and elsewhere — onto one GitOps path without every
+    team inventing its own process.
+  actions:
+    - text: Get Started
+      link: /why/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/jajera/kiro-eks-argocd-migration
+      icon: external
+---
+
+import Still from "../../components/Still.astro";
+import Tooltip from "@/components/Tooltip.astro";
+
+You already deployed <Tooltip term="eks" label="EKS" /> and you manage apps with{" "}
+<Tooltip term="argo-cd" label="Argo CD" /> on a <Tooltip term="gitops" label="GitOps" /> path.
+The next job is migrating what you already run somewhere else —{" "}
+<Tooltip term="podman" label="Podman" />, Docker Compose, <Tooltip term="ecs" label="ECS" />, or
+other hosts — onto that same cluster and the same repo shape.
+At **100** apps and roughly **450** engineer-hours per migration wave, configuration **drift**
+becomes the default outcome unless the repo carries one reusable contract.
+
+## Why the factory exists
+
+<Still
+  src="media/migration-to-eks-gitops.png"
+  darkSrc="media/migration-to-eks-gitops-dark.png"
+  alt="Diagram of migrating Docker, Podman, ECS, and VM hosts through a GitOps factory onto EKS, Kubernetes, Argo CD, Git, and ECR"
+  caption="Existing runtimes converge through the factory onto one EKS and Argo CD GitOps path."
+/>
+
+At a few apps, a careful engineer can do that by hand. At hundreds of containers, across multiple
+teams, it does not scale. Each person brings a slightly different layout, naming, and policy
+choices. Reviews get slow, and the drift is hard to see because nobody wrote down one way to do
+it.
+
+Prompting a model harder does not fix it. A bare model invents a different tree for each app, and
+given a shell it will apply that tree straight to a live cluster.
+
+So the decisions move into the repository instead of into the prompt.{" "}
+<Tooltip term="steering" label="Steering" /> carries the knowledge a reviewer would otherwise
+supply from memory, a <Tooltip term="skill" label="skill" /> fixes the procedure into an ordered
+sequence, <Tooltip term="hooks" label="hooks" /> refuse what must not happen no matter how the
+request is phrased, and an <Tooltip term="agent" label="agent" /> bundles the three so one thin
+prompt activates all of it.
+
+**skills generate → hooks enforce → humans approve.** This page claims none of the three clauses
+yet — it states the shape of the argument the rest of the site walks, and each page that follows
+takes up the clause it can actually prove.
+
+<Still
+  src="media/skills-hooks-humans.svg"
+  darkSrc="media/skills-hooks-humans-dark.svg"
+  alt="Pipeline diagram: Skills generate the correct tree, Hooks enforce constraints regardless of prompt, Humans approve via PR review"
+  caption="The factory pipeline — decisions live in the repo, not the prompt."
+/>
+
+## Three labs, one argument
+
+Each lab rests on the conclusion of the one before it, so the order is the point.
+
+<Still
+  src="media/three-labs-flow.svg"
+  darkSrc="media/three-labs-flow-dark.svg"
+  alt="Flow diagram from policy proof to repository guardrails to thin prompt output"
+  caption="Each lab rests on the conclusion of the one before it."
+/>
+
+1. **First — Lab A** proves policy passes before any cluster exists.
+   [Prove policy offline (Lab A)](/lab-a/)
+2. **Second — Lab B** proves the configuration in the repository is what makes a thin prompt safe.
+   [What makes prompts safe (Lab B)](/lab-b/)
+3. **Third — Lab C** proves a thin prompt produces a compliant{" "}
+   <Tooltip term="dual-overlay" label="dual-overlay" /> app.
+   [Onboard an app (Lab C)](/lab-c/)
+
+What the factory does not remove is the part that needs judgement: understanding the workload,
+shrinking <Tooltip term="iam" label="IAM" /> to what the app actually calls, getting{" "}
+<Tooltip term="dns" label="DNS" /> and <Tooltip term="tls" label="TLS" /> right, and carrying
+cutover risk. This site is documentation only — you clone the{" "}
+<Tooltip term="source-factory" label="source factory" />
+([jajera/kiro-eks-argocd-migration](https://github.com/jajera/kiro-eks-argocd-migration)) and run
+every command there, and a human still merges the result.
+
+Next: [Why manual onboarding breaks](/why/) settles why the multi-team hand path fails and what
+the factory refuses to take off your hands.
